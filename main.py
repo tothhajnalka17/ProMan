@@ -25,7 +25,7 @@ def get_boards():
     return queries.get_boards()
 
 
-@app.route('/create_board', methods=["POST"])
+@app.route('/api/create_board/', methods=["POST"])
 def create_board():
     queries.insert_board(request.form.get("boardTitle"))
     return Response(status=200)
