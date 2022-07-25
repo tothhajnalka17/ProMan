@@ -59,6 +59,16 @@ def execute_select(statement, variables=None, fetchall=True):
     return result_set
 
 
-
 # User login and singup functs
 
+def add_user(cursor, username, email, encrypted_password, register_date):
+    cursor.execute("""
+    INSERT INTO users (username, email, encrypted_password, register_date) 
+    VALUES (%(username)s, %(email)s, %(encrypted_password)s, %(register_date)s);
+    """,
+                   {
+                       'username': username,
+                       'email': email,
+                       'encrypted_password': encrypted_password,
+                       'register_date': register_date
+                   })

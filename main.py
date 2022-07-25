@@ -27,18 +27,18 @@ def login():
     if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
         email = request.form['email']
         password = request.form['password']
-        account = data_manager.get_user_by_email(email)
+        account = queries.get_user_by_email(email)
         print(account)
 
         if account:
-            encrypted_password = data_manager.get_user_encrypted_password(email)
+            encrypted_password = queries.get_user_encrypted_password(email)
             session.permanent = True
-            userdata = data_manager.get_username_by(email)
+            userdata = queries.get_username_by(email)
             for username in userdata[0].values():
                 pass
             session['username'] = username
 
-            userid = data_manager.get_user_id_by(email)
+            userid = queries.get_user_id_by(email)
             for id in userid[0].values():
                 pass
             session['id'] = id
@@ -73,8 +73,8 @@ def signup():
         email = request.form.get('email')
         original_password = request.form.get('password')
 
-        isUsernameTaken = data_manager.get_user_by_username(request.form.get('username'))
-        isEmailTaken = data_manager.get_user_by_email(request.form.get('email'))
+        isUsernameTaken = queries.get_user_by_username(request.form.get('username'))
+        isEmailTaken = queries.get_user_by_email(request.form.get('email'))
         usernameRegex = re.compile(r'[A-Za-z0-9]+')
         emailRegex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 

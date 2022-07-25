@@ -47,3 +47,59 @@ def get_cards_for_board(board_id):
         , {"board_id": board_id})
 
     return matching_cards
+
+
+def get_user_by_email(email):
+    user_select = data_manager.execute_select(
+        """
+        SELECT * FROM users
+        WHERE users.email = %(email)s
+        ;
+        """
+        , {"email": email})
+
+    return user_select
+
+
+def get_user_encrypted_password(username):
+    encrypted_pass = data_manager.execute_select(
+        """
+        SELECT encrypted_password FROM users
+        WHERE username = %{username}s 
+        """
+        , {"username": username})
+
+    return encrypted_pass
+
+
+def get_user_id_by(email):
+    user_select = data_manager.execute_select(
+        """
+        SELECT id FROM users
+        WHERE email = %(email)s;
+        """
+        , {'email': email})
+
+    return user_select
+
+
+def get_username_by(email):
+    user_select = data_manager.execute_select(
+        """
+        SELECT username FROM users
+        WHERE email = %(email)s;
+        """
+        , {'email': email})
+
+    return user_select
+
+
+def get_user_by_username(username):
+    user_select = data_manager.execute_select(
+        """
+        SELECT * FROM users
+        WHERE username = %(username)s
+        """
+        , {'username': username})
+
+    return user_select
