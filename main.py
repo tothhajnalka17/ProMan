@@ -23,6 +23,11 @@ def index():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
+
+
+@app.route("/signup")
+def signup():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
         username = request.form.get('username')
         email = request.form.get('email')
@@ -68,11 +73,6 @@ def login():
             data_manager.add_user(username, email, encrypted_password, register_date)
             flash('Registration successful!')
             return redirect(url_for('route_home'))
-
-
-@app.route("/signup")
-def signup():
-    return render_template('signup.html')
 
 
 @app.route("/api/boards")
