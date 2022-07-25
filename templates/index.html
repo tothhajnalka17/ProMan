@@ -17,9 +17,9 @@
     <body>
         <div id="root"></div>
         <div id="form-container">
-            <form action="/create_board" method="POST">
+            <form action="/api/create_board/" method="POST" id="boardNameForm">
                 <input type="text" id="boardTitle" name="boardTitle">
-                <input type="submit">
+                <input type="submit" id="boardNameSubmit" value="Create new Board">
             </form>
         </div>
     </body>
