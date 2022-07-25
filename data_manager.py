@@ -59,8 +59,7 @@ def execute_select(statement, variables=None, fetchall=True):
     return result_set
 
 
-# User login and singup functs
-
+# add newly registered user
 def add_user(cursor, username, email, encrypted_password, register_date):
     cursor.execute("""
     INSERT INTO users (username, email, encrypted_password, register_date) 
