@@ -36,7 +36,11 @@ def get_cards_for_board(board_id: int):
 
 
 def main():
-    app.run(debug=True)
+
+    app.run(
+        debug=True,
+
+    )
 
     # Serving the favicon
     with app.app_context():
@@ -44,4 +48,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    app.run()
