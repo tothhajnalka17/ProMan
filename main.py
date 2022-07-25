@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, Response
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
@@ -27,8 +27,8 @@ def get_boards():
 
 @app.route('/create_board', methods=["POST"])
 def create_board():
-    board_title = request.form.get("boardTitle")
-    return queries.insert_board(board_title)
+    queries.insert_board(request.form.get("boardTitle"))
+    return Response(status=200)
 
 
 @app.route("/api/boards/<int:board_id>/cards/")
