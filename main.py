@@ -114,6 +114,13 @@ def signup():
             flash('Registration successful!')
             return redirect(url_for('route_home'))
 
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    user = session['username']
+    flash(f'Goodbye {user}')
+    session.pop("username", None)
+    return redirect(url_for('route_home'))
+
 
 @app.route("/api/boards")
 @json_response
