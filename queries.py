@@ -34,6 +34,13 @@ def get_boards():
     )
 
 
+def insert_board(board_title):
+    data_manager.execute_insert("""
+    Insert INTO boards(title)
+    VALUES (%(board_title)s);
+    """, {"board_title": board_title})
+
+
 def get_cards_for_board(board_id):
     # remove this code once you implement the database
     return [{"title": "title1", "id": 1}, {"title": "board2", "id": 2}]
