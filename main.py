@@ -64,9 +64,7 @@ def login():
     return render_template('login.html')
 
 
-
-
-@app.route("/signup")
+@app.route("/signup", methods=["POST", "GET"])
 def signup():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
         username = request.form.get('username')
@@ -113,6 +111,8 @@ def signup():
             data_manager.add_user(username, email, encrypted_password, register_date)
             flash('Registration successful!')
             return redirect(url_for('route_home'))
+    return render_template("signup.html")
+
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
@@ -143,8 +143,7 @@ def get_cards_for_board(board_id: int):
 
 def main():
     app.run(
-        debug=True,
-
+        debug=True
     )
 
     # Serving the favicon
@@ -153,4 +152,4 @@ def main():
 
 
 if __name__ == '__main__':
-    app.run()
+    main()
