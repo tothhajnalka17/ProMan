@@ -18,15 +18,7 @@ app.permanent_session_lifetime = datetime.timedelta(minutes=1)
 
 @app.route("/")
 def index():
-    boards_raw = queries.get_boards()
-    boards = [dict(row) for row in boards_raw]
-    cards = []
-    print(boards)
-    for row in boards:
-        cards_raw = queries.get_cards_for_board(row["id"])
-        cards.append([dict(row) for row in cards_raw])
-    print(cards)
-    return render_template('index.html', boards=boards, cards=cards)
+    return render_template('index.html')
 
 
 @app.route("/login", methods=["GET", "POST"])
