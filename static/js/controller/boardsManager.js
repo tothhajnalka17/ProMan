@@ -1,5 +1,5 @@
 import {dataHandler} from "../data/dataHandler.js";
-import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
+import {builderFunctions, htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {cardsManager} from "./cardsManager.js";
 
@@ -17,6 +17,14 @@ export let boardsManager = {
             );
         }
     },
+    boardRenameControl: function() {
+        let headerDivs = Array.from(document.querySelectorAll(".board-header"));
+        headerDivs.forEach(headerDiv => {
+            headerDiv.addEventListener("click", () => {
+                renameBoardHandler(headerDiv);
+            })
+        })
+    }
 };
 
 function showHideButtonHandler(clickEvent) {
@@ -31,4 +39,31 @@ function showHideButtonHandler(clickEvent) {
         event.preventDefault();
         domManager.refreshPage();
     })
+}
+
+function renameBoardHandler (headerDiv) {
+    let boardId = headerDiv.getAttribute("data-header-id");
+    let boardTitle = headerDiv.innerText;
+    const formBuilder = htmlFactory(htmlTemplates.renameForm);
+
+    let newDiv = document.createElement("div");
+    newDiv.innerHTML = formBuilder(boardTitle);
+    newDiv.classList.add("board-header");
+
+    headerDiv.replaceWith(newDiv);
+
+    // Add focus to the main input field and listen to focus loss
+    let inputField = document.querySelector(".board-header > form > input");
+    inputField.focus();
+
+    inputField.addEventListener("focusout", async () => {
+        headerDiv.innerText = inputField.value;
+        newDiv.replaceWith(headerDiv)
+        try {
+            await dataHandler.updateBoardName(boardId, inputField.value);
+        }
+        catch (error) {
+            console.log(`There was an error during the board name update: ${error}`);
+        }
+    });
 }
