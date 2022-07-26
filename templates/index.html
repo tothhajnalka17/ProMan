@@ -18,11 +18,14 @@
         <div id="root"></div>
         <div id="form-container">
             <form action="/api/boards/create_board/" method="POST" id="boardNameForm">
+                <label for="boardTitle">Board title</label>
                 <input type="text" id="boardTitle" name="boardTitle">
                 <input type="submit" id="boardNameSubmit" value="Create new Board">
             </form>
             <form action="/api/boards/update_board_name/" method="POST" id="boardRenameForm">
+                <label for="boardId">Board Id</label>
                 <input type="text" id="boardId" name="boardId">
+                <label for="newBoardName">New board name</label>
                 <input type="text" id="newBoardName" name="newBoardName">
                 <input type="submit" id="boardRenameSubmit" value="Rename Board">
             </form>
