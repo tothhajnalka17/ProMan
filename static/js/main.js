@@ -3,7 +3,7 @@ import {formManager} from "./controller/formManager.js";
 
 function init() {
     boardsManager.loadBoards();
-    formManager.initBoardCreation();
+    formManager.initFormCreation();
 }
 
 init();
