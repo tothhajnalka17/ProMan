@@ -1,3 +1,5 @@
+import {init} from "../main.js"
+
 export let domManager = {
     addChild(parentIdentifier, childContent) {
         const parent = document.querySelector(parentIdentifier);
@@ -15,4 +17,19 @@ export let domManager = {
             console.error("could not find such html element: " + parentIdentifier);
         }
     },
+    clearRoot() {
+        let rootDiv = document.querySelector("#root");
+        Array.from(rootDiv.childNodes).forEach( child => child.remove() );
+    },
+    refreshPage () {
+        // Need to remove event listeners of elements not located in root div
+        let boardNameSubmitButton = document.querySelector("#boardNameSubmit");
+        let boardRenameSubmitButton = document.querySelector("#boardRenameSubmit");
+
+        boardNameSubmitButton.replaceWith(boardNameSubmitButton.cloneNode(true));
+        boardRenameSubmitButton.replaceWith(boardRenameSubmitButton.cloneNode(true));
+
+        this.clearRoot();
+        init();
+    }
 };

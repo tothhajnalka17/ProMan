@@ -1,7 +1,7 @@
 import {boardsManager} from "./controller/boardsManager.js";
 import {formManager} from "./controller/formManager.js";
 
-function init() {
+export async function init() {
     boardsManager.loadBoards();
     formManager.initFormCreation();
 }

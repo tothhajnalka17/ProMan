@@ -1,15 +1,18 @@
 import {dataHandler} from "../data/dataHandler.js"
+import {domManager} from "../view/domManager.js";
 
 export let formManager = {
     initFormCreation: function () {
-        document.querySelector("#boardNameSubmit").addEventListener("click", event => {
+        document.querySelector("#boardNameSubmit").addEventListener("click", async event => {
             event.preventDefault();
-            dataHandler.createNewBoard(document.querySelector("#boardTitle").value)
+            await dataHandler.createNewBoard(document.querySelector("#boardTitle").value)
+            domManager.refreshPage();
         })
-        document.querySelector("#boardRenameSubmit").addEventListener("click", event => {
+        document.querySelector("#boardRenameSubmit").addEventListener("click", async event => {
             event.preventDefault();
-            dataHandler.updateBoardName(document.querySelector("#boardId").value,
+            await dataHandler.updateBoardName(document.querySelector("#boardId").value,
                 document.querySelector("#newBoardName").value)
+            domManager.refreshPage();
         })
 }
 }
