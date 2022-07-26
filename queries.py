@@ -35,10 +35,18 @@ def get_boards():
 
 
 def insert_board(board_title):
-    data_manager.execute_insert("""
+    data_manager.execute_query("""
     Insert INTO boards(title)
     VALUES (%(board_title)s);
     """, {"board_title": board_title})
+
+
+def update_table_name(board_id, new_board_name):
+    data_manager.execute_query("""
+    UPDATE boards
+    SET title = %(new_board_name)s
+    WHERE id = %(board_id)s
+    """, {"board_id": board_id, "new_board_name": new_board_name})
 
 
 def get_cards_for_board(board_id):
