@@ -103,3 +103,16 @@ def get_user_by_username(username):
         , {'username': username})
 
     return user_select
+
+
+def insert_users(username, email, encrypted_password, register_date):
+    data_manager.execute_insert("""
+    INSERT INTO users (username, email, encrypted_password, register_date) 
+    VALUES (%(username)s, %(email)s, %(encrypted_password)s, %(register_date)s);
+    """,
+        {
+            'username': username,
+            'email': email,
+            'encrypted_password': encrypted_password,
+            'register_date': register_date
+        })

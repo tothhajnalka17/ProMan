@@ -59,15 +59,9 @@ def execute_select(statement, variables=None, fetchall=True):
     return result_set
 
 
-# add newly registered user
-def add_user(cursor, username, email, encrypted_password, register_date):
-    cursor.execute("""
-    INSERT INTO users (username, email, encrypted_password, register_date) 
-    VALUES (%(username)s, %(email)s, %(encrypted_password)s, %(register_date)s);
-    """,
-                   {
-                       'username': username,
-                       'email': email,
-                       'encrypted_password': encrypted_password,
-                       'register_date': register_date
-                   })
+def execute_insert(statement, variables=None):
+    with establish_connection() as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
+            cursor.execute(statement, variables)
+
+

@@ -1,16 +1,21 @@
+import random
+
 from flask import Flask, render_template, url_for, flash, request, redirect, session
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
 import queries
 import util
-import data_manager
 import datetime
 import re
+import data_manager
 
 mimetypes.add_type('application/javascript', '.js')
+
 app = Flask(__name__)
 load_dotenv()
+app.secret_key = "sajtosmakaroni"
+app.permanent_session_lifetime = datetime.timedelta(minutes=1)
 
 
 @app.route("/")
@@ -78,40 +83,51 @@ def signup():
 
         if isUsernameTaken:
             flash('this username is already in use')
-            return render_template('register.html')
+            return render_template('signup.html')
 
         elif isEmailTaken:
             flash('this email is already in use')
-            return render_template('register.html')
+            return render_template('signup.html')
 
         elif not request.form.get("username") or not request.form.get("email") or not request.form.get("password"):
             flash('Fill out the registration form properly!')
-            return render_template('register.html')
+            return render_template('signup.html')
 
         elif not re.fullmatch(emailRegex, email):
             flash('Invalid email address!')
-            return render_template('register.html')
+            return render_template('signup.html')
 
         elif not re.match(usernameRegex, username):
             flash('Username must contain only characters and numbers!')
-            return render_template('register.html')
+            return render_template('signup.html')
 
         elif len(username) <= 2:
             flash('Username must be at least 2 characters long!')
-            return render_template('register.html')
+            return render_template('signup.html')
 
         elif len(original_password) <= 5:
             flash('Password must be at least 6 characters long!')
-            return render_template('register.html')
+            return render_template('signup.html')
 
         else:
             # Handle registration, adding to DB
+
             encrypted_password = util.hash_password(original_password)
             register_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            data_manager.add_user(username, email, encrypted_password, register_date)
+
+            print(username, email, encrypted_password, register_date)
+            queries.insert_users(username, email, encrypted_password, register_date)
             flash('Registration successful!')
-            return redirect(url_for('route_home'))
-    return render_template("signup.html")
+
+            return redirect(url_for('index'))
+
+    elif request.method == 'POST':
+        # Form is empty
+        flash('Please fill out the form!')
+        return render_template('signup.html')
+
+    else:
+        return render_template('signup.html')
 
 
 @app.route('/logout', methods=['GET', 'POST'])
