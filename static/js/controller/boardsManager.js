@@ -22,4 +22,13 @@ export let boardsManager = {
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     cardsManager.loadCards(boardId);
+
+    let button = clickEvent.target;
+    button.removeEventListener("click", showHideButtonHandler)
+    button.innerText = "Hide Cards";
+
+    button.addEventListener("click", event => {
+        event.preventDefault();
+        domManager.refreshPage();
+    })
 }
