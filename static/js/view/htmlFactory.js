@@ -1,11 +1,13 @@
 export const htmlTemplates = {
     board: 1,
-    card: 2
+    card: 2,
+    renameForm: 3
 }
 
 export const builderFunctions = {
     [htmlTemplates.board]: boardBuilder,
-    [htmlTemplates.card]: cardBuilder
+    [htmlTemplates.card]: cardBuilder,
+    [htmlTemplates.renameForm]: renameFormBuilder,
 };
 
 export function htmlFactory(template) {
@@ -37,3 +39,12 @@ function cardBuilder(card) {
     return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
 }
 
+function renameFormBuilder(id, type, oldName) {
+    let element =
+        `<form>
+            <input type="text" name="newTitle" placeholder="${oldName}">
+            <input type="hidden" name="id" value="${id}">
+            <input type="hidden" name="type" value="${type}">
+        </form>`
+    return element
+}
