@@ -43,6 +43,15 @@ CREATE TABLE cards (
     card_order  INTEGER             NOT NULL
 );
 
+DROP TABLE IF EXISTS public.users;
+CREATE TABLE users (
+	id serial PRIMARY KEY,
+	username VARCHAR NOT NULL,
+	email VARCHAR NOT NULL,
+	encrypted_password VARCHAR NOT NULL,
+    register_date VARCHAR NOT NULL
+);
+
 ---
 --- insert data
 ---
