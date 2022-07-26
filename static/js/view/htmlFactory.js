@@ -22,7 +22,7 @@ export function htmlFactory(template) {
 
 function boardBuilder(board) {
     return `<div class="board-container">
-                <h2 class="board-header"> ${board.title} </h2>
+                <h2 class="board-header" data-header-id="${board.id}"> ${board.title} </h2>
                 <div class="board row" data-board-id=${board.id}>
                     <div class="board-column"></div>
                     <div class="board-column"></div>
