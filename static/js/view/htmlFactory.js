@@ -39,12 +39,10 @@ function cardBuilder(card) {
     return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
 }
 
-function renameFormBuilder(id, type, oldName) {
+function renameFormBuilder(oldName) {
     let element =
         `<form action="" method="get">
             <input type="text" name="newTitle" placeholder="${oldName}">
-            <input type="hidden" name="id" value="${id}">
-            <input type="hidden" name="type" value="${type}">
         </form>`
     return element
 }
