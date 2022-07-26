@@ -30,5 +30,11 @@
         </tr>
         {% endfor %}
     </table>
+        <div id="form-container">
+            <form action="/api/create_board/" method="POST" id="boardNameForm">
+                <input type="text" id="boardTitle" name="boardTitle">
+                <input type="submit" id="boardNameSubmit" value="Create new Board">
+            </form>
+        </div>
     </body>
 </html>

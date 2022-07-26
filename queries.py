@@ -27,6 +27,13 @@ def get_boards():
     )
 
 
+def insert_board(board_title):
+    data_manager.execute_insert("""
+    Insert INTO boards(title)
+    VALUES (%(board_title)s);
+    """, {"board_title": board_title})
+
+
 def get_cards_for_board(board_id):
     matching_cards = data_manager.execute_select(
         """
