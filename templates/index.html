@@ -21,5 +21,25 @@
     <body>
         {% include "navbar.html" %}
         <div id="root"></div>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Board name</th>
+        </tr>
+        {% for board in boards %}
+        <tr>
+            <td>{{ board.id }}</td>
+            <td>{{ board.title }}</td>
+            <td>{% for board in cards %}{% for card in board %}#{{ card.id }}: {{ card.title }}; <br>{% endfor %}{% endfor %}</td>
+        </tr>
+        {% endfor %}
+    </table>
+        <div id="form-container">
+            <form action="/api/create_board/" method="POST" id="boardNameForm">
+                <input type="text" id="boardTitle" name="boardTitle">
+                <input type="submit" id="boardNameSubmit" value="Create new Board">
+            </form>
+        </div>
     </body>
 </html>

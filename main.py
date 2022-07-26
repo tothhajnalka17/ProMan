@@ -1,6 +1,4 @@
-import random
-
-from flask import Flask, render_template, url_for, flash, request, redirect, session
+from flask import Flask, render_template, url_for, request, Response, redirect, session
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
@@ -20,10 +18,15 @@ app.permanent_session_lifetime = datetime.timedelta(minutes=1)
 
 @app.route("/")
 def index():
-    """
-    This is a one-pager which shows all the boards and cards
-    """
-    return render_template('index.html')
+    boards_raw = queries.get_boards()
+    boards = [dict(row) for row in boards_raw]
+    cards = []
+    print(boards)
+    for row in boards:
+        cards_raw = queries.get_cards_for_board(row["id"])
+        cards.append([dict(row) for row in cards_raw])
+    print(cards)
+    return render_template('index.html', boards=boards, cards=cards)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -147,6 +150,12 @@ def get_boards():
     return queries.get_boards()
 
 
+@app.route('/api/create_board/', methods=["POST"])
+def create_board():
+    queries.insert_board(request.form.get("boardTitle"))
+    return Response(status=200)
+
+
 @app.route("/api/boards/<int:board_id>/cards/")
 @json_response
 def get_cards_for_board(board_id: int):
@@ -158,9 +167,7 @@ def get_cards_for_board(board_id: int):
 
 
 def main():
-    app.run(
-        debug=True
-    )
+    app.run(debug=True)
 
     # Serving the favicon
     with app.app_context():

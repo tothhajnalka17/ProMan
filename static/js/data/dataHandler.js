@@ -18,7 +18,7 @@ export let dataHandler = {
         // the card is retrieved and then the callback function is called with the card
     },
     createNewBoard: async function (boardTitle) {
-        // creates new board, saves it and calls the callback function with its data
+        return await apiPost('/api/create_board/', {"boardTitle": boardTitle})
     },
     createNewCard: async function (cardTitle, boardId, statusId) {
         // creates new card, saves it and calls the callback function with its data
@@ -35,6 +35,24 @@ async function apiGet(url) {
 }
 
 async function apiPost(url, payload) {
+    let data = new FormData()
+    for (let [key, value] of Object.entries(payload)) {
+        console.log(key, value)
+        data.append(key, value)
+    }
+    try{
+        let response = await fetch(url, {
+            method: "POST",
+            body: data
+        })
+        if (response.ok === false) {
+            console.log("An error has occurred in the response!");
+        }
+    }
+    catch (error) {
+        console.log("An error has occurred!")
+        console.log(error)
+    }
 }
 
 async function apiDelete(url) {
