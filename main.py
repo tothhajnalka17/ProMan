@@ -161,6 +161,7 @@ def update_board_name():
     queries.update_table_name(request.form.get("boardId"), request.form.get("newBoardName"))
     return Response(status=200)
 
+
 @app.route("/api/boards/<int:board_id>/cards/")
 @json_response
 def get_cards_for_board(board_id: int):
