@@ -28,11 +28,22 @@ export let cardsManager = {
         button.classList.add("add-card-button");
         firstColumn.appendChild(button);
         button.addEventListener("click", () => {
-            dataHandler.createNewCard(boardId, status.id, cardOrder);
-            // TODO refresh page
+            insertCard(boardId, status.id, cardOrder);
             })
     }
 };
 
 function deleteButtonHandler(clickEvent) {
+}
+
+async function insertCard(boardId, statusId, cardOrder) {
+    try{
+        //TODO finish getting the card id back, add the card using the card factory
+        let response = await dataHandler.createNewCard(boardId, statusId, cardOrder);
+        console.log(response)
+    }
+    catch (error) {
+        console.log("An error has occurred during card insertion:");
+        console.log(error);
+    }
 }
