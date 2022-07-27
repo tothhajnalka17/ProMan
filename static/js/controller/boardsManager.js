@@ -24,12 +24,23 @@ export let boardsManager = {
                 renameBoardHandler(headerDiv);
             })
         })
+    },
+    columnRenameControl: function() {
+        let columnHeaderDivs = Array.from(document.querySelectorAll(".column-header"));
+        console.log(columnHeaderDivs);
+        columnHeaderDivs.forEach( columnHeaderDiv => {
+            columnHeaderDiv.addEventListener("click", () => {
+                renameColumnHandler(columnHeaderDiv);
+            })
+        })
     }
 };
 
-function showHideButtonHandler(clickEvent) {
+async function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    cardsManager.loadCards(boardId);
+    await cardsManager.loadCards(boardId);
+
+    boardsManager.columnRenameControl();
 
     let button = clickEvent.target;
     button.removeEventListener("click", showHideButtonHandler)
@@ -66,4 +77,11 @@ function renameBoardHandler (headerDiv) {
             console.log(`There was an error during the board name update: ${error}`);
         }
     });
+}
+
+function renameColumnHandler (headerDiv) {
+    let statusName = headerDiv.innerText;
+    // TODO still need id from query
+    let statusId = headerDiv.getAttribute("data-status-id");
+    console.log(statusName, statusId)
 }

@@ -31,10 +31,13 @@ async function add_statuses(boardId){
     const headers = document.getElementsByTagName("h4");
     if (headers.length === 0){
         for (let i=0; i<statuses.length; i++) {
-            const titles = document.createElement("h4")
-            titles.innerText = statuses[i].title
+            const title = document.createElement("h4")
+            title.classList.add("column-header");
+            console.log(statuses[i]);
+            title.setAttribute("data-status-id", statuses[i].id);
+            title.innerText = statuses[i].title
             let parent = document.querySelector(`.board[data-board-id="${boardId}"] > .board-column:nth-of-type(${i + 1})`);
-            parent.insertBefore(titles, parent.firstChild)
+            parent.insertBefore(title, parent.firstChild)
         }
     }
 }
