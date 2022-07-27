@@ -30,6 +30,17 @@ def insert_new_card(board_id, status_id, card_order):
           "card_order": card_order})
 
 
+def update_card(id, status_id, title, card_order):
+    data_manager.execute_query("""
+    UPDATE cards
+    SET %(status_id)s = status_id, 
+        %(title)s = title,
+        %(card_order)s = card_order
+    WHERE %(id)s = id
+    """, {"status_id": status_id,
+          "title": title,
+          "card_order": card_order})
+
 """
 BOARDS
 """
