@@ -29,7 +29,8 @@ DROP TABLE IF EXISTS board_status_relation;
 
 CREATE TABLE statuses (
     id       SERIAL PRIMARY KEY     NOT NULL,
-    title    VARCHAR(200)           NOT NULL
+    title    VARCHAR(200)           NOT NULL,
+    board_id INTEGER                NOT NULL
 );
 
 CREATE TABLE boards (
@@ -53,19 +54,18 @@ CREATE TABLE users (
     register_date VARCHAR NOT NULL
 );
 
-CREATE TABLE board_status_relation (
-    board_id integer,
-    status_id integer
-);
-
 ---
 --- insert data
 ---
 
-INSERT INTO statuses(title) VALUES ('new');
-INSERT INTO statuses(title) VALUES ('in progress');
-INSERT INTO statuses(title) VALUES ('testing');
-INSERT INTO statuses(title) VALUES ('done');
+INSERT INTO statuses(title, board_id) VALUES ('new', 1);
+INSERT INTO statuses(title, board_id) VALUES ('in progress', 1);
+INSERT INTO statuses(title, board_id) VALUES ('testing', 1);
+INSERT INTO statuses(title, board_id) VALUES ('done', 1);
+INSERT INTO statuses(title, board_id) VALUES ('no status', 2);
+INSERT INTO statuses(title, board_id) VALUES ('lost', 2);
+INSERT INTO statuses(title, board_id) VALUES ('forgotten', 2);
+INSERT INTO statuses(title, board_id) VALUES ('unnecessary', 2);
 
 INSERT INTO boards(title) VALUES ('Board 1');
 INSERT INTO boards(title) VALUES ('Board 2');
@@ -76,21 +76,12 @@ INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 2, 'in progress card', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 3, 'planning', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'done card 1', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'done card 1', 2);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 1, 'new card 1', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 1, 'new card 2', 2);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 2, 'in progress card', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 3, 'planning', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'done card 1', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'done card 1', 2);
-
-INSERT INTO board_status_relation VALUES (1, 1);
-INSERT INTO board_status_relation VALUES (1, 2);
-INSERT INTO board_status_relation VALUES (1, 3);
-INSERT INTO board_status_relation VALUES (1, 4);
-INSERT INTO board_status_relation VALUES (2, 1);
-INSERT INTO board_status_relation VALUES (2, 2);
-INSERT INTO board_status_relation VALUES (2, 3);
-INSERT INTO board_status_relation VALUES (2, 4);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 1, 'who knows', 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 1, 'whatever', 2);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 2, 'not a card', 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 3, 'unplanned', 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'unexpected', 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'undo', 2);
 
 ---
 --- add constraints
@@ -102,6 +93,5 @@ ALTER TABLE ONLY cards
 ALTER TABLE ONLY cards
     ADD CONSTRAINT fk_cards_status_id FOREIGN KEY (status_id) REFERENCES statuses(id);
 
-ALTER TABLE ONLY board_status_relation
-    ADD CONSTRAINT fk_board_id FOREIGN KEY (board_id) REFERENCES boards(id) ON DELETE CASCADE,
-    ADD CONSTRAINT fk_status_id FOREIGN KEY (status_id) REFERENCES statuses(id) ON DELETE CASCADE;
+ALTER TABLE ONLY statuses
+    ADD CONSTRAINT fk_board_id FOREIGN KEY (board_id) REFERENCES boards(id) ON DELETE CASCADE;

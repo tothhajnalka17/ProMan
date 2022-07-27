@@ -57,10 +57,10 @@ def get_cards_for_board(board_id):
 def get_statuses_for_board(board_id):
     statuses = data_manager.execute_select(
         """
-        SELECT statuses.title 
-        FROM board_status_relation
-        JOIN statuses
-        ON board_status_relation.status_id = statuses.id
+        SELECT statuses.title
+        FROM statuses
+        JOIN boards
+        ON statuses.board_id = boards.id
         WHERE board_id = %(board_id)s
         """
         , {"board_id": board_id})
