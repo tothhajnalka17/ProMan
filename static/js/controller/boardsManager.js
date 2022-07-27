@@ -2,6 +2,8 @@ import {dataHandler} from "../data/dataHandler.js";
 import {builderFunctions, htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {cardsManager} from "./cardsManager.js";
+import {add_columns} from "./columnsManager.js";
+import {initDragAndDrop} from "./dragNDropManager.js";
 
 export let boardsManager = {
     loadBoards: async function () {
@@ -29,9 +31,13 @@ export let boardsManager = {
 
 
 
-function showHideButtonHandler(clickEvent) {
+async function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    cardsManager.loadCards(boardId);
+    let statuses = await dataHandler.getStatuses(boardId)
+    await add_columns(boardId);
+    await cardsManager.loadCards(boardId);
+
+    initDragAndDrop();
 
     let button = clickEvent.target;
     button.removeEventListener("click", showHideButtonHandler)
