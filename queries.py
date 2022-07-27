@@ -22,6 +22,7 @@ def get_boards():
     return data_manager.execute_select(
         """
         SELECT * FROM boards
+        ORDER BY id
         ;
         """
     )
@@ -62,6 +63,7 @@ def get_statuses_for_board(board_id):
         JOIN boards
         ON statuses.board_id = boards.id
         WHERE board_id = %(board_id)s
+        ORDER BY statuses.column_order
         """
         , {"board_id": board_id})
 
@@ -84,7 +86,7 @@ def get_user_encrypted_password(username):
     encrypted_pass = data_manager.execute_select(
         """
         SELECT encrypted_password FROM users
-        WHERE username = %{username}s 
+        WHERE username = %(username)s 
         """
         , {"username": username})
 
