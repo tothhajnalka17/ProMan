@@ -24,9 +24,7 @@ function initDragAndDrop() {
 function initElements() {
     ui.cards = document.querySelectorAll(".card");
     ui.columns = document.querySelectorAll(".board-column");
-    console.log(ui.columns);
-
-    ui.cards.forEach(function (card) {
+        ui.cards.forEach(function (card) {
         card.setAttribute("draggable", true);
     });
 }
@@ -35,7 +33,7 @@ function initElements() {
 function initDragEvents() {
     ui.cards.forEach(card => initDraggable(card));
     ui.columns.forEach(column => initDropzone(column));
-    initDropzone(ui.columns);
+    // initDropzone(ui.columns);
 }
 
 
@@ -92,7 +90,11 @@ function handleDrop(e) {
     e.preventDefault();
     const dropzone = e.currentTarget;
     console.log("Drop of", dropzone);
+    dropzone.appendChild(card.dragged);
+    dropzone.classList.remove('cardContainerHover');
+    return;
 
+    /*
     if (dom.hasClass(dropzone, ".board-column")) {
         if (dom.isEmpty(dropzone)) {
             dropzone.appendChild(card.dragged);
@@ -100,8 +102,6 @@ function handleDrop(e) {
         return;
         }
     if (dom.hasClass(dropzone, "mixed-cards")) {
-        dropzone.appendChild(card.dragged);
-        dropzone.classList.remove('cardContainerHover');
-        return;
-    }
+
+    }*/
 }
