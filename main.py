@@ -150,7 +150,7 @@ def create_board():
 
 @app.route('/api/boards/update_board_name/', methods=["POST"])
 def update_board_name():
-    queries.update_table_name(request.form.get("boardId"), request.form.get("newBoardName"))
+    queries.update_board_name(request.form.get("boardId"), request.form.get("newBoardName"))
     return Response(status=200)
 
 
