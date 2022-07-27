@@ -46,6 +46,7 @@ async function showHideButtonHandler(clickEvent) {
     cardsManager.insertAddCardButton(boardId, statuses[0]);
 
     initDragAndDrop();
+    //TODO rename i variable
 
     let i = clickEvent.target;
     i.removeEventListener("click", showHideButtonHandler)
