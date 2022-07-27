@@ -33,11 +33,12 @@ function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     cardsManager.loadCards(boardId);
 
-    let button = clickEvent.target;
-    button.removeEventListener("click", showHideButtonHandler)
-    button.innerText = "Hide Cards";
+    let i = clickEvent.target;
+    i.removeEventListener("click", showHideButtonHandler)
+    i.classList.remove("fa-chevron-down")
+    i.classList.add("fa-chevron-up")
 
-    button.addEventListener("click", event => {
+    i.addEventListener("click", event => {
         event.preventDefault();
         domManager.refreshPage();
     })
