@@ -24,14 +24,21 @@ export function htmlFactory(template) {
 
 function boardBuilder(board) {
     return `<div class="board-container">
-                <h2 class="board-header" data-header-id="${board.id}"> ${board.title} </h2>
+                <div class="board-header-div">
+                    <div class="inline">
+                        <h2 class="board-header" data-header-id="${board.id}"> ${board.title} </h2>
+                    </div>
+                    <div class="inline right">
+                        <button class="toggle-board-button" data-board-id="${board.id}"></button>
+                    </div>               
+                </div>
                 <div class="board row" data-board-id=${board.id}>
                     <div class="board-column"></div>
                     <div class="board-column"></div>
                     <div class="board-column"></div>
                     <div class="board-column"></div>
                 </div>
-                <button class="toggle-board-button" data-board-id="${board.id}">Show Cards</button>
+                
             </div>`;
 }
 

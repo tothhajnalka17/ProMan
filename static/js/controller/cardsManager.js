@@ -28,8 +28,6 @@ function deleteButtonHandler(clickEvent) {
 
 async function add_statuses(boardId){
     const statuses = await dataHandler.getStatuses(boardId)
-    const headers = document.getElementsByTagName("h4");
-    if (headers.length === 0){
         for (let i=0; i<statuses.length; i++) {
             const title = document.createElement("h4")
             title.classList.add("column-header");
@@ -38,5 +36,4 @@ async function add_statuses(boardId){
             let parent = document.querySelector(`.board[data-board-id="${boardId}"] > .board-column:nth-of-type(${i + 1})`);
             parent.insertBefore(title, parent.firstChild)
         }
-    }
 }
