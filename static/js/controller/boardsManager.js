@@ -42,13 +42,13 @@ export let boardsManager = {
 
 async function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
+    console.log(boardId)
     let statuses = await dataHandler.getStatuses(boardId)
     await add_columns(boardId);
     await cardsManager.loadCards(boardId);
 
-    initDragAndDrop();
-
     let i = clickEvent.target;
+    console.log(i)
     i.removeEventListener("click", showHideButtonHandler)
     i.classList.remove("fa-chevron-down")
     i.classList.add("fa-chevron-up")
@@ -57,6 +57,7 @@ async function showHideButtonHandler(clickEvent) {
         event.preventDefault();
         domManager.refreshPage();
     })
+    initDragAndDrop();
 }
 
 function renameBoardHandler (headerDiv) {
