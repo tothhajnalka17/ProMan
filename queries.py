@@ -57,7 +57,7 @@ def get_cards_for_board(board_id):
 def get_statuses_for_board(board_id):
     statuses = data_manager.execute_select(
         """
-        SELECT statuses.title
+        SELECT statuses.title, statuses.id
         FROM statuses
         JOIN boards
         ON statuses.board_id = boards.id
@@ -66,6 +66,14 @@ def get_statuses_for_board(board_id):
         , {"board_id": board_id})
 
     return statuses
+
+
+def update_status_name(id, name):
+    data_manager.execute_query("""
+    UPDATE statuses
+    SET title = %(name)s
+    WHERE id = %(id)s
+    """, {"id": id, "name": name})
 
 
 def get_user_by_email(email):
@@ -84,7 +92,7 @@ def get_user_encrypted_password(username):
     encrypted_pass = data_manager.execute_select(
         """
         SELECT encrypted_password FROM users
-        WHERE username = %{username}s 
+        WHERE username = %(username)s 
         """
         , {"username": username})
 
