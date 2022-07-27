@@ -3,15 +3,17 @@ export const htmlTemplates = {
     card: 2,
     renameForm: 3,
     column: 4,
-    addBordForm: 5
-}
+    addBordForm: 5,
+    deleteBoard: 6
+    }
 
 export const builderFunctions = {
     [htmlTemplates.board]: boardBuilder,
     [htmlTemplates.card]: cardBuilder,
     [htmlTemplates.renameForm]: renameFormBuilder,
     [htmlTemplates.column]: columnBuilder,
-    [htmlTemplates.addBordForm]: addBoardForm
+    [htmlTemplates.addBordForm]: addBoardForm,
+    [htmlTemplates.deleteBoard]: deleteBoard
 };
 
 export function htmlFactory(template) {
@@ -77,4 +79,13 @@ function addBoardForm(){
     return newForm
 }
 
+function deleteBoard(){
+    const deleteBtn =
+
+        `<div class="inline">
+            <i type="button" class="deleteBoardBtn fa fa-trash"></i>
+        </div>`
+
+    return deleteBtn
+}
 

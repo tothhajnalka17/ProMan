@@ -8,8 +8,10 @@ import {initDragAndDrop} from "./dragNDropManager.js";
 export let boardsManager = {
     loadBoards: async function () {
         addNewBoardForm()
+
         const boards = await dataHandler.getBoards();
         for (let board of boards) {
+            deleteBoard(board.id)
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
@@ -131,4 +133,12 @@ function addNewBoardForm(){
           createBtn.classList.add("fa-minus")
         }
     })
+}
+
+function deleteBoard(boardId){
+    const deleteBtn = htmlFactory(htmlTemplates.deleteBoard)
+    const boardHeader = document.getElementById(boardId)
+    console.log(deleteBtn())
+    boardHeader.appendChild(deleteBtn)
+
 }
