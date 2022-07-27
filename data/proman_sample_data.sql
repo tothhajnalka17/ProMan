@@ -30,7 +30,8 @@ DROP TABLE IF EXISTS board_status_relation;
 CREATE TABLE statuses (
     id       SERIAL PRIMARY KEY     NOT NULL,
     title    VARCHAR(200)           NOT NULL,
-    board_id INTEGER                NOT NULL
+    board_id INTEGER                NOT NULL,
+    column_order INTEGER            NOT NULL
 );
 
 CREATE TABLE boards (
