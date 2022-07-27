@@ -63,6 +63,7 @@ async function apiPost(url, payload) {
         if (response.ok === false) {
             console.log("An error has occurred in the response!");
         }
+        return response
     }
     catch (error) {
         console.log("An error has occurred!")
