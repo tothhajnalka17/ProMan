@@ -1,5 +1,5 @@
-import {dataHandler} from "../data/dataHandler";
-import {htmlFactory, htmlTemplates} from "../view/htmlFactory";
+import {dataHandler} from "../data/dataHandler.js";
+import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 
 export async function add_columns(boardId){
     const statuses = await dataHandler.getStatuses(boardId);
