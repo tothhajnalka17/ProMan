@@ -176,7 +176,7 @@ def update_status_name():
     return Response(status=200)
 
 
-@app.route('/api/insert_card', methods=["POST"])
+@app.route('/api/cards/insert', methods=["POST"])
 def insert_card():
     board_id = request.form.get("boardId")
     status_id = request.form.get("statusId")
@@ -185,9 +185,14 @@ def insert_card():
     return Response(status=200)
 
 
-@app.route('/api/cards/<int:id>/update')
+@app.route('/api/cards/<int:id>/update', methods=["POST"])
 def update_card(id):
-    pass
+    status_id = request.form.get("status_id")
+    title = request.form.get("title")
+    card_order = request.form.get("card_order")
+    queries.update_card(id, status_id, title, card_order)
+    return Response(status=200)
+
 
 def main():
     app.run(debug=True)
