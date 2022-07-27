@@ -18,8 +18,16 @@ def get_card_status(status_id):
         ;
         """
         , {"status_id": status_id})
-
     return status
+
+
+def insert_new_card(board_id, status_id, card_order):
+    data_manager.execute_query("""
+    INSERT INTO cards(board_id, status_id, card_order)
+    VALUES (%(board_id)s, %(status_id)s, %(card_order)s); 
+    """, {"board_id": board_id,
+          "status_id": status_id,
+          "card_order": card_order})
 
 
 """
