@@ -30,7 +30,8 @@ DROP TABLE IF EXISTS board_status_relation;
 CREATE TABLE statuses (
     id       SERIAL PRIMARY KEY     NOT NULL,
     title    VARCHAR(200)           NOT NULL,
-    board_id INTEGER                NOT NULL
+    board_id INTEGER                NOT NULL,
+    column_order INTEGER            NOT NULL
 );
 
 CREATE TABLE boards (
@@ -58,14 +59,14 @@ CREATE TABLE users (
 --- insert data
 ---
 
-INSERT INTO statuses(title, board_id) VALUES ('new', 1);
-INSERT INTO statuses(title, board_id) VALUES ('in progress', 1);
-INSERT INTO statuses(title, board_id) VALUES ('testing', 1);
-INSERT INTO statuses(title, board_id) VALUES ('done', 1);
-INSERT INTO statuses(title, board_id) VALUES ('no status', 2);
-INSERT INTO statuses(title, board_id) VALUES ('lost', 2);
-INSERT INTO statuses(title, board_id) VALUES ('forgotten', 2);
-INSERT INTO statuses(title, board_id) VALUES ('unnecessary', 2);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('new', 1, 1);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('in progress', 1, 2);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('testing', 1, 3);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('done', 1, 4);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('no status', 2, 1);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('lost', 2, 2);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('forgotten', 2, 3);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('unnecessary', 2, 4);
 
 INSERT INTO boards(title) VALUES ('Board 1');
 INSERT INTO boards(title) VALUES ('Board 2');
