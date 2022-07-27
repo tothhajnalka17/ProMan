@@ -150,7 +150,7 @@ def create_board():
 
 @app.route('/api/boards/update_board_name/', methods=["POST"])
 def update_board_name():
-    queries.update_table_name(request.form.get("boardId"), request.form.get("newBoardName"))
+    queries.update_board_name(request.form.get("boardId"), request.form.get("newBoardName"))
     return Response(status=200)
 
 
@@ -173,6 +173,24 @@ def get_statues(board_id: int):
 @app.route("/api/status/update_status_name/", methods=["POST"])
 def update_status_name():
     queries.update_status_name(request.form.get("id"), request.form.get("name"))
+    return Response(status=200)
+
+
+@app.route('/api/cards/insert', methods=["POST"])
+def insert_card():
+    board_id = request.form.get("boardId")
+    status_id = request.form.get("statusId")
+    card_order = request.form.get("cardOrder")
+    queries.insert_card(board_id, status_id, card_order)
+    return Response(status=200)
+
+
+@app.route('/api/cards/<int:id>/update', methods=["POST"])
+def update_card(id):
+    status_id = request.form.get("status_id")
+    title = request.form.get("title")
+    card_order = request.form.get("card_order")
+    queries.update_card(id, status_id, title, card_order)
     return Response(status=200)
 
 

@@ -1,5 +1,9 @@
 import data_manager
 
+"""
+CARDS
+"""
+
 
 def get_card_status(status_id):
     """
@@ -14,8 +18,32 @@ def get_card_status(status_id):
         ;
         """
         , {"status_id": status_id})
-
     return status
+
+
+def insert_card(board_id, status_id, card_order):
+    data_manager.execute_query("""
+    INSERT INTO cards(board_id, status_id, card_order, title)
+    VALUES (%(board_id)s, %(status_id)s, %(card_order)s, 'New card'); 
+    """, {"board_id": board_id,
+          "status_id": status_id,
+          "card_order": card_order})
+
+
+def update_card(id, status_id, title, card_order):
+    data_manager.execute_query("""
+    UPDATE cards
+    SET %(status_id)s = status_id, 
+        %(title)s = title,
+        %(card_order)s = card_order
+    WHERE %(id)s = id
+    """, {"status_id": status_id,
+          "title": title,
+          "card_order": card_order})
+
+"""
+BOARDS
+"""
 
 
 def get_boards():
@@ -35,7 +63,7 @@ def insert_board(board_title):
     """, {"board_title": board_title})
 
 
-def update_table_name(board_id, new_board_name):
+def update_board_name(board_id, new_board_name):
     data_manager.execute_query("""
     UPDATE boards
     SET title = %(new_board_name)s
@@ -70,12 +98,22 @@ def get_statuses_for_board(board_id):
     return statuses
 
 
+"""
+COLUMNS
+"""
+
+
 def update_status_name(id, name):
     data_manager.execute_query("""
     UPDATE statuses
     SET title = %(name)s
     WHERE id = %(id)s
     """, {"id": id, "name": name})
+
+
+"""
+USERS
+"""
 
 
 def get_user_by_email(email):
