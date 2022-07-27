@@ -22,12 +22,13 @@ def get_card_status(status_id):
 
 
 def insert_card(board_id, status_id, card_order):
-    data_manager.execute_query("""
+    data_manager.execute_select("""
     INSERT INTO cards(board_id, status_id, card_order, title)
-    VALUES (%(board_id)s, %(status_id)s, %(card_order)s, 'New card'); 
+    VALUES (%(board_id)s, %(status_id)s, %(card_order)s, 'New card')
+    RETURNING id; 
     """, {"board_id": board_id,
           "status_id": status_id,
-          "card_order": card_order})
+          "card_order": card_order}, False)
 
 
 def update_card(id, status_id, title, card_order):
