@@ -1,0 +1,23 @@
+.boardFromDiv{
+    overflow-x: auto;
+    display: none;
+    margin: 20px 200px;
+    width: 420px;
+}
+
+.boardTitle{
+
+}
+.boardNameForm{
+    min-width: 20px;
+    width: auto;
+}
+.createBoardBtn{
+    overflow-x: auto;
+    margin-left: 185px;
+    margin-top: 50px;
+    font-size: 20px;
+}
+.create{
+    padding: 6px 10px 8px 10px;
+}

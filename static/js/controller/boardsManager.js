@@ -7,6 +7,7 @@ import {initDragAndDrop} from "./dragNDropManager.js";
 
 export let boardsManager = {
     loadBoards: async function () {
+        addNewBoardForm()
         const boards = await dataHandler.getBoards();
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
@@ -15,9 +16,10 @@ export let boardsManager = {
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click",
-                showHideButtonHandler
+                showHideButtonHandler,
             );
         }
+
     },
     boardRenameControl: function() {
         let headerDivs = Array.from(document.querySelectorAll(".board-header"));
@@ -111,4 +113,21 @@ function renameColumnHandler (headerDiv) {
     });
 
 
+}
+function addNewBoardForm(){
+    const NewForm = htmlFactory(htmlTemplates.addBordForm)
+    domManager.addChild("#root", NewForm())
+    const createBtn = document.getElementById("createBoard")
+    const formDiv = document.getElementById("form-container")
+    createBtn.addEventListener("click", ev => {
+        if(formDiv.style.display === 'block'){
+            formDiv.style.display = 'none';
+            createBtn.classList.remove("fa-minus");
+            createBtn.classList.add("fa-plus")
+        }else{
+          formDiv.style.display = 'block';
+          createBtn.classList.remove("fa-plus");
+          createBtn.classList.add("fa-minus")
+        }
+    })
 }

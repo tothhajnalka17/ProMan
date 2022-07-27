@@ -2,14 +2,16 @@ export const htmlTemplates = {
     board: 1,
     card: 2,
     renameForm: 3,
-    column: 4
+    column: 4,
+    addBordForm: 5
 }
 
 export const builderFunctions = {
     [htmlTemplates.board]: boardBuilder,
     [htmlTemplates.card]: cardBuilder,
     [htmlTemplates.renameForm]: renameFormBuilder,
-    [htmlTemplates.column]: columnBuilder
+    [htmlTemplates.column]: columnBuilder,
+    [htmlTemplates.addBordForm]: addBoardForm
 };
 
 export function htmlFactory(template) {
@@ -59,3 +61,20 @@ function columnBuilder(title) {
     columnDiv.appendChild(columnHeader);
     return columnDiv
 }
+
+function addBoardForm(){
+    const newForm =
+
+        `
+       <i type="button" class="createBoardBtn fa fa-plus" id="createBoard" > New Board</i>
+       
+       <div id="form-container" class="boardFromDiv">
+            <form action="/api/boards/create_board/" method="POST" id="boardNameForm">
+                <input type="text" id="boardTitle" name="boardTitle" placeholder="New Board Name ">
+                <i type="submit" id="boardNameSubmit" class="fa fa-check create"> Create </i>
+            </form>
+        </div>`
+    return newForm
+}
+
+
