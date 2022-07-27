@@ -170,6 +170,12 @@ def get_statues(board_id: int):
     return queries.get_statuses_for_board(board_id)
 
 
+@app.route("/api/status/update_status_name/", methods=["POST"])
+def update_status_name():
+    queries.update_status_name(request.form.get("id"), request.form.get("name"))
+    return Response(status=200)
+
+
 def main():
     app.run(debug=True)
 

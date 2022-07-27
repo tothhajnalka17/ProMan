@@ -31,7 +31,7 @@ function boardBuilder(board) {
                         <h2 class="board-header" data-header-id="${board.id}"> ${board.title} </h2>
                     </div>
                     <div class="inline right">
-                        <button class="toggle-board-button" data-board-id="${board.id}"></button>
+                        <i class="toggle-board-button fa fa-chevron-down" data-board-id="${board.id}"></i></i>
                     </div>               
                 </div>
                 <div class="board row" data-board-id=${board.id}>

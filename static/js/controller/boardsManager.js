@@ -26,9 +26,16 @@ export let boardsManager = {
                 renameBoardHandler(headerDiv);
             })
         })
+    },
+    columnRenameControl: function() {
+        let columnHeaderDivs = Array.from(document.querySelectorAll(".column-header"));
+        columnHeaderDivs.forEach( columnHeaderDiv => {
+            columnHeaderDiv.addEventListener("click", () => {
+                renameColumnHandler(columnHeaderDiv);
+            })
+        })
     }
 };
-
 
 
 async function showHideButtonHandler(clickEvent) {
@@ -39,11 +46,12 @@ async function showHideButtonHandler(clickEvent) {
 
     initDragAndDrop();
 
-    let button = clickEvent.target;
-    button.removeEventListener("click", showHideButtonHandler)
-    button.innerText = "Hide Cards";
+    let i = clickEvent.target;
+    i.removeEventListener("click", showHideButtonHandler)
+    i.classList.remove("fa-chevron-down")
+    i.classList.add("fa-chevron-up")
 
-    button.addEventListener("click", event => {
+    i.addEventListener("click", event => {
         event.preventDefault();
         domManager.refreshPage();
     })
@@ -74,4 +82,33 @@ function renameBoardHandler (headerDiv) {
             console.log(`There was an error during the board name update: ${error}`);
         }
     });
+}
+
+function renameColumnHandler (headerDiv) {
+    let statusName = headerDiv.innerText;
+    let statusId = headerDiv.getAttribute("data-status-id");
+
+    const formBuilder = htmlFactory(htmlTemplates.renameForm);
+    let newDiv = document.createElement("div");
+    newDiv.innerHTML = formBuilder(statusName);
+    newDiv.classList.add("column-header");
+
+    headerDiv.replaceWith(newDiv);
+
+    // Add focus to the main input field and listen to focus loss
+    let inputField = document.querySelector(".column-header > form > input");
+    inputField.focus();
+
+    inputField.addEventListener("focusout", async () => {
+        headerDiv.innerText = inputField.value;
+        newDiv.replaceWith(headerDiv)
+        try {
+            await dataHandler.updateStatusName(statusId, inputField.value);
+        }
+        catch (error) {
+            console.log(`There was an error during the board name update: ${error}`);
+        }
+    });
+
+
 }

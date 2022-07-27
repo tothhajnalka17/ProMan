@@ -11,6 +11,9 @@ export let dataHandler = {
     getStatus: async function (statusId) {
 
     },
+    updateStatusName: async function (columnId, newStatusName) {
+        return await apiPost("/api/status/update_status_name/", {"id": columnId, "name": newStatusName})
+    },
     getCardsByBoardId: async function (boardId) {
         return await apiGet(`/api/boards/${boardId}/cards/`);
     },
@@ -41,7 +44,6 @@ async function apiGet(url) {
 async function apiPost(url, payload) {
     let data = new FormData()
     for (let [key, value] of Object.entries(payload)) {
-        console.log(key, value)
         data.append(key, value)
     }
     try{
