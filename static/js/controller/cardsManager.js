@@ -33,7 +33,6 @@ async function add_statuses(boardId){
         for (let i=0; i<statuses.length; i++) {
             const title = document.createElement("h4")
             title.classList.add("column-header");
-            console.log(statuses[i]);
             title.setAttribute("data-status-id", statuses[i].id);
             title.innerText = statuses[i].title
             let parent = document.querySelector(`.board[data-board-id="${boardId}"] > .board-column:nth-of-type(${i + 1})`);
