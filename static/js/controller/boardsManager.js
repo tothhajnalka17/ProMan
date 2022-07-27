@@ -27,7 +27,6 @@ export let boardsManager = {
     },
     columnRenameControl: function() {
         let columnHeaderDivs = Array.from(document.querySelectorAll(".column-header"));
-        console.log(columnHeaderDivs);
         columnHeaderDivs.forEach( columnHeaderDiv => {
             columnHeaderDiv.addEventListener("click", () => {
                 renameColumnHandler(columnHeaderDiv);
@@ -81,7 +80,30 @@ function renameBoardHandler (headerDiv) {
 
 function renameColumnHandler (headerDiv) {
     let statusName = headerDiv.innerText;
-    // TODO still need id from query
     let statusId = headerDiv.getAttribute("data-status-id");
+
     console.log(statusName, statusId)
+    const formBuilder = htmlFactory(htmlTemplates.renameForm);
+    let newDiv = document.createElement("div");
+    newDiv.innerHTML = formBuilder(statusName);
+    newDiv.classList.add("column-header");
+
+    headerDiv.replaceWith(newDiv);
+
+    // Add focus to the main input field and listen to focus loss
+    let inputField = document.querySelector(".column-header > form > input");
+    inputField.focus();
+
+    inputField.addEventListener("focusout", async () => {
+        headerDiv.innerText = inputField.value;
+        newDiv.replaceWith(headerDiv)
+        try {
+            await dataHandler.updateStatusName(statusId, inputField.value);
+        }
+        catch (error) {
+            console.log(`There was an error during the board name update: ${error}`);
+        }
+    });
+
+
 }
