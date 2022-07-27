@@ -24,10 +24,8 @@ export let domManager = {
     refreshPage () {
         // Need to remove event listeners of elements not located in root div
         let boardNameSubmitButton = document.querySelector("#boardNameSubmit");
-        let boardRenameSubmitButton = document.querySelector("#boardRenameSubmit");
 
         boardNameSubmitButton.replaceWith(boardNameSubmitButton.cloneNode(true));
-        boardRenameSubmitButton.replaceWith(boardRenameSubmitButton.cloneNode(true));
 
         this.clearRoot();
         init();
