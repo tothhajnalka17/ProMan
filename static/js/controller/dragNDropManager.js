@@ -1,4 +1,5 @@
 export {initDragAndDrop}
+import {dataHandler} from "../data/dataHandler.js";
 
 const dom = {
     isEmpty: function (el) {
@@ -29,13 +30,10 @@ function initElements() {
     });
 }
 
-
 function initDragEvents() {
     ui.cards.forEach(card => initDraggable(card));
     ui.columns.forEach(column => initDropzone(column));
-    // initDropzone(ui.columns);
 }
-
 
 function initDraggable(draggable) {
     draggable.setAttribute("draggable", true);
@@ -53,16 +51,12 @@ function initDropzone(dropzone) {
 function handleDragStart(e) {
     card.dragged = e.currentTarget;
     card.dragged.classList.add('dragActive');
-    console.log("Drag start of", card.dragged);
 }
 
-
 function handleDragEnd() {
-    console.log("Drag end of", card.dragged);
     card.dragged.classList.remove('dragActive');
     card.dragged = null;
     }
-
 
 function handleDragOver(e) {
     e.preventDefault();
@@ -72,36 +66,22 @@ function handleDragOver(e) {
 }
 
 function handleDragEnter(e) {
-    console.log("Drag enter of", e.currentTarget);
     if (dom.hasClass(e.currentTarget, "mixed-cards")) {
         e.currentTarget.classList.add('cardContainerHover');
     }
 }
 
 function handleDragLeave(e) {
-    console.log("Drag leave of", e.currentTarget);
-    if (dom.hasClass(e.currentTarget, "mixed-cards")) {
+    if (dom.hasClass(e.currentTarget, "ourColumn")) {
         e.currentTarget.classList.remove('cardContainerHover');
     }
 }
 
-
 function handleDrop(e) {
     e.preventDefault();
     const dropzone = e.currentTarget;
-    console.log("Drop of", dropzone);
     dropzone.appendChild(card.dragged);
+    dataHandler.updateCard(card.dragged.id, statusId, title, cardOrder);
     dropzone.classList.remove('cardContainerHover');
     return;
-
-    /*
-    if (dom.hasClass(dropzone, ".board-column")) {
-        if (dom.isEmpty(dropzone)) {
-            dropzone.appendChild(card.dragged);
-        }
-        return;
-        }
-    if (dom.hasClass(dropzone, "mixed-cards")) {
-
-    }*/
 }
