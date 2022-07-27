@@ -68,6 +68,14 @@ def get_statuses_for_board(board_id):
     return statuses
 
 
+def update_status_name(id, name):
+    data_manager.execute_query("""
+    UPDATE statuses
+    SET title = %(name)s
+    WHERE id = %(id)s
+    """, {"id": id, "name": name})
+
+
 def get_user_by_email(email):
     user_select = data_manager.execute_select(
         """
