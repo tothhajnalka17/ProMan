@@ -92,7 +92,7 @@ def get_user_encrypted_password(username):
     encrypted_pass = data_manager.execute_select(
         """
         SELECT encrypted_password FROM users
-        WHERE username = %{username}s 
+        WHERE username = %(username)s 
         """
         , {"username": username})
 
