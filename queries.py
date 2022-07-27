@@ -54,6 +54,20 @@ def get_cards_for_board(board_id):
     return matching_cards
 
 
+def get_statuses_for_board(board_id):
+    statuses = data_manager.execute_select(
+        """
+        SELECT statuses.title 
+        FROM board_status_relation
+        JOIN statuses
+        ON board_status_relation.status_id = statuses.id
+        WHERE board_id = %(board_id)s
+        """
+        , {"board_id": board_id})
+
+    return statuses
+
+
 def get_user_by_email(email):
     user_select = data_manager.execute_select(
         """

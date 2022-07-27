@@ -20,6 +20,8 @@ SET default_with_oids = false;
 DROP TABLE IF EXISTS statuses CASCADE;
 DROP TABLE IF EXISTS boards CASCADE;
 DROP TABLE IF EXISTS cards;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS board_status_relation;
 
 ---
 --- create tables
@@ -43,13 +45,17 @@ CREATE TABLE cards (
     card_order  INTEGER             NOT NULL
 );
 
-DROP TABLE IF EXISTS public.users;
 CREATE TABLE users (
 	id serial PRIMARY KEY,
 	username VARCHAR NOT NULL,
 	email VARCHAR NOT NULL,
 	encrypted_password VARCHAR NOT NULL,
     register_date VARCHAR NOT NULL
+);
+
+CREATE TABLE board_status_relation (
+    board_id integer,
+    status_id integer
 );
 
 ---
@@ -77,6 +83,15 @@ INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 3, 'planning', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'done card 1', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'done card 1', 2);
 
+INSERT INTO board_status_relation VALUES (1, 1);
+INSERT INTO board_status_relation VALUES (1, 2);
+INSERT INTO board_status_relation VALUES (1, 3);
+INSERT INTO board_status_relation VALUES (1, 4);
+INSERT INTO board_status_relation VALUES (2, 1);
+INSERT INTO board_status_relation VALUES (2, 2);
+INSERT INTO board_status_relation VALUES (2, 3);
+INSERT INTO board_status_relation VALUES (2, 4);
+
 ---
 --- add constraints
 ---
@@ -86,3 +101,7 @@ ALTER TABLE ONLY cards
 
 ALTER TABLE ONLY cards
     ADD CONSTRAINT fk_cards_status_id FOREIGN KEY (status_id) REFERENCES statuses(id);
+
+ALTER TABLE ONLY board_status_relation
+    ADD CONSTRAINT fk_board_id FOREIGN KEY (board_id) REFERENCES boards(id) ON DELETE CASCADE,
+    ADD CONSTRAINT fk_status_id FOREIGN KEY (status_id) REFERENCES statuses(id) ON DELETE CASCADE;
