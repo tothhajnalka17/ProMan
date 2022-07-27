@@ -176,6 +176,19 @@ def update_status_name():
     return Response(status=200)
 
 
+@app.route('/api/insert_card', methods=["POST"])
+def insert_card():
+    board_id = request.form.get("boardId")
+    status_id = request.form.get("statusId")
+    card_order = request.form.get("cardOrder")
+    queries.insert_card(board_id, status_id, card_order)
+    return Response(status=200)
+
+
+@app.route('/api/cards/<int:id>/update')
+def update_card(id):
+    pass
+
 def main():
     app.run(debug=True)
 
