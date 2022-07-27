@@ -82,7 +82,6 @@ function renameColumnHandler (headerDiv) {
     let statusName = headerDiv.innerText;
     let statusId = headerDiv.getAttribute("data-status-id");
 
-    console.log(statusName, statusId)
     const formBuilder = htmlFactory(htmlTemplates.renameForm);
     let newDiv = document.createElement("div");
     newDiv.innerHTML = formBuilder(statusName);

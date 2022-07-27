@@ -44,7 +44,6 @@ async function apiGet(url) {
 async function apiPost(url, payload) {
     let data = new FormData()
     for (let [key, value] of Object.entries(payload)) {
-        console.log(key, value)
         data.append(key, value)
     }
     try{
