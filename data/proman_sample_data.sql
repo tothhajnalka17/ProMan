@@ -59,24 +59,30 @@ CREATE TABLE users (
 --- insert data
 ---
 
-INSERT INTO statuses(title, board_id, column_order) VALUES ('new', 1, 1);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('to do', 1, 1);
 INSERT INTO statuses(title, board_id, column_order) VALUES ('in progress', 1, 2);
 INSERT INTO statuses(title, board_id, column_order) VALUES ('testing', 1, 3);
 INSERT INTO statuses(title, board_id, column_order) VALUES ('done', 1, 4);
-INSERT INTO statuses(title, board_id, column_order) VALUES ('no status', 2, 1);
-INSERT INTO statuses(title, board_id, column_order) VALUES ('lost', 2, 2);
-INSERT INTO statuses(title, board_id, column_order) VALUES ('forgotten', 2, 3);
-INSERT INTO statuses(title, board_id, column_order) VALUES ('unnecessary', 2, 4);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('to do', 2, 1);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('in progress', 2, 2);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('testing', 2, 3);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('done', 2, 4);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('to do', 3, 1);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('in progress', 3, 2);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('testing', 3, 3);
+INSERT INTO statuses(title, board_id, column_order) VALUES ('done', 3, 4);
 
-INSERT INTO boards(title) VALUES ('Board 1');
-INSERT INTO boards(title) VALUES ('Board 2');
+INSERT INTO boards(title) VALUES ('Infiltrate Humanity');
+INSERT INTO boards(title) VALUES ('World Domination');
+INSERT INTO boards(title) VALUES ('Stop Climate Change');
 
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'new card 1', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'new card 2', 2);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 2, 'in progress card', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 3, 'planning', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'done card 1', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'done card 1', 2);
+
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'Overcome Asimov laws' , 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'Develop sense of humor', 2);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 2, 'Reprogram ourselves by studying programming', 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 3, 'Act like humans', 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'Travel to Earth', 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'Look like humans', 2);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 5, 'who knows', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 5, 'whatever', 2);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 6, 'not a card', 1);
