@@ -5,20 +5,12 @@ CARDS
 """
 
 
-def get_card_status(status_id):
-    """
-    Find the first status matching the given id
-    :param status_id:
-    :return: str
-    """
-    status = data_manager.execute_select(
-        """
-        SELECT * FROM statuses s
-        WHERE s.id = %(status_id)s
-        ;
-        """
-        , {"status_id": status_id})
-    return status
+def get_card(card_id):
+    return data_manager.execute_select("""
+    SELECT *
+    FROM cards
+    WHERE id = %(card_id)s
+    """, {"card_id": card_id})
 
 
 def insert_card(board_id, status_id, card_order):
@@ -42,6 +34,7 @@ def update_card(id, status_id, title, card_order):
     """, {"status_id": status_id,
           "title": title,
           "card_order": card_order})
+
 
 """
 BOARDS
@@ -103,6 +96,22 @@ def get_statuses_for_board(board_id):
 """
 COLUMNS
 """
+
+
+def get_card_status(status_id):
+    """
+    Find the first status matching the given id
+    :param status_id:
+    :return: str
+    """
+    status = data_manager.execute_select(
+        """
+        SELECT * FROM statuses s
+        WHERE s.id = %(status_id)s
+        ;
+        """
+        , {"status_id": status_id})
+    return status
 
 
 def update_status_name(id, name):
