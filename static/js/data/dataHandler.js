@@ -24,7 +24,7 @@ export let dataHandler = {
     getCard: async function (cardId) {
         return await apiGet(`/api/cards/${cardId}`);
     },
-    createNewBoard: async function (boardTitle) {
+    createNewBoard: async function  (boardTitle) {
         return await apiPost('/api/boards/create_board', {"boardTitle": boardTitle})
     },
     updateBoardName: async function (boardId, newBoardName) {
@@ -46,6 +46,12 @@ export let dataHandler = {
     },
     deleteBoard: async function(boardId){
         return await apiDelete(`/api/board/${boardId}/delete`)
+    },
+    deleteColumn: async function(statusId){
+        return await apiDelete(`/api/status/${statusId}/delete`)
+    }
+    deleteCard: async function(cardId){
+        return await apiDelete(`/api/cards/${cardId}/delete`)
     }
 };
 
