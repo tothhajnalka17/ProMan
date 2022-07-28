@@ -1,4 +1,4 @@
-export {initDragAndDrop}
+export {initDragAndDrop, initDraggable}
 import {dataHandler} from "../data/dataHandler.js";
 
 const dom = {
@@ -25,9 +25,6 @@ function initDragAndDrop() {
 function initElements() {
     ui.cards = document.querySelectorAll(".card");
     ui.columns = document.querySelectorAll(".board-column");
-        ui.cards.forEach(function (card) {
-        card.setAttribute("draggable", true);
-    });
 }
 
 function initDragEvents() {
