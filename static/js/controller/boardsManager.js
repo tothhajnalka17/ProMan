@@ -147,6 +147,8 @@ function deleteBoard(boardId){
     const deleteBtn = document.getElementById(boardId)
     console.log(deleteBtn)
     deleteBtn.addEventListener("click", (e) =>{
+        dataHandler.deleteBoard(boardId)
+        window.location.reload();
 
     })
 }

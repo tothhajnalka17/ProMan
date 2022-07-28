@@ -38,6 +38,10 @@ export let dataHandler = {
             {"statusId": statusId,
                 "title": title,
                 "cardOrder": cardOrder})
+    },
+    deleteBoard: async function(boardId){
+        return await apiDelete(`/api/board/${boardId}/delete`
+        )
     }
 };
 
@@ -72,9 +76,18 @@ async function apiPost(url, payload) {
 }
 
 async function apiDelete(url) {
-    let response = await fetch(url, {
-        method:"POST"
-    })
+    try {
+        let response = await fetch(url, {
+            method: "DELETE"
+        })
+        if(response.ok === false){
+            console.log("An error has occurred in the response!");
+        }
+    }
+    catch (error){
+        console.log("An error has occurred!")
+        console.log(error)
+    }
 }
 
 async function apiPut(url) {
