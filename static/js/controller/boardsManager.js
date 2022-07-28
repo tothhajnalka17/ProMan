@@ -11,7 +11,7 @@ export let boardsManager = {
 
         const boards = await dataHandler.getBoards();
         for (let board of boards) {
-            deleteBoard(board.id)
+
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
@@ -20,8 +20,8 @@ export let boardsManager = {
                 "click",
                 showHideButtonHandler,
             );
+            deleteBoard(board.id)
         }
-
     },
     boardRenameControl: function() {
         let headerDivs = Array.from(document.querySelectorAll(".board-header"));
@@ -137,8 +137,8 @@ function addNewBoardForm(){
 
 function deleteBoard(boardId){
     const deleteBtn = htmlFactory(htmlTemplates.deleteBoard)
-    const boardHeader = document.getElementById(boardId)
-    console.log(deleteBtn())
-    boardHeader.appendChild(deleteBtn)
+    domManager.addChild(`data-board-header-id: ${boardId}`,deleteBtn())
+
+
 
 }
