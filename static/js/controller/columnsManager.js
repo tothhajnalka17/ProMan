@@ -5,6 +5,7 @@ export let columnsManager = {
     columnRenameControl: function() {
         let columnHeaderDivs = Array.from(document.querySelectorAll(".column-header"));
         columnHeaderDivs.forEach( columnHeaderDiv => {
+            //columnHeaderDiv.replaceWith(columnHeaderDiv.cloneNode(true));
             columnHeaderDiv.addEventListener("click", () => {
                 renameColumnHandler(columnHeaderDiv);
             })
