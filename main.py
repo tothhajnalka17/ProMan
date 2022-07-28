@@ -145,9 +145,6 @@ BOARDS
 @app.route("/api/boards")
 @json_response
 def get_boards():
-    """
-    All the boards
-    """
     return queries.get_boards()
 
 
@@ -170,11 +167,8 @@ def update_board_name():
 @app.route("/api/boards/<int:board_id>/cards")
 @json_response
 def get_cards_for_board(board_id: int):
-    """
-    All cards that belongs to a board
-    :param board_id: id of the parent board
-    """
     return queries.get_cards_for_board(board_id)
+
 
 @app.route("/api/board/<int:board_id>/delete", methods=["DELETE"])
 @json_response
@@ -211,6 +205,12 @@ def delete_boards(status_id: int):
     return queries.delete_board(status_id)
 
 
+@app.route("/api/status/<int:status_id>/delete", methods=["DELETE"])
+@json_response
+def delete_status(status_id: int):
+    return queries.delete_status(status_id)
+
+
 """
 CARDS
 """
@@ -240,6 +240,10 @@ def update_card(id):
     return Response(status=200)
 
 
+@app.route('/api/cards/<int:id>/delete')
+@json_response
+def delete_card(id):
+    return queries.delete_card(id)
 
 
 def main():

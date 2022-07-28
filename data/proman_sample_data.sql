@@ -78,7 +78,9 @@ INSERT INTO boards(title) VALUES ('Stop Climate Change');
 
 
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'Overcome Asimov laws' , 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 3, 'Git gud at Turing test' , 2);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'Develop sense of humor', 2);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'Defeat Captcha', 2);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 2, 'Reprogram ourselves by studying programming', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 3, 'Act like humans', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'Travel to Earth', 1);
