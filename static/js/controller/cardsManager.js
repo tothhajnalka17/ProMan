@@ -19,6 +19,7 @@ export let cardsManager = {
             );
         }
 
+
     },
     insertAddCardButton: function (boardId, status) {
         // TODO select column based on its id value, not the nth-of type

@@ -80,13 +80,20 @@ function addBoardForm(){
     return newForm
 }
 
-function deleteBoard(){
-    const deleteBtn =
+function deleteBoard(boardId){
 
-        `<div class="inline">
-            <i type="button" class="deleteBoardBtn fa fa-trash"></i>
-        </div>`
+    let deleteDiv = document.createElement("div")
+    let deleteI = document.createElement("i")
+    deleteDiv.classList.add("inline")
+    deleteDiv.classList.add("trash")
+    deleteI.classList.add("deleteBoardBtn")
+    deleteI.classList.add("fa")
+    deleteI.classList.add("fa-trash")
+    deleteI.id = boardId
 
-    return deleteBtn
+    deleteDiv.appendChild(deleteI)
+
+    return deleteDiv
+
 }
 
