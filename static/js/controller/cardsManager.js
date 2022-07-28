@@ -30,6 +30,9 @@ export let cardsManager = {
             insertCard(boardId, status.id, cardOrder);
             })
     },
+
+
+
     cardRenameControl: function () {
         let cardDivs = Array.from(document.querySelectorAll(".card"));
         cardDivs.forEach(cardDiv => {
@@ -93,12 +96,20 @@ async function insertCard(boardId, statusId, cardOrder) {
 }
 
 async function deleteCard() {
-    const trash = document.createElement('i')
-    trash.classList = "fa fa-trash inline"
-    trash.style = "float: right"
-    column.insertBefore(trash, column.firstChild)
-    let statusId = column.dataset.columnId
-    trash.addEventListener("click", ev => {
+    const cardTrash = document.createElement('i')
+    cardTrash.classList = "fa fa-trash inline"
+    cardTrash.dataset.board_id = boardId
+    cardTrash.style = "float: right"
+    console.log(parent.dataset.boardId)
+    if (parent.dataset.boardId === boardId) {
+        let columns = parent.children
+        for(let i=0;i<columns.length;i++) {
+            const column = columns[i]
+            column.insertBefore(trash, column.firstChild)
+        }
+
+    }
+    cardTrash.addEventListener("click", ev => {
         dataHandler.deleteColumn(statusId)
         window.location.reload()
     })

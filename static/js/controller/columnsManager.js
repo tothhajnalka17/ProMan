@@ -69,18 +69,22 @@ async function deleteColumn(parent, boardId){
     trash.dataset.board_id = boardId
     trash.style = "float: right"
     console.log(parent.dataset.boardId)
+    let columns = parent.children
     if (parent.dataset.boardId === boardId) {
-        let columns = parent.children
+
         for(let i=0;i<columns.length;i++) {
             const column = columns[i]
+            trash.dataset.delId = column.dataset.columnId
             column.insertBefore(trash, column.firstChild)
-        }
 
-    }
+
+        }
     trash.addEventListener("click", ev => {
-        dataHandler.deleteColumn(statusId)
+        dataHandler.deleteColumn(trash.dataset.delId)
         window.location.reload()
-    })
+        })
+    }
+
 
 
 }
