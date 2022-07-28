@@ -51,16 +51,14 @@ async function showHideButtonHandler(clickEvent) {
     cardsManager.cardRenameControl()
 
     initDragAndDrop();
-    //TODO rename i variable
 
-    let i = clickEvent.target;
-    console.log(i)
-    i.removeEventListener("click", showHideButtonHandler)
-    i.classList.remove("fa-chevron-down")
-    i.classList.add("fa-chevron-up")
+    let icon = clickEvent.target;
+    icon.removeEventListener("click", showHideButtonHandler)
+    icon.classList.remove("fa-chevron-down")
+    icon.classList.add("fa-chevron-up")
 
 
-    i.addEventListener("click", event => {
+    icon.addEventListener("click", event => {
         event.preventDefault();
         domManager.refreshPage();
     })
@@ -145,7 +143,6 @@ function deleteBoard(boardId){
     const header = document.querySelector(`[data-board-header-id="${boardId}"]`)
     header.appendChild(content(boardId))
     const deleteBtn = document.getElementById(boardId)
-    console.log(deleteBtn)
     deleteBtn.addEventListener("click", (e) =>{
 
     })
