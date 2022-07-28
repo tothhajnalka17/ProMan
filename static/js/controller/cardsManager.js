@@ -2,6 +2,7 @@ import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {initDraggable} from "./dragNDropManager.js";
+import {boardsManager} from "./boardsManager.js";
 
 export let cardsManager = {
     loadCards: async function (boardId) {
@@ -10,13 +11,18 @@ export let cardsManager = {
             let index = card.status_id;
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
+
             domManager.addChild(`.board-column[data-column-id="${index}"]`, content);
             domManager.addEventListener(
                 `.card[data-card-id="${card.id}"]`,
                 "click",
-                deleteButtonHandler
+
+
             );
+
+
         }
+
     },
     insertAddCardButton: function (boardId, status) {
         let firstColumn = document.querySelector(`.board-column[data-column-id="${status.id}"]`);
@@ -25,13 +31,12 @@ export let cardsManager = {
         button.innerText = " Add card";
         button.classList.add("fa");
         button.classList.add("fa-plus")
+        button.classList.add("bicon")
         firstColumn.insertBefore(button, firstColumn.firstChild.nextSibling);
         button.addEventListener("click", () => {
             insertCard(boardId, status.id, cardOrder);
             })
     },
-
-
 
     cardRenameControl: function () {
         let cardDivs = Array.from(document.querySelectorAll(".card"));
@@ -40,11 +45,25 @@ export let cardsManager = {
                 renameCardHandler(cardDiv)
             })
         })
-    }
+    },
+
+    deleteCrd: function () {
+    let deleteI = Array.from(document.querySelectorAll(".delI"))
+        deleteI.forEach((i)=>{
+            let trashId = i.dataset.trashId
+            i.addEventListener("click", e => {
+                dataHandler.deleteCard(trashId)
+                domManager.refreshPage()
+            })
+        })
+
+
+
+}
+
 };
 
-function deleteButtonHandler(clickEvent) {
-}
+
 
 function renameCardHandler (cardDiv) {
     let boardId = cardDiv.parentElement.parentElement.getAttribute("data-board-id");
@@ -93,24 +112,5 @@ async function insertCard(boardId, statusId, cardOrder) {
         console.log("An error has occurred during card insertion:");
         console.log(error);
     }
-}
 
-async function deleteCard() {
-    const cardTrash = document.createElement('i')
-    cardTrash.classList = "fa fa-trash inline"
-    cardTrash.dataset.board_id = boardId
-    cardTrash.style = "float: right"
-    console.log(parent.dataset.boardId)
-    if (parent.dataset.boardId === boardId) {
-        let columns = parent.children
-        for(let i=0;i<columns.length;i++) {
-            const column = columns[i]
-            column.insertBefore(trash, column.firstChild)
-        }
-
-    }
-    cardTrash.addEventListener("click", ev => {
-        dataHandler.deleteColumn(statusId)
-        window.location.reload()
-    })
 }

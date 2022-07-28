@@ -50,8 +50,8 @@ export let dataHandler = {
     deleteColumn: async function(statusId){
         return await apiDelete(`/api/status/${statusId}/delete`)
     },
-    deleteCard: async function(cardId){
-        return await apiDelete(`/api/cards/${cardId}/delete`)
+    deleteCard: async function(trashId){
+        return await apiDelete(`/api/cards/${trashId}/delete`)
     }
 };
 

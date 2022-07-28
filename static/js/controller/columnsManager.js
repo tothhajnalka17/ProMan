@@ -65,7 +65,7 @@ export function renameColumnHandler(headerDiv) {
 
 async function deleteColumn(parent, boardId){
     const trash = document.createElement('i')
-    trash.classList = "fa fa-trash inline"
+    trash.classList = "fa fa-trash inline bicon"
     trash.dataset.board_id = boardId
     trash.style = "float: right"
     console.log(parent.dataset.boardId)

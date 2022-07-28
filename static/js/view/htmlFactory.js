@@ -35,7 +35,7 @@ function boardBuilder(board) {
                         <h2 class="board-header" data-header-id="${board.id}"> ${board.title} </h2>
                     </div>
                     <div class="inline right">
-                        <i class="toggle-board-button fa fa-chevron-down" data-board-id="${board.id}"></i></i>
+                        <i class="toggle-board-button fa fa-chevron-down bicon" data-board-id="${board.id}"></i></i>
                     </div>               
                 </div>
                 <div class="board row" data-board-id=${board.id}>
@@ -44,7 +44,13 @@ function boardBuilder(board) {
 }
 
 function cardBuilder(card) {
-    return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
+    return `<div class="card" data-card-id="${card.id}">${card.title}
+    <div class="cardDel">
+            <i class="fa fa-trash inline delI" style="" data-trash-id="${card.id}" ></i>
+        </div>
+    </div>`
+
+        ;
 }
 
 function renameFormBuilder(oldName) {
@@ -70,12 +76,12 @@ function addBoardForm(){
     const newForm =
 
         `
-       <i type="button" class="createBoardBtn fa fa-plus" id="createBoard" > New Board</i>
+       <i type="button" class="createBoardBtn bicon fa fa-plus" id="createBoard" > New Board</i>
        
        <div id="form-container" class="boardFromDiv">
             <form action="/api/boards/create_board/" method="POST" id="boardNameForm">
                 <input type="text" id="boardTitle" name="boardTitle" placeholder="New Board Name ">
-                <i type="submit" id="boardNameSubmit" class="fa fa-check create"> Create </i>
+                <i type="submit" id="boardNameSubmit" class="bicon fa fa-check create "> Create </i>
             </form>
         </div>`
     return newForm
@@ -90,8 +96,8 @@ function deleteBoard(boardId){
     deleteI.classList.add("deleteBoardBtn")
     deleteI.classList.add("fa")
     deleteI.classList.add("fa-trash")
+    deleteI.classList.add("bicon")
     deleteI.id = boardId
-
     deleteDiv.appendChild(deleteI)
 
     return deleteDiv

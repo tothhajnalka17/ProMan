@@ -234,7 +234,7 @@ def update_card(id):
     return Response(status=200)
 
 
-@app.route('/api/cards/<int:id>/delete')
+@app.route('/api/cards/<int:id>/delete', methods=["DELETE"])
 @json_response
 def delete_card(id):
     return queries.delete_card(id)

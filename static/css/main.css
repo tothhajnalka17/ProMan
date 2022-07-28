@@ -35,14 +35,25 @@ h4{
 
 }
 
-i{
+.bicon{
     background: #222;
     color: #fff;
     border: none;
     font-size: 14px;
     font-family: sans-serif;
     padding: 4px 10px;
+    margin-right: 3px;
+    border-radius: 3px;
 
+}
+
+.delI{
+    color: #fff;
+    border: none;
+    font-size: 12px;
+    font-family: sans-serif;
+    padding: 4px 10px;
+    float: right;
 }
 
 .board-container{
@@ -145,4 +156,8 @@ i{
     overflow-x: auto;
     margin-bottom: 6px;
     float: right;
+}
+
+.cardDel{
+    font-size: 8px;
 }
