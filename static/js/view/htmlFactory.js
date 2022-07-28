@@ -60,6 +60,7 @@ function columnBuilder(title, statusId) {
     columnDiv.classList.add("board-column");
     columnDiv.setAttribute("data-column-id", statusId);
     let columnHeader = document.createElement("h4");
+    columnHeader.classList.add("column-header");
     columnHeader.innerText = title;
     columnDiv.appendChild(columnHeader);
     return columnDiv
