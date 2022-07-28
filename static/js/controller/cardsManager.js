@@ -38,11 +38,13 @@ function deleteButtonHandler(clickEvent) {
 
 async function insertCard(boardId, statusId, cardOrder) {
     try{
-        //TODO add the card using the card factory
         let response = await dataHandler.createNewCard(boardId, statusId, cardOrder);
         let cardResponse = await response.json();
         let card = await dataHandler.getCard(cardResponse["id"]);
-        console.log(card)
+
+        const cardBuilder = htmlFactory(htmlTemplates.card);
+        let content =  cardBuilder(card);
+        domManager.addChild(`.board[data-board-id="${boardId}"] > .board-column:nth-of-type(1)`, content);
     }
     catch (error) {
         console.log("An error has occurred during card insertion:");
