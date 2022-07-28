@@ -1,4 +1,5 @@
 export {initDragAndDrop}
+import {dataHandler} from "../data/dataHandler.js";
 
 const dom = {
     isEmpty: function (el) {
@@ -24,20 +25,15 @@ function initDragAndDrop() {
 function initElements() {
     ui.cards = document.querySelectorAll(".card");
     ui.columns = document.querySelectorAll(".board-column");
-    console.log(ui.columns);
-
-    ui.cards.forEach(function (card) {
+        ui.cards.forEach(function (card) {
         card.setAttribute("draggable", true);
     });
 }
 
-
 function initDragEvents() {
     ui.cards.forEach(card => initDraggable(card));
     ui.columns.forEach(column => initDropzone(column));
-    initDropzone(ui.columns);
 }
-
 
 function initDraggable(draggable) {
     draggable.setAttribute("draggable", true);
@@ -55,16 +51,12 @@ function initDropzone(dropzone) {
 function handleDragStart(e) {
     card.dragged = e.currentTarget;
     card.dragged.classList.add('dragActive');
-    console.log("Drag start of", card.dragged);
 }
 
-
 function handleDragEnd() {
-    console.log("Drag end of", card.dragged);
     card.dragged.classList.remove('dragActive');
     card.dragged = null;
     }
-
 
 function handleDragOver(e) {
     e.preventDefault();
@@ -74,34 +66,29 @@ function handleDragOver(e) {
 }
 
 function handleDragEnter(e) {
-    console.log("Drag enter of", e.currentTarget);
     if (dom.hasClass(e.currentTarget, "mixed-cards")) {
         e.currentTarget.classList.add('cardContainerHover');
     }
 }
 
 function handleDragLeave(e) {
-    console.log("Drag leave of", e.currentTarget);
-    if (dom.hasClass(e.currentTarget, "mixed-cards")) {
+    if (dom.hasClass(e.currentTarget, "ourColumn")) {
         e.currentTarget.classList.remove('cardContainerHover');
     }
 }
 
-
 function handleDrop(e) {
     e.preventDefault();
     const dropzone = e.currentTarget;
-    console.log("Drop of", dropzone);
+    // let boardId = document.querySelector(".board.row").getAttribute("data-board-id");
+    // we may need this later if we can drag and drop cards from one board to another, and we want to stop that
+    let cardId = card.dragged.getAttribute("data-card-id");
+    let statusId = dropzone.getAttribute("data-column-id");
+    let title = card.dragged.innerText;
+    let cardOrder = document.querySelectorAll("dropzone>.board-column:nth-of-type(1)>.card").length + 1;
+    dropzone.appendChild(card.dragged);
+    dataHandler.updateCard(cardId, statusId, title, cardOrder);
 
-    if (dom.hasClass(dropzone, ".board-column")) {
-        if (dom.isEmpty(dropzone)) {
-            dropzone.appendChild(card.dragged);
-        }
-        return;
-        }
-    if (dom.hasClass(dropzone, "mixed-cards")) {
-        dropzone.appendChild(card.dragged);
-        dropzone.classList.remove('cardContainerHover');
-        return;
-    }
+    dropzone.classList.remove('cardContainerHover');
+    return;
 }

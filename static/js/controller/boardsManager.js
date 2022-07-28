@@ -7,16 +7,20 @@ import {initDragAndDrop} from "./dragNDropManager.js";
 
 export let boardsManager = {
     loadBoards: async function () {
+        addNewBoardForm()
+
         const boards = await dataHandler.getBoards();
         for (let board of boards) {
+
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click",
-                showHideButtonHandler
+                showHideButtonHandler,
             );
+            //deleteBoard(board.id)
         }
     },
     boardRenameControl: function() {
@@ -40,7 +44,7 @@ export let boardsManager = {
 
 async function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    let statuses = await dataHandler.getStatuses(boardId)
+    let statuses = await dataHandler.getStatuses(boardId);
     await add_columns(boardId);
     await cardsManager.loadCards(boardId);
     cardsManager.insertAddCardButton(boardId, statuses[0]);
@@ -50,6 +54,7 @@ async function showHideButtonHandler(clickEvent) {
     //TODO rename i variable
 
     let i = clickEvent.target;
+    console.log(i)
     i.removeEventListener("click", showHideButtonHandler)
     i.classList.remove("fa-chevron-down")
     i.classList.add("fa-chevron-up")
@@ -59,6 +64,7 @@ async function showHideButtonHandler(clickEvent) {
         event.preventDefault();
         domManager.refreshPage();
     })
+    initDragAndDrop();
 }
 
 function renameBoardHandler (headerDiv) {
@@ -113,6 +119,31 @@ function renameColumnHandler (headerDiv) {
             console.log(`There was an error during the board name update: ${error}`);
         }
     });
+
+
+}
+function addNewBoardForm(){
+    const NewForm = htmlFactory(htmlTemplates.addBordForm)
+    domManager.addChild("#root", NewForm())
+    const createBtn = document.getElementById("createBoard")
+    const formDiv = document.getElementById("form-container")
+    createBtn.addEventListener("click", ev => {
+        if(formDiv.style.display === 'block'){
+            formDiv.style.display = 'none';
+            createBtn.classList.remove("fa-minus");
+            createBtn.classList.add("fa-plus")
+        }else{
+          formDiv.style.display = 'block';
+          createBtn.classList.remove("fa-plus");
+          createBtn.classList.add("fa-minus")
+        }
+    })
+}
+
+function deleteBoard(boardId){
+    const deleteBtn = htmlFactory(htmlTemplates.deleteBoard)
+    domManager.addChild(`data-board-header-id: ${boardId}`,deleteBtn())
+
 
 
 }

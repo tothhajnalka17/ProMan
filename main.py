@@ -180,7 +180,7 @@ COLUMNS
 
 @app.route("/api/status/<int:board_id>", methods=["GET"])
 @json_response
-def get_statues(board_id: int):
+def get_statuses(board_id: int):
     return queries.get_statuses_for_board(board_id)
 
 
