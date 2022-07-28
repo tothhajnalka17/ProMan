@@ -234,6 +234,10 @@ def update_card(id):
     return Response(status=200)
 
 
+@app.route('/api/cards/<int:id>/delete')
+@json_response
+def delete_card(id):
+    return queries.delete_card(id)
 
 
 def main():
