@@ -41,8 +41,10 @@ def update_card(id, board_id, status_id, title, card_order):
 
 def delete_card(card_id):
     data_manager.execute_query("""
-    DELETE FROM cards WHERE id = %(card_id)s;
-    """), {"card_id": card_id}
+            DELETE FROM cards WHERE id = %(card_id)s
+            ;
+            """
+                               , {"card_id": card_id})
 
 
 """

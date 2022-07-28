@@ -26,13 +26,13 @@ export async function add_columns(boardId){
     for (let status of statuses) {
         let column = columnBuilder(status.title, status.id);
         parent.appendChild(column);
+        deleteColumn(parent, boardId)
     }
     let columns = Array.from(document.querySelectorAll(".board-column"))
     columns.forEach( column => {
         column.classList.add('ourColumn')
-        deleteColumn(column)
-
     })
+
 
 }
 
@@ -63,18 +63,26 @@ export function renameColumnHandler(headerDiv) {
 
 }
 
-function deleteColumn(column){
+async function deleteColumn(parent, boardId){
     const trash = document.createElement('i')
     trash.classList = "fa fa-trash inline"
+    trash.dataset.board_id = boardId
     trash.style = "float: right"
-    column.insertBefore(trash, column.firstChild)
-    let statusId = column.dataset.columnId
+    console.log(parent.dataset.boardId)
+    if (parent.dataset.boardId === boardId) {
+        let columns = parent.children
+        for(let i=0;i<columns.length;i++) {
+            const column = columns[i]
+            column.insertBefore(trash, column.firstChild)
+        }
+
+    }
     trash.addEventListener("click", ev => {
         dataHandler.deleteColumn(statusId)
         window.location.reload()
     })
 
-    // TODO: call data_handler for delete column by data-column-id
+
 }
 
 

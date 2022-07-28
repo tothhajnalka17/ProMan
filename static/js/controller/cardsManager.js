@@ -91,3 +91,15 @@ async function insertCard(boardId, statusId, cardOrder) {
         console.log(error);
     }
 }
+
+async function deleteCard() {
+    const trash = document.createElement('i')
+    trash.classList = "fa fa-trash inline"
+    trash.style = "float: right"
+    column.insertBefore(trash, column.firstChild)
+    let statusId = column.dataset.columnId
+    trash.addEventListener("click", ev => {
+        dataHandler.deleteColumn(statusId)
+        window.location.reload()
+    })
+}
