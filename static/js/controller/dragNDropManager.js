@@ -79,7 +79,6 @@ function handleDrop(e) {
     const dropzone = e.currentTarget;
     let cardId = card.dragged.getAttribute("data-card-id");
     let boardId = dropzone.parentElement.getAttribute("data-board-id");
-    console.log({boardId});
     let statusId = dropzone.getAttribute("data-column-id");
     let title = card.dragged.innerText;
     let cardOrder = document.querySelectorAll("dropzone>.board-column:nth-of-type(1)>.card").length + 1;

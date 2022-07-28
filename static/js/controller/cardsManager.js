@@ -10,7 +10,6 @@ export let cardsManager = {
             let index = card.status_id;
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
-            let parentColumn = document.querySelector(`.board-column[data-column-id="${index}"]`);
             domManager.addChild(`.board-column[data-column-id="${index}"]`, content);
             domManager.addEventListener(
                 `.card[data-card-id="${card.id}"]`,
@@ -18,8 +17,6 @@ export let cardsManager = {
                 deleteButtonHandler
             );
         }
-
-
     },
     insertAddCardButton: function (boardId, status) {
         let firstColumn = document.querySelector(`.board-column[data-column-id="${status.id}"]`);
@@ -46,7 +43,7 @@ function deleteButtonHandler(clickEvent) {
 }
 
 function renameCardHandler (cardDiv) {
-    let boardId = cardDiv.parentElement.parentElement["data-column-id"];
+    let boardId = cardDiv.parentElement.parentElement.getAttribute("data-board-id");
     let cardId = cardDiv.dataset["cardId"];
     let cardTitle = cardDiv.innerText;
     const formBuilder = htmlFactory(htmlTemplates.renameForm);
