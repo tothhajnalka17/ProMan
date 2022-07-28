@@ -40,9 +40,10 @@ async function showHideButtonHandler(clickEvent) {
     await add_columns(boardId);
     await cardsManager.loadCards(boardId);
     cardsManager.insertAddCardButton(boardId, statuses[0]);
+
+    // Call event related functions
     cardsManager.cardRenameControl();
     columnsManager.columnRenameControl();
-
     initDragAndDrop();
 
     let icon = clickEvent.target;
@@ -55,7 +56,6 @@ async function showHideButtonHandler(clickEvent) {
         event.preventDefault();
         domManager.refreshPage();
     })
-    initDragAndDrop();
 }
 
 function renameBoardHandler (headerDiv) {

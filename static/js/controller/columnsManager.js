@@ -3,9 +3,13 @@ import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 
 export let columnsManager = {
     columnRenameControl: function() {
+        // Clear column headers of event listeners as duplicate event listeners caused problems
+        Array.from(document.querySelectorAll(".column-header")).forEach( node => {
+        node.replaceWith(node.cloneNode(true));
+        })
+
         let columnHeaderDivs = Array.from(document.querySelectorAll(".column-header"));
         columnHeaderDivs.forEach( columnHeaderDiv => {
-            //columnHeaderDiv.replaceWith(columnHeaderDiv.cloneNode(true));
             columnHeaderDiv.addEventListener("click", () => {
                 renameColumnHandler(columnHeaderDiv);
             })
