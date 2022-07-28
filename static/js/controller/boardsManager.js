@@ -20,7 +20,7 @@ export let boardsManager = {
                 "click",
                 showHideButtonHandler,
             );
-            deleteBoard(board.id)
+            //deleteBoard(board.id)
         }
     },
     boardRenameControl: function() {
