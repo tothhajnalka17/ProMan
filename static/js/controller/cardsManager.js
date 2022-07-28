@@ -22,6 +22,7 @@ export let cardsManager = {
     },
     insertAddCardButton: function (boardId, status) {
         // TODO select column based on its id value, not the nth-of type
+        // TODO Insert button at the top of the column, not the end
         let firstColumn = document.querySelector(`.board[data-board-id="${boardId}"] > .board-column:nth-of-type(1)`);
         let cardOrder = document.querySelectorAll(`.board[data-board-id="${boardId}"] > .board-column:nth-of-type(1) > .card`).length + 1;
         let button = document.createElement("button");
@@ -31,10 +32,22 @@ export let cardsManager = {
         button.addEventListener("click", () => {
             insertCard(boardId, status.id, cardOrder);
             })
+    },
+    cardRenameControl: function () {
+        let cardDivs = Array.from(document.querySelectorAll(".card"));
+        cardDivs.forEach(cardDiv => {
+            cardDiv.addEventListener("click", () => {
+                renameCardHandler(cardDiv)
+            })
+        })
     }
 };
 
 function deleteButtonHandler(clickEvent) {
+}
+
+function renameCardHandler (cardDiv) {
+    pass
 }
 
 async function insertCard(boardId, statusId, cardOrder) {
