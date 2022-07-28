@@ -10,7 +10,7 @@ def get_card(card_id):
     SELECT *
     FROM cards
     WHERE id = %(card_id)s
-    """, {"card_id": card_id})
+    """, {"card_id": card_id}, False)
 
 
 def insert_card(board_id, status_id, card_order):
