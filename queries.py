@@ -24,15 +24,17 @@ def insert_card(board_id, status_id, card_order):
     return id
 
 
-def update_card(id, status_id, title, card_order):
+def update_card(id, board_id, status_id, title, card_order):
     data_manager.execute_query("""
     UPDATE cards
-    SET status_id = %(status_id)s, 
+    SET status_id = %(status_id)s,
+        board_id = %(board_id)s,
         title = %(title)s,
         card_order = %(card_order)s
     WHERE id = %(id)s
     """, {"status_id": status_id,
           "title": title,
+          "board_id": board_id,
           "card_order": card_order,
           "id": id})
 

@@ -46,10 +46,10 @@ function deleteButtonHandler(clickEvent) {
 }
 
 function renameCardHandler (cardDiv) {
+    let boardId = cardDiv.parentElement.parentElement["data-column-id"];
     let cardId = cardDiv.dataset["cardId"];
     let cardTitle = cardDiv.innerText;
     const formBuilder = htmlFactory(htmlTemplates.renameForm);
-
     let newDiv = document.createElement("div");
     newDiv.innerHTML = formBuilder(cardTitle);
     newDiv.classList.add("card");
@@ -64,7 +64,7 @@ function renameCardHandler (cardDiv) {
         newDiv.replaceWith(cardDiv)
         try {
             let card = await dataHandler.getCard(cardId);
-            await dataHandler.updateCard(cardId, card.status_id, inputField.value, card.card_order);
+            await dataHandler.updateCard(cardId, boardId, card.status_id, inputField.value, card.card_order);
         }
         catch (error) {
             console.log(`There was an error during the card name update: ${error}`);
