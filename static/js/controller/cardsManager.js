@@ -38,9 +38,11 @@ function deleteButtonHandler(clickEvent) {
 
 async function insertCard(boardId, statusId, cardOrder) {
     try{
-        //TODO finish getting the card id back, add the card using the card factory
+        //TODO add the card using the card factory
         let response = await dataHandler.createNewCard(boardId, statusId, cardOrder);
-        console.log(response)
+        let cardResponse = await response.json();
+        let card = await dataHandler.getCard(cardResponse["id"]);
+        console.log(card)
     }
     catch (error) {
         console.log("An error has occurred during card insertion:");
