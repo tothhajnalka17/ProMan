@@ -153,7 +153,11 @@ def get_boards():
 
 @app.route('/api/boards/create_board', methods=["POST"])
 def create_board():
-    queries.insert_board(request.form.get("boardTitle"))
+    board_id = queries.insert_board(request.form.get("boardTitle"))["id"]
+    queries.insert_status("New", board_id, 1)
+    queries.insert_status("In Progress", board_id, 2)
+    queries.insert_status("Testing", board_id, 3)
+    queries.insert_status("Done", board_id, 4)
     return Response(status=200)
 
 
@@ -176,6 +180,12 @@ def get_cards_for_board(board_id: int):
 """
 COLUMNS
 """
+
+
+@app.route('/api/status/insert')
+def insert_status():
+    queries.insert_status(request.form.get("name"), request.form.get("boardId"), request.form.get("columnOrder"))
+    return Response(status=200)
 
 
 @app.route("/api/status/<int:board_id>", methods=["GET"])
