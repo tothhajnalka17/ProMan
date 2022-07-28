@@ -179,7 +179,6 @@ def get_cards_for_board(board_id: int):
 @app.route("/api/board/<int:board_id>/delete", methods=["DELETE"])
 @json_response
 def delete_boards(board_id: int):
-    print(board_id)
     return queries.delete_board(board_id)
 
 
@@ -204,6 +203,12 @@ def get_statuses(board_id: int):
 def update_status_name():
     queries.update_status_name(request.form.get("id"), request.form.get("name"))
     return Response(status=200)
+
+@app.route("/api/column/<int:status_is>/delete", methods=["DELETE"])
+@json_response
+def delete_boards(status_id: int):
+    print(status_id)
+    return queries.delete_board(status_id)
 
 
 """

@@ -41,9 +41,11 @@ async function showHideButtonHandler(clickEvent) {
     await cardsManager.loadCards(boardId);
     cardsManager.insertAddCardButton(boardId, statuses[0]);
 
+
     // Call event related functions
     cardsManager.cardRenameControl();
     columnsManager.columnRenameControl();
+
     initDragAndDrop();
 
     let icon = clickEvent.target;

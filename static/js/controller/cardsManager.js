@@ -21,9 +21,10 @@ export let cardsManager = {
     insertAddCardButton: function (boardId, status) {
         let firstColumn = document.querySelector(`.board-column[data-column-id="${status.id}"]`);
         let cardOrder = document.querySelectorAll(`.board-column[data-column-id="${status.id}"] > .card`).length + 1;
-        let button = document.createElement("button");
-        button.innerText = "Add card";
-        button.classList.add("add-card-button");
+        let button = document.createElement("i");
+        button.innerText = " Add card";
+        button.classList.add("fa");
+        button.classList.add("fa-plus")
         firstColumn.insertBefore(button, firstColumn.firstChild.nextSibling);
         button.addEventListener("click", () => {
             insertCard(boardId, status.id, cardOrder);

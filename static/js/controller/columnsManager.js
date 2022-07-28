@@ -14,7 +14,8 @@ export let columnsManager = {
                 renameColumnHandler(columnHeaderDiv);
             })
         })
-    }
+
+    },
 
 }
 
@@ -27,7 +28,12 @@ export async function add_columns(boardId){
         parent.appendChild(column);
     }
     let columns = Array.from(document.querySelectorAll(".board-column"))
-    columns.forEach( column => column.classList.add('ourColumn') )
+    columns.forEach( column => {
+        column.classList.add('ourColumn')
+        deleteColumn(column)
+
+    })
+
 }
 
 export function renameColumnHandler(headerDiv) {
@@ -55,5 +61,14 @@ export function renameColumnHandler(headerDiv) {
         }
     });
 
-
 }
+
+function deleteColumn(column){
+    const trash = document.createElement('i')
+    trash.classList = "fa fa-trash inline"
+    trash.style = "float: right"
+    column.insertBefore(trash, column.firstChild)
+    // TODO: call data_handler for delete column by data-column-id
+}
+
+

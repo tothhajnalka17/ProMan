@@ -141,3 +141,8 @@ i{
 .right{
     float:right
 }
+.trash{
+    overflow-x: auto;
+    margin-bottom: 6px;
+    float: right;
+}
