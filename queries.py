@@ -91,6 +91,7 @@ def delete_board(board_id):
                                , {"board_id": board_id})
 
 
+
 def get_statuses_for_board(board_id):
     statuses = data_manager.execute_select(
         """
