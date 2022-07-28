@@ -20,6 +20,18 @@ export let cardsManager = {
         }
 
     },
+    insertAddCardButton: function (boardId, status) {
+        let firstColumn = document.querySelector(`.board[data-board-id="${boardId}"] > .board-column:nth-of-type(1)`);
+        let cardOrder = document.querySelectorAll(`.board[data-board-id="${boardId}"] > .board-column:nth-of-type(1) > .card`).length + 1;
+        let button = document.createElement("button");
+        button.innerText = "Add card";
+        button.classList.add("add-card-button");
+        firstColumn.appendChild(button);
+        button.addEventListener("click", () => {
+            dataHandler.createNewCard(boardId, status.id, cardOrder);
+            // TODO refresh page
+            })
+    }
 };
 
 function deleteButtonHandler(clickEvent) {

@@ -48,6 +48,7 @@ async function showHideButtonHandler(clickEvent) {
     let statuses = await dataHandler.getStatuses(boardId)
     await add_columns(boardId);
     await cardsManager.loadCards(boardId);
+    cardsManager.insertAddCardButton(boardId, statuses[0]);
 
     let i = clickEvent.target;
     console.log(i)
