@@ -151,8 +151,10 @@ def update_status_name(id, name):
 
 def delete_status(status_id):
     data_manager.execute_query("""
-    DELETE FROM statuses WHERE id = %(status_id)s;
-    """), {"status_id": status_id}
+        DELETE FROM statuses WHERE id = %(status_id)s
+        ;
+        """
+                               , {"status_id": status_id})
 
 
 """

@@ -198,12 +198,6 @@ def update_status_name():
     queries.update_status_name(request.form.get("id"), request.form.get("name"))
     return Response(status=200)
 
-@app.route("/api/column/<int:status_is>/delete", methods=["DELETE"])
-@json_response
-def delete_boards(status_id: int):
-    print(status_id)
-    return queries.delete_board(status_id)
-
 
 @app.route("/api/status/<int:status_id>/delete", methods=["DELETE"])
 @json_response
