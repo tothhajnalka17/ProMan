@@ -12,7 +12,6 @@ export let cardsManager = {
             const content = cardBuilder(card);
             let parentColumn = document.querySelector(`.board-column[data-column-id="${index}"]`);
             domManager.addChild(`.board-column[data-column-id="${index}"]`, content);
-            parentColumn.classList.add('ourColumn');
             domManager.addEventListener(
                 `.card[data-card-id="${card.id}"]`,
                 "click",

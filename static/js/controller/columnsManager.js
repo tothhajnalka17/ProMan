@@ -21,6 +21,8 @@ export async function add_columns(boardId){
         let column = columnBuilder(status.title, status.id);
         parent.appendChild(column);
     }
+    let columns = Array.from(document.querySelectorAll(".board-column"))
+    columns.forEach( column => column.classList.add('ourColumn') )
 }
 
 export function renameColumnHandler(headerDiv) {
