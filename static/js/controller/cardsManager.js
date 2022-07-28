@@ -24,7 +24,7 @@ export let cardsManager = {
         let button = document.createElement("button");
         button.innerText = "Add card";
         button.classList.add("add-card-button");
-        firstColumn.insertBefore(button, firstColumn.firstChild);
+        firstColumn.insertBefore(button, firstColumn.firstChild.nextSibling);
         button.addEventListener("click", () => {
             insertCard(boardId, status.id, cardOrder);
             })
