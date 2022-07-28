@@ -195,6 +195,11 @@ CARDS
 """
 
 
+@app.route('/api/cards/<int:id>')
+def get_card(id):
+    return queries.get_card(id)
+
+
 @app.route('/api/cards/insert', methods=["POST"])
 def insert_card():
     board_id = request.form.get("boardId")
