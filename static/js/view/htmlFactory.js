@@ -46,7 +46,7 @@ function cardBuilder(card) {
 function renameFormBuilder(oldName) {
     let element =
         `<form action="" method="get">
-            <input type="text" name="newTitle" placeholder="${oldName}">
+            <input type="text" name="newTitle" value="${oldName}">
         </form>`
     return element
 }
