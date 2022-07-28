@@ -144,6 +144,7 @@ function deleteBoard(boardId){
     console.log(deleteBtn)
     deleteBtn.addEventListener("click", (e) =>{
         dataHandler.deleteBoard(boardId)
-        // TODO: refresh page
+        window.location.reload();
+
     })
 }
