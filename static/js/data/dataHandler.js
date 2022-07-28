@@ -71,6 +71,9 @@ async function apiPost(url, payload) {
 }
 
 async function apiDelete(url) {
+    let response = await fetch(url, {
+        method:"POST"
+    })
 }
 
 async function apiPut(url) {

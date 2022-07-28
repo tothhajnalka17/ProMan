@@ -19,6 +19,7 @@ export let cardsManager = {
             );
         }
 
+
     },
     insertAddCardButton: function (boardId, status) {
         let firstColumn = document.querySelector(`.board[data-board-id="${boardId}"] > .board-column:nth-of-type(1)`);

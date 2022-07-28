@@ -20,7 +20,7 @@ export let boardsManager = {
                 "click",
                 showHideButtonHandler,
             );
-            //deleteBoard(board.id)
+            deleteBoard(board.id)
         }
     },
     boardRenameControl: function() {
@@ -137,9 +137,12 @@ function addNewBoardForm(){
 }
 
 function deleteBoard(boardId){
-    const deleteBtn = htmlFactory(htmlTemplates.deleteBoard)
-    domManager.addChild(`data-board-header-id: ${boardId}`,deleteBtn())
+    const content = htmlFactory(htmlTemplates.deleteBoard)
+    const header = document.querySelector(`[data-board-header-id="${boardId}"]`)
+    header.appendChild(content(boardId))
+    const deleteBtn = document.getElementById(boardId)
+    console.log(deleteBtn)
+    deleteBtn.addEventListener("click", (e) =>{
 
-
-
+    })
 }
