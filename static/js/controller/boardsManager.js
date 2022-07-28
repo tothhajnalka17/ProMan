@@ -48,12 +48,17 @@ async function showHideButtonHandler(clickEvent) {
     await add_columns(boardId);
     await cardsManager.loadCards(boardId);
     cardsManager.insertAddCardButton(boardId, statuses[0]);
+    cardsManager.cardRenameControl()
+
+    initDragAndDrop();
+    //TODO rename i variable
 
     let i = clickEvent.target;
     console.log(i)
     i.removeEventListener("click", showHideButtonHandler)
     i.classList.remove("fa-chevron-down")
     i.classList.add("fa-chevron-up")
+
 
     i.addEventListener("click", event => {
         event.preventDefault();

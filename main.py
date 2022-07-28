@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, Response, redirect, session, flash
+from flask import Flask, render_template, url_for, request, Response, redirect, session, flash, jsonify
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
@@ -20,6 +20,10 @@ app.permanent_session_lifetime = datetime.timedelta(minutes=1)
 def index():
     return render_template('index.html')
 
+
+"""
+USERS
+"""
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -133,6 +137,11 @@ def logout():
     return redirect(url_for('route_home'))
 
 
+"""
+BOARDS
+"""
+
+
 @app.route("/api/boards")
 @json_response
 def get_boards():
@@ -164,6 +173,11 @@ def get_cards_for_board(board_id: int):
     return queries.get_cards_for_board(board_id)
 
 
+"""
+COLUMNS
+"""
+
+
 @app.route("/api/status/<int:board_id>", methods=["GET"])
 @json_response
 def get_statuses(board_id: int):
@@ -176,13 +190,23 @@ def update_status_name():
     return Response(status=200)
 
 
+"""
+CARDS
+"""
+
+
+@app.route('/api/cards/<int:id>')
+@json_response
+def get_card(id):
+    return queries.get_card(id)
+
+
 @app.route('/api/cards/insert', methods=["POST"])
 def insert_card():
     board_id = request.form.get("boardId")
     status_id = request.form.get("statusId")
     card_order = request.form.get("cardOrder")
-    queries.insert_card(board_id, status_id, card_order)
-    return Response(status=200)
+    return jsonify(queries.insert_card(board_id, status_id, card_order))
 
 
 @app.route('/api/cards/<int:id>/update', methods=["POST"])
@@ -190,9 +214,7 @@ def update_card(id):
     status_id = request.form.get("statusId")
     title = request.form.get("title")
     card_order = request.form.get("cardOrder")
-    print(id, status_id, title, card_order)
     queries.update_card(id, status_id, title, card_order)
-
     return Response(status=200)
 
 
