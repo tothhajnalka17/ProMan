@@ -51,9 +51,10 @@ function renameFormBuilder(oldName) {
     return element
 }
 
-function columnBuilder(title) {
+function columnBuilder(title, statusId) {
     let columnDiv = document.createElement("div");
     columnDiv.classList.add("board-column");
+    columnDiv.setAttribute("data-column-id", statusId);
     let columnHeader = document.createElement("h4");
     columnHeader.innerText = title;
     columnDiv.appendChild(columnHeader);

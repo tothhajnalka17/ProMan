@@ -6,7 +6,7 @@ export async function add_columns(boardId){
     let parent = document.querySelector(`.board[data-board-id="${boardId}"]`);
     const columnBuilder = htmlFactory(htmlTemplates.column);
     for (let status of statuses) {
-        let column = columnBuilder(status.title);
+        let column = columnBuilder(status.title, status.id);
         parent.appendChild(column);
     }
 }
