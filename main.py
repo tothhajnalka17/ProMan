@@ -166,7 +166,7 @@ def get_cards_for_board(board_id: int):
 
 @app.route("/api/status/<int:board_id>", methods=["GET"])
 @json_response
-def get_statues(board_id: int):
+def get_statuses(board_id: int):
     return queries.get_statuses_for_board(board_id)
 
 
@@ -187,10 +187,12 @@ def insert_card():
 
 @app.route('/api/cards/<int:id>/update', methods=["POST"])
 def update_card(id):
-    status_id = request.form.get("status_id")
+    status_id = request.form.get("statusId")
     title = request.form.get("title")
-    card_order = request.form.get("card_order")
+    card_order = request.form.get("cardOrder")
+    print(id, status_id, title, card_order)
     queries.update_card(id, status_id, title, card_order)
+
     return Response(status=200)
 
 

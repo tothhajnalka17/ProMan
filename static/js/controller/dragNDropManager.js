@@ -80,8 +80,16 @@ function handleDragLeave(e) {
 function handleDrop(e) {
     e.preventDefault();
     const dropzone = e.currentTarget;
+    // let boardId = document.querySelector(".board.row").getAttribute("data-board-id");
+    // we may need this later if we can drag and drop cards from one board to another, and we want to stop that
+    let cardId = card.dragged.getAttribute("data-card-id");
+    let statusId = dropzone.getAttribute("data-column-id");
+    let title = card.dragged.innerText;
+    let cardOrder = document.querySelectorAll("dropzone>.board-column:nth-of-type(1)>.card").length + 1;
+    console.log({statusId});
     dropzone.appendChild(card.dragged);
-    dataHandler.updateCard(card.dragged.id, statusId, title, cardOrder);
+    dataHandler.updateCard(cardId, statusId, title, cardOrder);
+
     dropzone.classList.remove('cardContainerHover');
     return;
 }
