@@ -68,7 +68,6 @@ def insert_board(board_title):
     """, {"board_title": board_title}, False)
 
 
-
 def update_board_name(board_id, new_board_name):
     data_manager.execute_query("""
     UPDATE boards
@@ -152,7 +151,7 @@ def update_status_name(id, name):
 
 def delete_status(status_id):
     data_manager.execute_query("""
-    DELETE FROM boards WHERE id = %(status_id)s;
+    DELETE FROM statuses WHERE id = %(status_id)s;
     """), {"status_id": status_id}
 
 
