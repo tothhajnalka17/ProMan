@@ -196,6 +196,7 @@ CARDS
 
 
 @app.route('/api/cards/<int:id>')
+@json_response
 def get_card(id):
     return queries.get_card(id)
 
