@@ -18,7 +18,7 @@ export let dataHandler = {
         return await apiGet(`/api/boards/${boardId}/cards/`);
     },
     getCard: async function (cardId) {
-        // the card is retrieved and then the callback function is called with the card
+        return await apiGet(`/api/cards/${cardId}`);
     },
     createNewBoard: async function (boardTitle) {
         return await apiPost('/api/boards/create_board/', {"boardTitle": boardTitle})
