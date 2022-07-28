@@ -11,20 +11,24 @@ export let dataHandler = {
     getStatus: async function (statusId) {
 
     },
+    insertStatus: async function (name, boardId, columnOrder) {
+        return await apiPost("/api/status/insert",
+            {"name":name, "boardId": boardId, "columnOrder": columnOrder})
+    },
     updateStatusName: async function (columnId, newStatusName) {
-        return await apiPost("/api/status/update_status_name/", {"id": columnId, "name": newStatusName})
+        return await apiPost("/api/status/update_status_name", {"id": columnId, "name": newStatusName})
     },
     getCardsByBoardId: async function (boardId) {
-        return await apiGet(`/api/boards/${boardId}/cards/`);
+        return await apiGet(`/api/boards/${boardId}/cards`);
     },
     getCard: async function (cardId) {
         return await apiGet(`/api/cards/${cardId}`);
     },
     createNewBoard: async function (boardTitle) {
-        return await apiPost('/api/boards/create_board/', {"boardTitle": boardTitle})
+        return await apiPost('/api/boards/create_board', {"boardTitle": boardTitle})
     },
     updateBoardName: async function (boardId, newBoardName) {
-        return await apiPost('/api/boards/update_board_name/', {"boardId": boardId,
+        return await apiPost('/api/boards/update_board_name', {"boardId": boardId,
             "newBoardName": newBoardName})
     },
     createNewCard: async function (boardId, statusId, cardOrder) {
@@ -33,9 +37,10 @@ export let dataHandler = {
                 "statusId": statusId,
                 "cardOrder": cardOrder})
     },
-    updateCard: async function (id, statusId, title, cardOrder) {
+    updateCard: async function (id, boardId, statusId, title, cardOrder) {
         return await apiPost(`/api/cards/${id}/update`,
             {"statusId": statusId,
+                "boardId": boardId,
                 "title": title,
                 "cardOrder": cardOrder})
     },

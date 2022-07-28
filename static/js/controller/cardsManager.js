@@ -1,6 +1,7 @@
 import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
+import {initDraggable} from "./dragNDropManager.js";
 
 export let cardsManager = {
     loadCards: async function (boardId) {
@@ -9,27 +10,21 @@ export let cardsManager = {
             let index = card.status_id;
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
-            let parentColumn = document.querySelector(`.board[data-board-id="${boardId}"] > .board-column:nth-of-type(${index})`);
-            domManager.addChild(`.board[data-board-id="${boardId}"] > .board-column:nth-of-type(${index})`, content);
-            parentColumn.classList.add('ourColumn');
+            domManager.addChild(`.board-column[data-column-id="${index}"]`, content);
             domManager.addEventListener(
                 `.card[data-card-id="${card.id}"]`,
                 "click",
                 deleteButtonHandler
             );
         }
-
-
     },
     insertAddCardButton: function (boardId, status) {
-        // TODO select column based on its id value, not the nth-of type
-        // TODO Insert button at the top of the column, not the end
-        let firstColumn = document.querySelector(`.board[data-board-id="${boardId}"] > .board-column:nth-of-type(1)`);
-        let cardOrder = document.querySelectorAll(`.board[data-board-id="${boardId}"] > .board-column:nth-of-type(1) > .card`).length + 1;
+        let firstColumn = document.querySelector(`.board-column[data-column-id="${status.id}"]`);
+        let cardOrder = document.querySelectorAll(`.board-column[data-column-id="${status.id}"] > .card`).length + 1;
         let button = document.createElement("button");
         button.innerText = "Add card";
         button.classList.add("add-card-button");
-        firstColumn.appendChild(button);
+        firstColumn.insertBefore(button, firstColumn.firstChild.nextSibling);
         button.addEventListener("click", () => {
             insertCard(boardId, status.id, cardOrder);
             })
@@ -48,10 +43,10 @@ function deleteButtonHandler(clickEvent) {
 }
 
 function renameCardHandler (cardDiv) {
+    let boardId = cardDiv.parentElement.parentElement.getAttribute("data-board-id");
     let cardId = cardDiv.dataset["cardId"];
     let cardTitle = cardDiv.innerText;
     const formBuilder = htmlFactory(htmlTemplates.renameForm);
-
     let newDiv = document.createElement("div");
     newDiv.innerHTML = formBuilder(cardTitle);
     newDiv.classList.add("card");
@@ -66,7 +61,7 @@ function renameCardHandler (cardDiv) {
         newDiv.replaceWith(cardDiv)
         try {
             let card = await dataHandler.getCard(cardId);
-            await dataHandler.updateCard(cardId, card.status_id, inputField.value, card.card_order);
+            await dataHandler.updateCard(cardId, boardId, card.status_id, inputField.value, card.card_order);
         }
         catch (error) {
             console.log(`There was an error during the card name update: ${error}`);
@@ -83,7 +78,12 @@ async function insertCard(boardId, statusId, cardOrder) {
 
         const cardBuilder = htmlFactory(htmlTemplates.card);
         let content =  cardBuilder(card);
-        domManager.addChild(`.board[data-board-id="${boardId}"] > .board-column:nth-of-type(1)`, content);
+        domManager.addChild(`.board-column[data-column-id="${statusId}"]`, content);
+        let cardElement = document.querySelector(`.board-column[data-column-id="${statusId}"]`).lastChild;
+        initDraggable(cardElement);
+        cardElement.addEventListener("click", () => {
+                renameCardHandler(cardElement);
+            })
     }
     catch (error) {
         console.log("An error has occurred during card insertion:");

@@ -24,15 +24,17 @@ def insert_card(board_id, status_id, card_order):
     return id
 
 
-def update_card(id, status_id, title, card_order):
+def update_card(id, board_id, status_id, title, card_order):
     data_manager.execute_query("""
     UPDATE cards
-    SET status_id = %(status_id)s, 
+    SET status_id = %(status_id)s,
+        board_id = %(board_id)s,
         title = %(title)s,
         card_order = %(card_order)s
     WHERE id = %(id)s
     """, {"status_id": status_id,
           "title": title,
+          "board_id": board_id,
           "card_order": card_order,
           "id": id})
 
@@ -53,10 +55,12 @@ def get_boards():
 
 
 def insert_board(board_title):
-    data_manager.execute_query("""
+    return data_manager.execute_select("""
     Insert INTO boards(title)
-    VALUES (%(board_title)s);
-    """, {"board_title": board_title})
+    VALUES (%(board_title)s)
+    RETURNING id;
+    """, {"board_title": board_title}, False)
+
 
 
 def update_board_name(board_id, new_board_name):
@@ -105,6 +109,15 @@ def get_statuses_for_board(board_id):
 """
 COLUMNS
 """
+
+
+def insert_status(name, board_id, column_order):
+    data_manager.execute_query("""
+    INSERT INTO statuses(title, board_id, column_order)
+    VALUES (%(name)s, %(board_id)s, %(column_order)s)
+    """, {"name": name,
+          "board_id": board_id,
+          "column_order": column_order})
 
 
 def get_card_status(status_id):

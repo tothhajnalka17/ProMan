@@ -25,6 +25,7 @@ def index():
 USERS
 """
 
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     # Check if "username" and "password" POST requests exist (user submitted form)
@@ -114,7 +115,6 @@ def signup():
             encrypted_password = util.hash_password(original_password)
             register_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-            print(username, email, encrypted_password, register_date)
             queries.insert_users(username, email, encrypted_password, register_date)
             flash('Registration successful!')
 
@@ -134,7 +134,7 @@ def logout():
     user = session['username']
     flash(f'Goodbye {user}')
     session.pop("username", None)
-    return redirect(url_for('route_home'))
+    return redirect(url_for('index'))
 
 
 """
@@ -151,19 +151,23 @@ def get_boards():
     return queries.get_boards()
 
 
-@app.route('/api/boards/create_board/', methods=["POST"])
+@app.route('/api/boards/create_board', methods=["POST"])
 def create_board():
-    queries.insert_board(request.form.get("boardTitle"))
+    board_id = queries.insert_board(request.form.get("boardTitle"))["id"]
+    queries.insert_status("New", board_id, 1)
+    queries.insert_status("In Progress", board_id, 2)
+    queries.insert_status("Testing", board_id, 3)
+    queries.insert_status("Done", board_id, 4)
     return Response(status=200)
 
 
-@app.route('/api/boards/update_board_name/', methods=["POST"])
+@app.route('/api/boards/update_board_name', methods=["POST"])
 def update_board_name():
     queries.update_board_name(request.form.get("boardId"), request.form.get("newBoardName"))
     return Response(status=200)
 
 
-@app.route("/api/boards/<int:board_id>/cards/")
+@app.route("/api/boards/<int:board_id>/cards")
 @json_response
 def get_cards_for_board(board_id: int):
     """
@@ -184,13 +188,19 @@ COLUMNS
 """
 
 
+@app.route('/api/status/insert')
+def insert_status():
+    queries.insert_status(request.form.get("name"), request.form.get("boardId"), request.form.get("columnOrder"))
+    return Response(status=200)
+
+
 @app.route("/api/status/<int:board_id>", methods=["GET"])
 @json_response
 def get_statuses(board_id: int):
     return queries.get_statuses_for_board(board_id)
 
 
-@app.route("/api/status/update_status_name/", methods=["POST"])
+@app.route("/api/status/update_status_name", methods=["POST"])
 def update_status_name():
     queries.update_status_name(request.form.get("id"), request.form.get("name"))
     return Response(status=200)
@@ -218,9 +228,10 @@ def insert_card():
 @app.route('/api/cards/<int:id>/update', methods=["POST"])
 def update_card(id):
     status_id = request.form.get("statusId")
+    board_id = request.form.get("boardId")
     title = request.form.get("title")
     card_order = request.form.get("cardOrder")
-    queries.update_card(id, status_id, title, card_order)
+    queries.update_card(id, board_id, status_id, title, card_order)
     return Response(status=200)
 
 

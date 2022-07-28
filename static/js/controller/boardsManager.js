@@ -1,8 +1,8 @@
 import {dataHandler} from "../data/dataHandler.js";
-import {builderFunctions, htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
+import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {cardsManager} from "./cardsManager.js";
-import {add_columns} from "./columnsManager.js";
+import {add_columns, columnsManager, renameColumnHandler} from "./columnsManager.js";
 import {initDragAndDrop} from "./dragNDropManager.js";
 
 export let boardsManager = {
@@ -31,14 +31,6 @@ export let boardsManager = {
             })
         })
     },
-    columnRenameControl: function() {
-        let columnHeaderDivs = Array.from(document.querySelectorAll(".column-header"));
-        columnHeaderDivs.forEach( columnHeaderDiv => {
-            columnHeaderDiv.addEventListener("click", () => {
-                renameColumnHandler(columnHeaderDiv);
-            })
-        })
-    }
 };
 
 
@@ -48,23 +40,22 @@ async function showHideButtonHandler(clickEvent) {
     await add_columns(boardId);
     await cardsManager.loadCards(boardId);
     cardsManager.insertAddCardButton(boardId, statuses[0]);
-    cardsManager.cardRenameControl()
 
+    // Call event related functions
+    cardsManager.cardRenameControl();
+    columnsManager.columnRenameControl();
     initDragAndDrop();
-    //TODO rename i variable
 
-    let i = clickEvent.target;
-    console.log(i)
-    i.removeEventListener("click", showHideButtonHandler)
-    i.classList.remove("fa-chevron-down")
-    i.classList.add("fa-chevron-up")
+    let icon = clickEvent.target;
+    icon.removeEventListener("click", showHideButtonHandler)
+    icon.classList.remove("fa-chevron-down")
+    icon.classList.add("fa-chevron-up")
 
 
-    i.addEventListener("click", event => {
+    icon.addEventListener("click", event => {
         event.preventDefault();
         domManager.refreshPage();
     })
-    initDragAndDrop();
 }
 
 function renameBoardHandler (headerDiv) {
@@ -94,34 +85,6 @@ function renameBoardHandler (headerDiv) {
     });
 }
 
-function renameColumnHandler (headerDiv) {
-    let statusName = headerDiv.innerText;
-    let statusId = headerDiv.getAttribute("data-status-id");
-
-    const formBuilder = htmlFactory(htmlTemplates.renameForm);
-    let newDiv = document.createElement("div");
-    newDiv.innerHTML = formBuilder(statusName);
-    newDiv.classList.add("column-header");
-
-    headerDiv.replaceWith(newDiv);
-
-    // Add focus to the main input field and listen to focus loss
-    let inputField = document.querySelector(".column-header > form > input");
-    inputField.focus();
-
-    inputField.addEventListener("focusout", async () => {
-        headerDiv.innerText = inputField.value;
-        newDiv.replaceWith(headerDiv)
-        try {
-            await dataHandler.updateStatusName(statusId, inputField.value);
-        }
-        catch (error) {
-            console.log(`There was an error during the board name update: ${error}`);
-        }
-    });
-
-
-}
 function addNewBoardForm(){
     const NewForm = htmlFactory(htmlTemplates.addBordForm)
     domManager.addChild("#root", NewForm())
@@ -145,7 +108,6 @@ function deleteBoard(boardId){
     const header = document.querySelector(`[data-board-header-id="${boardId}"]`)
     header.appendChild(content(boardId))
     const deleteBtn = document.getElementById(boardId)
-    console.log(deleteBtn)
     deleteBtn.addEventListener("click", (e) =>{
         dataHandler.deleteBoard(boardId)
         window.location.reload();
