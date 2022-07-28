@@ -39,6 +39,12 @@ def update_card(id, board_id, status_id, title, card_order):
           "id": id})
 
 
+def delete_card(card_id):
+    data_manager.execute_query("""
+    DELETE FROM cards WHERE id = %(card_id)s;
+    """), {"card_id": card_id}
+
+
 """
 BOARDS
 """
@@ -89,12 +95,6 @@ def delete_board(board_id):
     ;
     """
                                , {"board_id": board_id})
-
-
-def delete_status(status_id):
-    data_manager.execute_query("""
-    DELETE FROM boards WHERE id = %(status_id)s;
-    """), {"status_id": status_id}
 
 
 def get_statuses_for_board(board_id):
@@ -148,6 +148,12 @@ def update_status_name(id, name):
     SET title = %(name)s
     WHERE id = %(id)s
     """, {"id": id, "name": name})
+
+
+def delete_status(status_id):
+    data_manager.execute_query("""
+    DELETE FROM boards WHERE id = %(status_id)s;
+    """), {"status_id": status_id}
 
 
 """
