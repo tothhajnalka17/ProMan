@@ -26,7 +26,7 @@ export function htmlFactory(template) {
 
 function boardBuilder(board) {
     return `<div class="board-container">
-                <div class="board-header-div">
+                <div class="board-header-div" data-board-header-id="${board.id}">
                     <div class="inline">
                         <h2 class="board-header" data-header-id="${board.id}"> ${board.title} </h2>
                     </div>
