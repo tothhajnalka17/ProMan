@@ -86,7 +86,6 @@ function handleDrop(e) {
     let statusId = dropzone.getAttribute("data-column-id");
     let title = card.dragged.innerText;
     let cardOrder = document.querySelectorAll("dropzone>.board-column:nth-of-type(1)>.card").length + 1;
-    console.log({statusId});
     dropzone.appendChild(card.dragged);
     dataHandler.updateCard(cardId, statusId, title, cardOrder);
 
