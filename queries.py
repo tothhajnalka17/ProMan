@@ -42,6 +42,7 @@ def update_card(id, status_id, title, card_order):
           "card_order": card_order,
           "id": id})
 
+
 """
 BOARDS
 """
@@ -82,6 +83,14 @@ def get_cards_for_board(board_id):
         , {"board_id": board_id})
 
     return matching_cards
+
+
+def delete_board(board_id):
+    data_manager.execute_query("""
+    DELETE FROM boards WHERE id = %(board_id)s
+    ;
+    """
+                               , {"board_id": board_id})
 
 
 def get_statuses_for_board(board_id):
@@ -178,9 +187,9 @@ def insert_users(username, email, encrypted_password, register_date):
     INSERT INTO users (username, email, encrypted_password, register_date) 
     VALUES (%(username)s, %(email)s, %(encrypted_password)s, %(register_date)s);
     """,
-        {
-            'username': username,
-            'email': email,
-            'encrypted_password': encrypted_password,
-            'register_date': register_date
-        })
+                                {
+                                    'username': username,
+                                    'email': email,
+                                    'encrypted_password': encrypted_password,
+                                    'register_date': register_date
+                                })
