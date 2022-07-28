@@ -44,8 +44,7 @@ export let boardsManager = {
 
 async function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    console.log(boardId)
-    let statuses = await dataHandler.getStatuses(boardId)
+    let statuses = await dataHandler.getStatuses(boardId);
     await add_columns(boardId);
     await cardsManager.loadCards(boardId);
     cardsManager.insertAddCardButton(boardId, statuses[0]);
