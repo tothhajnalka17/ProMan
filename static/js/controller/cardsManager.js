@@ -52,8 +52,9 @@ export let cardsManager = {
         deleteI.forEach((i)=>{
             let trashId = i.dataset.trashId
             i.addEventListener("click", e => {
-                dataHandler.deleteCard(trashId)
-                domManager.refreshPage()
+                dataHandler.deleteCard(trashId);
+                e.stopPropagation();
+                e.target.parentElement.parentElement.remove();
             })
         })
 
