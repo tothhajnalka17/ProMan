@@ -114,8 +114,8 @@ function deleteBoard(boardId){
     const header = document.querySelector(`[data-board-header-id="${boardId}"]`)
     header.appendChild(content(boardId))
     const deleteBtn = document.getElementById(boardId)
-    deleteBtn.addEventListener("click", async () =>{
+    deleteBtn.addEventListener("click", async (e) =>{
         await dataHandler.deleteBoard(boardId)
-        window.location.reload();
+        e.target.parentElement.parentElement.parentElement.remove()
     })
 }
