@@ -79,8 +79,8 @@ async function deleteColumn(parent, boardId){
 
 
         }
-    trash.addEventListener("click", ev => {
-        dataHandler.deleteColumn(trash.dataset.delId)
+    trash.addEventListener("click", async e => {
+        await dataHandler.deleteColumn(trash.dataset.delId)
         window.location.reload()
         })
     }
