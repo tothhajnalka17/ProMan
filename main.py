@@ -38,33 +38,21 @@ def login():
         if account:
             encrypted_password = queries.get_user_encrypted_password(email)
             session.permanent = True
-            userdata = queries.get_username_by(email)
-            for username in userdata[0].values():
-                pass
-            session['username'] = username
+            session['username'] = account.username
+            session['id'] = account.id
 
-            userid = queries.get_user_id_by(email)
-            for id in userid[0].values():
-                pass
-            session['id'] = id
-            print(id)
             # If account exists in users table in out database
             if util.verify_password(password, encrypted_password):
-                print("Passwords match")
-                # Create session data, we can access this data in other routes
-                # Redirect to home page
-                return redirect(url_for('route_home'))
-            elif 'user' in session:
                 return redirect(url_for('route_home'))
 
             else:
-                # Account doesnt exist or username/password incorrect
+                # Account doesn't exist or username/password incorrect
                 flash('Incorrect username/password')
-                return redirect(url_for('userlogin'))
+                return redirect(url_for('login'))
         else:
-            # Account doesnt exist or username/password incorrect
+            # Account doesn't exist or username/password incorrect
             flash('Incorrect username/password')
-            return redirect(url_for('userlogin'))
+            return redirect(url_for('login'))
 
     return render_template('login.html')
 
