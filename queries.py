@@ -139,7 +139,7 @@ def get_card_status(status_id):
         WHERE s.id = %(status_id)s
         ;
         """
-        , {"status_id": status_id})
+        , {"status_id": status_id}, fetchall=False)
     return status
 
 
@@ -167,12 +167,12 @@ USERS
 def get_user_by_email(email):
     user_select = data_manager.execute_select(
         """
-        SELECT * FROM users
+        SELECT * 
+        FROM users
         WHERE users.email = %(email)s
         ;
         """
-        , {"email": email})
-
+        , {"email": email}, fetchall=False)
     return user_select
 
 
@@ -182,7 +182,7 @@ def get_user_encrypted_password(username):
         SELECT encrypted_password FROM users
         WHERE username = %(username)s 
         """
-        , {"username": username})
+        , {"username": username}, fetchall=False)
 
     return encrypted_pass
 
@@ -193,7 +193,7 @@ def get_user_id_by(email):
         SELECT id FROM users
         WHERE email = %(email)s;
         """
-        , {'email': email})
+        , {'email': email}, fetchall=False)
 
     return user_select
 
@@ -204,7 +204,7 @@ def get_username_by(email):
         SELECT username FROM users
         WHERE email = %(email)s;
         """
-        , {'email': email})
+        , {'email': email}, fetchall=False)
 
     return user_select
 
@@ -215,13 +215,13 @@ def get_user_by_username(username):
         SELECT * FROM users
         WHERE username = %(username)s
         """
-        , {'username': username})
+        , {'username': username}, fetchall=False)
 
     return user_select
 
 
 def insert_users(username, email, encrypted_password, register_date):
-    data_manager.execute_insert("""
+    data_manager.execute_query("""
     INSERT INTO users (username, email, encrypted_password, register_date) 
     VALUES (%(username)s, %(email)s, %(encrypted_password)s, %(register_date)s);
     """,
