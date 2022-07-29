@@ -80,8 +80,8 @@ async function deleteColumn(parent, boardId){
 
         }
     trash.addEventListener("click", async e => {
-        await dataHandler.deleteColumn(trash.dataset.delId)
-        window.location.reload()
+        await dataHandler.deleteColumn(trash.dataset.delId);
+        e.target.parentElement.remove();
         })
     }
 
