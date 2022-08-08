@@ -170,10 +170,11 @@ def get_cards_for_board(board_id: int):
     return queries.get_cards_for_board(board_id)
 
 
-@app.route("/api/board/<int:board_id>/delete", methods=["DELETE"])
+@app.route("/api/boards/<int:board_id>", methods=["DELETE"])
 @json_response
 def delete_boards(board_id: int):
-    return queries.delete_board(board_id)
+    if request.method == "DELETE":
+        return queries.delete_board(board_id)
 
 
 """
