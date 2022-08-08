@@ -177,7 +177,7 @@ def get_statuses(board_id: int):
         return jsonify(queries.get_statuses_for_board(board_id))
 
 
-@app.route('/api/status/<int:status_id>', methods=["POST", "PUT"])
+@app.route('/api/status/<int:status_id>', methods=["POST", "PUT", "DELETE"])
 def status_routes(status_id):
     if request.method == "POST":
         queries.insert_status(request.form.get("name"), request.form.get("boardId"), request.form.get("columnOrder"))
@@ -185,12 +185,8 @@ def status_routes(status_id):
     elif request.method == "PUT":
         queries.update_status_name(request.form.get("id"), request.form.get("name"))
         return Response(status=200)
-
-
-@app.route("/api/status/<int:status_id>/delete", methods=["DELETE"])
-@json_response
-def delete_status(status_id: int):
-    return queries.delete_status(status_id)
+    elif request.method == "DELETE":
+        return jsonify(queries.delete_status(status_id))
 
 
 """
