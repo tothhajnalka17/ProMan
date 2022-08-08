@@ -109,7 +109,25 @@ async function apiDelete(url) {
     }
 }
 
-async function apiPut(url) {
+async function apiPut(url, payload) {
+    let data = new FormData()
+    for (let [key, value] of Object.entries(payload)) {
+        data.append(key, value)
+    }
+    try{
+        let response = await fetch(url, {
+            method: "PUT",
+            body: data
+        })
+        if (response.ok === false) {
+            console.log("An error has occurred in the put response!");
+        }
+        return response
+    }
+    catch (error) {
+        console.log("An error has occurred!")
+        console.log(error)
+    }
 }
 
 async function apiPatch(url) {
