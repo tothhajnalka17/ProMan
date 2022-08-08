@@ -23,11 +23,13 @@ export let columnsManager = {
             let statuses = await dataHandler.getStatuses(boardId);
             let newStatusOrder = statuses.length + 1;
 
-            await dataHandler.insertStatus("New Column", boardId, newStatusOrder)
+            let status = await dataHandler.insertStatus("New Column", boardId, newStatusOrder);
 
-            let board = document.querySelector(`.board[data-board-id="${boardId}"]`);
-            Array.from(board.childNodes).forEach((node) => node.remove());
-            add_columns(boardId);
+            let parent = document.querySelector(`.board[data-board-id="${boardId}"]`);
+            const columnBuilder = htmlFactory(htmlTemplates.column);
+            let column = columnBuilder(status["title"], status["id"]);
+            parent.appendChild(column);
+            column.classList.add("ourColumn");
         })
     })
 }
