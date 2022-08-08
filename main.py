@@ -194,19 +194,15 @@ CARDS
 """
 
 
-@app.route('/api/cards/<int:id>', methods=["GET"])
-@json_response
+@app.route('/api/cards/<int:id>', methods=["GET", "POST"])
 def card_crud(id):
     if request.method == "GET":
         return queries.get_card(id)
-
-
-@app.route('/api/cards/insert', methods=["POST"])
-def insert_card():
-    board_id = request.form.get("boardId")
-    status_id = request.form.get("statusId")
-    card_order = request.form.get("cardOrder")
-    return jsonify(queries.insert_card(board_id, status_id, card_order))
+    elif request.method == "POST":
+        board_id = request.form.get("boardId")
+        status_id = request.form.get("statusId")
+        card_order = request.form.get("cardOrder")
+        return jsonify(queries.insert_card(board_id, status_id, card_order))
 
 
 @app.route('/api/cards/<int:id>/update', methods=["POST"])

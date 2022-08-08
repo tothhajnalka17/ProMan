@@ -32,7 +32,7 @@ export let dataHandler = {
             "newBoardName": newBoardName})
     },
     createNewCard: async function (boardId, statusId, cardOrder) {
-        return await apiPost("api/cards/insert",
+        return await apiPost("/api/cards/0",
             {"boardId": boardId,
                 "statusId": statusId,
                 "cardOrder": cardOrder})
