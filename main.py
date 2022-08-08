@@ -194,7 +194,7 @@ CARDS
 """
 
 
-@app.route('/api/cards/<int:id>', methods=["GET", "POST"])
+@app.route('/api/cards/<int:id>', methods=["GET", "POST", "PUT"])
 def card_crud(id):
     if request.method == "GET":
         return queries.get_card(id)
@@ -203,16 +203,13 @@ def card_crud(id):
         status_id = request.form.get("statusId")
         card_order = request.form.get("cardOrder")
         return jsonify(queries.insert_card(board_id, status_id, card_order))
-
-
-@app.route('/api/cards/<int:id>/update', methods=["POST"])
-def update_card(id):
-    status_id = request.form.get("statusId")
-    board_id = request.form.get("boardId")
-    title = request.form.get("title")
-    card_order = request.form.get("cardOrder")
-    queries.update_card(id, board_id, status_id, title, card_order)
-    return Response(status=200)
+    elif request.method == "PUT":
+        status_id = request.form.get("statusId")
+        board_id = request.form.get("boardId")
+        title = request.form.get("title")
+        card_order = request.form.get("cardOrder")
+        queries.update_card(id, board_id, status_id, title, card_order)
+        return Response(status=200)
 
 
 @app.route('/api/cards/<int:id>/delete', methods=["DELETE"])

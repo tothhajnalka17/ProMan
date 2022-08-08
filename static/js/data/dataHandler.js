@@ -38,7 +38,7 @@ export let dataHandler = {
                 "cardOrder": cardOrder})
     },
     updateCard: async function (id, boardId, statusId, title, cardOrder) {
-        return await apiPost(`/api/cards/${id}/update`,
+        return await apiPut(`/api/cards/${id}`,
             {"statusId": statusId,
                 "boardId": boardId,
                 "title": title,
