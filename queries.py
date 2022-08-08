@@ -119,20 +119,15 @@ COLUMNS
 
 
 def insert_status(name, board_id, column_order):
-    data_manager.execute_query("""
+    return data_manager.execute_select("""
     INSERT INTO statuses(title, board_id, column_order)
     VALUES (%(name)s, %(board_id)s, %(column_order)s)
-    """, {"name": name,
-          "board_id": board_id,
-          "column_order": column_order})
+    RETURNING id, title;""", {"name": name,
+                              "board_id": board_id,
+                              "column_order": column_order}, fetchall=False)
 
 
 def get_card_status(status_id):
-    """
-    Find the first status matching the given id
-    :param status_id:
-    :return: str
-    """
     status = data_manager.execute_select(
         """
         SELECT * FROM statuses s

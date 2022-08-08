@@ -64,12 +64,12 @@ async function apiGet(url) {
             return await response.json();
         }
         else {
-            throw new Error("An error has occurred in the get response!")
+            throw new Error("An error has occurred in the get response!");
         }
     }
     catch (error) {
-        console.log("An error has occurred!")
-        console.log(error)
+        console.log("An error has occurred!");
+        console.log(error);
     }
 }
 
@@ -86,11 +86,11 @@ async function apiPost(url, payload) {
         if (response.ok === false) {
             console.log("An error has occurred in the post response!");
         }
-        return response
+        return response;
     }
     catch (error) {
-        console.log("An error has occurred!")
-        console.log(error)
+        console.log("An error has occurred!");
+        console.log(error);
     }
 }
 
@@ -102,6 +102,7 @@ async function apiDelete(url) {
         if(response.ok === false){
             console.log("An error has occurred in the delete response!");
         }
+        else return await response.json()
     }
     catch (error){
         console.log("An error has occurred!")

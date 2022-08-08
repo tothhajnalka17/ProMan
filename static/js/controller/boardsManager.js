@@ -20,7 +20,7 @@ export let boardsManager = {
                 "click",
                 showHideButtonHandler,
             );
-            deleteBoard(board.id)
+            deleteBoardHandler(board.id)
         }
     },
     boardRenameControl: function() {
@@ -42,13 +42,10 @@ async function showHideButtonHandler(clickEvent) {
 
     cardsManager.insertAddCardButton(boardId, statuses[0]);
 
-
-
     // Call event related functions
     cardsManager.cardRenameControl();
     cardsManager.deleteCrd()
     columnsManager.columnRenameControl();
-
 
     initDragAndDrop();
 
@@ -56,7 +53,6 @@ async function showHideButtonHandler(clickEvent) {
     icon.removeEventListener("click", showHideButtonHandler)
     icon.classList.remove("fa-chevron-down")
     icon.classList.add("fa-chevron-up")
-
 
     icon.addEventListener("click", event => {
         event.preventDefault();
@@ -109,7 +105,7 @@ function addNewBoardForm(){
     })
 }
 
-function deleteBoard(boardId){
+function deleteBoardHandler(boardId){
     const content = htmlFactory(htmlTemplates.deleteBoard)
     const header = document.querySelector(`[data-board-header-id="${boardId}"]`)
     header.appendChild(content(boardId))

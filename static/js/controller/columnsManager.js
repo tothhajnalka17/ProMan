@@ -14,9 +14,25 @@ export let columnsManager = {
                 renameColumnHandler(columnHeaderDiv);
             })
         })
-
     },
+    insertAddColumnListener: function() {
+    let addColumnButtons = Array.from(document.querySelectorAll(".add-column"))
+    addColumnButtons.forEach((button) => {
+        button.addEventListener("click", async (event) => {
+            let boardId = event.target.dataset.boardId;
+            let statuses = await dataHandler.getStatuses(boardId);
+            let newStatusOrder = statuses.length + 1;
 
+            let status = await dataHandler.insertStatus("New Column", boardId, newStatusOrder);
+
+            let parent = document.querySelector(`.board[data-board-id="${boardId}"]`);
+            const columnBuilder = htmlFactory(htmlTemplates.column);
+            let column = columnBuilder(status["title"], status["id"]);
+            parent.appendChild(column);
+            column.classList.add("ourColumn");
+        })
+    })
+}
 }
 
 export async function add_columns(boardId){
@@ -32,8 +48,6 @@ export async function add_columns(boardId){
     columns.forEach( column => {
         column.classList.add('ourColumn')
     })
-
-
 }
 
 export function renameColumnHandler(headerDiv) {
@@ -60,7 +74,6 @@ export function renameColumnHandler(headerDiv) {
             console.log(`There was an error during the board name update: ${error}`);
         }
     });
-
 }
 
 async function deleteColumn(parent, boardId){
@@ -76,17 +89,12 @@ async function deleteColumn(parent, boardId){
             const column = columns[i]
             trash.dataset.delId = column.dataset.columnId
             column.insertBefore(trash, column.firstChild)
-
-
         }
     trash.addEventListener("click", async e => {
         await dataHandler.deleteColumn(trash.dataset.delId);
         e.target.parentElement.remove();
         })
     }
-
-
-
 }
 
 

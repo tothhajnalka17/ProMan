@@ -168,8 +168,7 @@ def get_statuses(board_id: int):
 @app.route('/api/status/<int:status_id>', methods=["POST", "PUT", "DELETE"])
 def status_crud(status_id):
     if request.method == "POST":
-        queries.insert_status(request.form.get("name"), request.form.get("boardId"), request.form.get("columnOrder"))
-        return Response(status=200)
+        return jsonify(queries.insert_status(request.form.get("name"), request.form.get("boardId"), request.form.get("columnOrder")))
     elif request.method == "PUT":
         queries.update_status_name(request.form.get("id"), request.form.get("name"))
         return Response(status=200)
