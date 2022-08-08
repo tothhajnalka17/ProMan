@@ -128,11 +128,6 @@ def insert_status(name, board_id, column_order):
 
 
 def get_card_status(status_id):
-    """
-    Find the first status matching the given id
-    :param status_id:
-    :return: str
-    """
     status = data_manager.execute_select(
         """
         SELECT * FROM statuses s
