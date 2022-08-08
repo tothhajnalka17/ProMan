@@ -35,7 +35,10 @@ function boardBuilder(board) {
                         <h2 class="board-header" data-header-id="${board.id}"> ${board.title} </h2>
                     </div>
                     <div class="inline right">
-                        <i class="toggle-board-button fa fa-chevron-down bicon" data-board-id="${board.id}"></i></i>
+                        <i class="fa-solid fa-plus bicon add-column" data-board-id="${board.id}"></i>
+                    </div>    
+                    <div class="inline right">
+                        <i class="toggle-board-button fa fa-chevron-down bicon" data-board-id="${board.id}"></i>
                     </div>               
                 </div>
                 <div class="board row" data-board-id=${board.id}>
