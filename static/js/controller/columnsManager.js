@@ -15,6 +15,22 @@ export let columnsManager = {
             })
         })
     },
+    insertAddColumnListener: function() {
+    let addColumnButtons = Array.from(document.querySelectorAll(".add-column"))
+    addColumnButtons.forEach((button) => {
+        button.addEventListener("click", async (event) => {
+            let boardId = event.target.dataset.boardId;
+            let statuses = await dataHandler.getStatuses(boardId);
+            let newStatusOrder = statuses.length + 1;
+
+            await dataHandler.insertStatus("New Column", boardId, newStatusOrder)
+
+            let board = document.querySelector(`.board[data-board-id="${boardId}"]`);
+            Array.from(board.childNodes).forEach((node) => node.remove());
+            add_columns(boardId);
+        })
+    })
+}
 }
 
 export async function add_columns(boardId){
