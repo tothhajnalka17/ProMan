@@ -148,16 +148,6 @@ def get_boards():
     return queries.get_boards()
 
 
-@app.route('/api/boards/create_board', methods=["POST"])
-def create_board():
-    board_id = queries.insert_board(request.form.get("boardTitle"))["id"]
-    queries.insert_status("New", board_id, 1)
-    queries.insert_status("In Progress", board_id, 2)
-    queries.insert_status("Testing", board_id, 3)
-    queries.insert_status("Done", board_id, 4)
-    return Response(status=200)
-
-
 @app.route('/api/boards/update_board_name', methods=["POST"])
 def update_board_name():
     queries.update_board_name(request.form.get("boardId"), request.form.get("newBoardName"))
@@ -170,11 +160,18 @@ def get_cards_for_board(board_id: int):
     return queries.get_cards_for_board(board_id)
 
 
-@app.route("/api/boards/<int:board_id>", methods=["DELETE"])
-@json_response
+@app.route("/api/boards/<int:board_id>", methods=["POST", "DELETE"])
 def delete_boards(board_id: int):
-    if request.method == "DELETE":
-        return queries.delete_board(board_id)
+    if request.method == "POST":
+        board_id = queries.insert_board(request.form.get("boardTitle"))["id"]
+        queries.insert_status("New", board_id, 1)
+        queries.insert_status("In Progress", board_id, 2)
+        queries.insert_status("Testing", board_id, 3)
+        queries.insert_status("Done", board_id, 4)
+        return Response(status=200)
+
+    elif request.method == "DELETE":
+        return jsonify(queries.delete_board(board_id))
 
 
 """
