@@ -12,11 +12,11 @@ export let dataHandler = {
 
     },
     insertStatus: async function (name, boardId, columnOrder) {
-        return await apiPost("/api/status/insert",
+        return await apiPost("/api/status/0",
             {"name":name, "boardId": boardId, "columnOrder": columnOrder})
     },
     updateStatusName: async function (columnId, newStatusName) {
-        return await apiPost("/api/status/update_status_name", {"id": columnId, "name": newStatusName})
+        return await apiPut( `/api/status/${columnId}`, {"id": columnId, "name": newStatusName})
     },
     getCardsByBoardId: async function (boardId) {
         return await apiGet(`/api/boards/${boardId}`);

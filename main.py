@@ -171,22 +171,20 @@ COLUMNS
 """
 
 
-@app.route('/api/status/insert')
-def insert_status():
-    queries.insert_status(request.form.get("name"), request.form.get("boardId"), request.form.get("columnOrder"))
-    return Response(status=200)
-
-
 @app.route("/api/status/<int:board_id>", methods=["GET"])
-@json_response
 def get_statuses(board_id: int):
-    return queries.get_statuses_for_board(board_id)
+    if request.method == "GET":
+        return jsonify(queries.get_statuses_for_board(board_id))
 
 
-@app.route("/api/status/update_status_name", methods=["POST"])
-def update_status_name():
-    queries.update_status_name(request.form.get("id"), request.form.get("name"))
-    return Response(status=200)
+@app.route('/api/status/<int:status_id>', methods=["POST", "PUT"])
+def status_routes(status_id):
+    if request.method == "POST":
+        queries.insert_status(request.form.get("name"), request.form.get("boardId"), request.form.get("columnOrder"))
+        return Response(status=200)
+    elif request.method == "PUT":
+        queries.update_status_name(request.form.get("id"), request.form.get("name"))
+        return Response(status=200)
 
 
 @app.route("/api/status/<int:status_id>/delete", methods=["DELETE"])
