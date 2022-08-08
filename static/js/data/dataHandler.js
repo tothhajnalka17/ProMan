@@ -19,7 +19,7 @@ export let dataHandler = {
         return await apiPost("/api/status/update_status_name", {"id": columnId, "name": newStatusName})
     },
     getCardsByBoardId: async function (boardId) {
-        return await apiGet(`/api/boards/${boardId}/cards`);
+        return await apiGet(`/api/boards/${boardId}`);
     },
     getCard: async function (cardId) {
         return await apiGet(`/api/cards/${cardId}`);

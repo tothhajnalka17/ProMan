@@ -154,15 +154,11 @@ def update_board_name():
     return Response(status=200)
 
 
-@app.route("/api/boards/<int:board_id>/cards")
-@json_response
-def get_cards_for_board(board_id: int):
-    return queries.get_cards_for_board(board_id)
-
-
-@app.route("/api/boards/<int:board_id>", methods=["POST", "DELETE"])
-def delete_boards(board_id: int):
-    if request.method == "POST":
+@app.route("/api/boards/<int:board_id>", methods=["GET", "POST", "DELETE"])
+def boards_routes(board_id: int):
+    if request.method == "GET":
+        return jsonify(queries.get_cards_for_board(board_id))
+    elif request.method == "POST":
         board_id = queries.insert_board(request.form.get("boardTitle"))["id"]
         queries.insert_status("New", board_id, 1)
         queries.insert_status("In Progress", board_id, 2)
