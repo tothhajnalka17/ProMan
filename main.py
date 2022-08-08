@@ -149,7 +149,7 @@ def get_boards():
 
 
 @app.route("/api/boards/<int:board_id>", methods=["GET", "POST", "DELETE", "PUT"])
-def boards_routes(board_id: int):
+def boards_crud(board_id: int):
     if request.method == "GET":
         return jsonify(queries.get_cards_for_board(board_id))
     elif request.method == "PUT":
@@ -178,7 +178,7 @@ def get_statuses(board_id: int):
 
 
 @app.route('/api/status/<int:status_id>', methods=["POST", "PUT", "DELETE"])
-def status_routes(status_id):
+def status_crud(status_id):
     if request.method == "POST":
         queries.insert_status(request.form.get("name"), request.form.get("boardId"), request.form.get("columnOrder"))
         return Response(status=200)
@@ -194,10 +194,11 @@ CARDS
 """
 
 
-@app.route('/api/cards/<int:id>')
+@app.route('/api/cards/<int:id>', methods=["GET"])
 @json_response
-def get_card(id):
-    return queries.get_card(id)
+def card_crud(id):
+    if request.method == "GET":
+        return queries.get_card(id)
 
 
 @app.route('/api/cards/insert', methods=["POST"])
