@@ -14,9 +14,7 @@ export let columnsManager = {
                 renameColumnHandler(columnHeaderDiv);
             })
         })
-
     },
-
 }
 
 export async function add_columns(boardId){
@@ -76,17 +74,12 @@ async function deleteColumn(parent, boardId){
             const column = columns[i]
             trash.dataset.delId = column.dataset.columnId
             column.insertBefore(trash, column.firstChild)
-
-
         }
     trash.addEventListener("click", async e => {
         await dataHandler.deleteColumn(trash.dataset.delId);
         e.target.parentElement.remove();
         })
     }
-
-
-
 }
 
 

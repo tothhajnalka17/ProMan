@@ -16,13 +16,8 @@ export let cardsManager = {
             domManager.addEventListener(
                 `.card[data-card-id="${card.id}"]`,
                 "click",
-
-
             );
-
-
         }
-
     },
     insertAddCardButton: function (boardId, status) {
         let firstColumn = document.querySelector(`.board-column[data-column-id="${status.id}"]`);
@@ -57,14 +52,8 @@ export let cardsManager = {
                 e.target.parentElement.parentElement.remove();
             })
         })
-
-
-
 }
-
 };
-
-
 
 function renameCardHandler (cardDiv) {
     let boardId = cardDiv.parentElement.parentElement.getAttribute("data-board-id");
@@ -113,5 +102,4 @@ async function insertCard(boardId, statusId, cardOrder) {
         console.log("An error has occurred during card insertion:");
         console.log(error);
     }
-
 }
