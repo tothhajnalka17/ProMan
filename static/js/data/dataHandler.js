@@ -12,55 +12,64 @@ export let dataHandler = {
 
     },
     insertStatus: async function (name, boardId, columnOrder) {
-        return await apiPost("/api/status/insert",
+        return await apiPost("/api/status/0",
             {"name":name, "boardId": boardId, "columnOrder": columnOrder})
     },
     updateStatusName: async function (columnId, newStatusName) {
-        return await apiPost("/api/status/update_status_name", {"id": columnId, "name": newStatusName})
+        return await apiPut( `/api/status/${columnId}`, {"id": columnId, "name": newStatusName})
     },
     getCardsByBoardId: async function (boardId) {
-        return await apiGet(`/api/boards/${boardId}/cards`);
+        return await apiGet(`/api/boards/${boardId}`);
     },
     getCard: async function (cardId) {
         return await apiGet(`/api/cards/${cardId}`);
     },
     createNewBoard: async function  (boardTitle) {
-        return await apiPost('/api/boards/create_board', {"boardTitle": boardTitle})
+        return await apiPost('/api/boards/0', {"boardTitle": boardTitle})
     },
     updateBoardName: async function (boardId, newBoardName) {
-        return await apiPost('/api/boards/update_board_name', {"boardId": boardId,
+        return await apiPut(`/api/boards/${boardId}`, {"boardId": boardId,
             "newBoardName": newBoardName})
     },
     createNewCard: async function (boardId, statusId, cardOrder) {
-        return await apiPost("api/cards/insert",
+        return await apiPost("/api/cards/0",
             {"boardId": boardId,
                 "statusId": statusId,
                 "cardOrder": cardOrder})
     },
     updateCard: async function (id, boardId, statusId, title, cardOrder) {
-        return await apiPost(`/api/cards/${id}/update`,
+        return await apiPut(`/api/cards/${id}`,
             {"statusId": statusId,
                 "boardId": boardId,
                 "title": title,
                 "cardOrder": cardOrder})
     },
     deleteBoard: async function(boardId){
-        return await apiDelete(`/api/board/${boardId}/delete`)
+        return await apiDelete(`/api/boards/${boardId}`)
     },
     deleteColumn: async function(statusId){
-        return await apiDelete(`/api/status/${statusId}/delete`)
+        return await apiDelete(`/api/status/${statusId}`)
     },
-    deleteCard: async function(trashId){
-        return await apiDelete(`/api/cards/${trashId}/delete`)
+    deleteCard: async function(cardId){
+        return await apiDelete(`/api/cards/${cardId}`)
     }
 };
 
 async function apiGet(url) {
-    let response = await fetch(url, {
-        method: "GET",
-    });
-    if (response.ok) {
-        return await response.json();
+    try {
+        let response = await fetch(url, {
+            method: "GET",
+        });
+        if (response.ok) {
+            return await response.json();
+        }
+        else {
+            throw new Error("An error has occurred in the get response!")
+        }
+    }
+    catch (error) {
+        console.log("An error has occurred!")
+        console.log(error)
     }
 }
 
@@ -75,7 +84,7 @@ async function apiPost(url, payload) {
             body: data
         })
         if (response.ok === false) {
-            console.log("An error has occurred in the response!");
+            console.log("An error has occurred in the post response!");
         }
         return response
     }
@@ -91,7 +100,7 @@ async function apiDelete(url) {
             method: "DELETE"
         })
         if(response.ok === false){
-            console.log("An error has occurred in the response!");
+            console.log("An error has occurred in the delete response!");
         }
     }
     catch (error){
@@ -100,7 +109,25 @@ async function apiDelete(url) {
     }
 }
 
-async function apiPut(url) {
+async function apiPut(url, payload) {
+    let data = new FormData()
+    for (let [key, value] of Object.entries(payload)) {
+        data.append(key, value)
+    }
+    try{
+        let response = await fetch(url, {
+            method: "PUT",
+            body: data
+        })
+        if (response.ok === false) {
+            console.log("An error has occurred in the put response!");
+        }
+        return response
+    }
+    catch (error) {
+        console.log("An error has occurred!")
+        console.log(error)
+    }
 }
 
 async function apiPatch(url) {

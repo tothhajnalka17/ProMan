@@ -136,32 +136,22 @@ def get_boards():
     return queries.get_boards()
 
 
-@app.route('/api/boards/create_board', methods=["POST"])
-def create_board():
-    board_id = queries.insert_board(request.form.get("boardTitle"))["id"]
-    queries.insert_status("New", board_id, 1)
-    queries.insert_status("In Progress", board_id, 2)
-    queries.insert_status("Testing", board_id, 3)
-    queries.insert_status("Done", board_id, 4)
-    return Response(status=200)
-
-
-@app.route('/api/boards/update_board_name', methods=["POST"])
-def update_board_name():
-    queries.update_board_name(request.form.get("boardId"), request.form.get("newBoardName"))
-    return Response(status=200)
-
-
-@app.route("/api/boards/<int:board_id>/cards")
-@json_response
-def get_cards_for_board(board_id: int):
-    return queries.get_cards_for_board(board_id)
-
-
-@app.route("/api/board/<int:board_id>/delete", methods=["DELETE"])
-@json_response
-def delete_boards(board_id: int):
-    return queries.delete_board(board_id)
+@app.route("/api/boards/<int:board_id>", methods=["GET", "POST", "DELETE", "PUT"])
+def boards_crud(board_id: int):
+    if request.method == "GET":
+        return jsonify(queries.get_cards_for_board(board_id))
+    elif request.method == "PUT":
+        queries.update_board_name(request.form.get("boardId"), request.form.get("newBoardName"))
+        return Response(status=200)
+    elif request.method == "POST":
+        board_id = queries.insert_board(request.form.get("boardTitle"))["id"]
+        queries.insert_status("New", board_id, 1)
+        queries.insert_status("In Progress", board_id, 2)
+        queries.insert_status("Testing", board_id, 3)
+        queries.insert_status("Done", board_id, 4)
+        return Response(status=200)
+    elif request.method == "DELETE":
+        return jsonify(queries.delete_board(board_id))
 
 
 """
@@ -169,28 +159,22 @@ COLUMNS
 """
 
 
-@app.route('/api/status/insert')
-def insert_status():
-    queries.insert_status(request.form.get("name"), request.form.get("boardId"), request.form.get("columnOrder"))
-    return Response(status=200)
-
-
 @app.route("/api/status/<int:board_id>", methods=["GET"])
-@json_response
 def get_statuses(board_id: int):
-    return queries.get_statuses_for_board(board_id)
+    if request.method == "GET":
+        return jsonify(queries.get_statuses_for_board(board_id))
 
 
-@app.route("/api/status/update_status_name", methods=["POST"])
-def update_status_name():
-    queries.update_status_name(request.form.get("id"), request.form.get("name"))
-    return Response(status=200)
-
-
-@app.route("/api/status/<int:status_id>/delete", methods=["DELETE"])
-@json_response
-def delete_status(status_id: int):
-    return queries.delete_status(status_id)
+@app.route('/api/status/<int:status_id>', methods=["POST", "PUT", "DELETE"])
+def status_crud(status_id):
+    if request.method == "POST":
+        queries.insert_status(request.form.get("name"), request.form.get("boardId"), request.form.get("columnOrder"))
+        return Response(status=200)
+    elif request.method == "PUT":
+        queries.update_status_name(request.form.get("id"), request.form.get("name"))
+        return Response(status=200)
+    elif request.method == "DELETE":
+        return jsonify(queries.delete_status(status_id))
 
 
 """
@@ -198,34 +182,24 @@ CARDS
 """
 
 
-@app.route('/api/cards/<int:id>')
-@json_response
-def get_card(id):
-    return queries.get_card(id)
-
-
-@app.route('/api/cards/insert', methods=["POST"])
-def insert_card():
-    board_id = request.form.get("boardId")
-    status_id = request.form.get("statusId")
-    card_order = request.form.get("cardOrder")
-    return jsonify(queries.insert_card(board_id, status_id, card_order))
-
-
-@app.route('/api/cards/<int:id>/update', methods=["POST"])
-def update_card(id):
-    status_id = request.form.get("statusId")
-    board_id = request.form.get("boardId")
-    title = request.form.get("title")
-    card_order = request.form.get("cardOrder")
-    queries.update_card(id, board_id, status_id, title, card_order)
-    return Response(status=200)
-
-
-@app.route('/api/cards/<int:id>/delete', methods=["DELETE"])
-@json_response
-def delete_card(id):
-    return queries.delete_card(id)
+@app.route('/api/cards/<int:id>', methods=["GET", "POST", "PUT", "DELETE"])
+def card_crud(id):
+    if request.method == "GET":
+        return queries.get_card(id)
+    elif request.method == "POST":
+        board_id = request.form.get("boardId")
+        status_id = request.form.get("statusId")
+        card_order = request.form.get("cardOrder")
+        return jsonify(queries.insert_card(board_id, status_id, card_order))
+    elif request.method == "PUT":
+        status_id = request.form.get("statusId")
+        board_id = request.form.get("boardId")
+        title = request.form.get("title")
+        card_order = request.form.get("cardOrder")
+        queries.update_card(id, board_id, status_id, title, card_order)
+        return Response(status=200)
+    elif request.method == "DELETE":
+        return jsonify(queries.delete_card(id))
 
 
 def main():
