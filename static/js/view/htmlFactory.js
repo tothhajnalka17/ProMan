@@ -91,17 +91,12 @@ function deleteBoard(boardId){
 
     let deleteDiv = document.createElement("div")
     let deleteI = document.createElement("i")
-    deleteDiv.classList.add("inline")
-    deleteDiv.classList.add("trash")
-    deleteI.classList.add("deleteBoardBtn")
-    deleteI.classList.add("fa")
-    deleteI.classList.add("fa-trash")
-    deleteI.classList.add("bicon")
+    deleteDiv.classList.add("inline", "trash")
+    deleteI.classList.add("deleteBoardBtn", "fa", "fa-trash", "bicon")
     deleteI.id = boardId
     deleteDiv.appendChild(deleteI)
 
     return deleteDiv
-
 }
 
 

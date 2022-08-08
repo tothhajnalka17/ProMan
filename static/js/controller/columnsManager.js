@@ -30,8 +30,6 @@ export async function add_columns(boardId){
     columns.forEach( column => {
         column.classList.add('ourColumn')
     })
-
-
 }
 
 export function renameColumnHandler(headerDiv) {
@@ -58,7 +56,6 @@ export function renameColumnHandler(headerDiv) {
             console.log(`There was an error during the board name update: ${error}`);
         }
     });
-
 }
 
 async function deleteColumn(parent, boardId){
