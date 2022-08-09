@@ -41,7 +41,7 @@ def login():
             session['username'] = account.username
             session['id'] = account.id
 
-            # If account exists in users table in out database
+            # If account exists in users table in our database
             if util.verify_password(password, encrypted_password):
                 return redirect(url_for('route_home'))
 
