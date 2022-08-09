@@ -12,7 +12,7 @@ export let formManager = {
             }
 
             let userId = 0;
-            if (document.querySelector("#privateBox").checked){
+            if (document.querySelector("#privateBox") !== null && document.querySelector("#privateBox").checked){
                 userId = localStorage.getItem("userId");
             }
 
