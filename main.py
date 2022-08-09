@@ -151,7 +151,7 @@ def boards_crud(board_id: int):
         queries.update_board_name(request.form.get("boardId"), request.form.get("newBoardName"))
         return Response(status=200)
     elif request.method == "POST":
-        board_id = queries.insert_board(request.form.get("boardTitle"))["id"]
+        board_id = queries.insert_board(request.form.get("boardTitle"), request.form.get("userId"))["id"]
         queries.insert_status("New", board_id, 1)
         queries.insert_status("In Progress", board_id, 2)
         queries.insert_status("Testing", board_id, 3)
