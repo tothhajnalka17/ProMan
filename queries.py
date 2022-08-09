@@ -52,14 +52,14 @@ BOARDS
 """
 
 
-def get_boards():
+def get_boards(user_id=0):
     return data_manager.execute_select(
         """
         SELECT * FROM boards
+        WHERE user_id = 0 OR user_id = %(user_id)s
         ORDER BY id
         ;
-        """
-    )
+        """, {"user_id": user_id})
 
 
 def insert_board(board_title):
