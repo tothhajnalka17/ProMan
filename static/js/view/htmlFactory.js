@@ -29,6 +29,7 @@ export function htmlFactory(template) {
 }
 
 function boardBuilder(board) {
+    let type = board.user_id === 0 ? "Public": "Private";
     return `<div class="board-container">
                 <div class="board-header-div" data-board-header-id="${board.id}">
                     <div class="inline">
@@ -36,6 +37,7 @@ function boardBuilder(board) {
                     </div>
                     <div class="inline right">
                         <i class="fa-solid fa-plus bicon add-column" data-board-id="${board.id}"></i>
+                        (${type})
                     </div>    
                     <div class="inline right">
                         <i class="toggle-board-button fa fa-chevron-down bicon" data-board-id="${board.id}"></i>
@@ -79,12 +81,12 @@ function addBoardForm(){
     const newForm =
 
         `
-       <i type="button" class="createBoardBtn bicon fa fa-plus" id="createBoard" > New Board</i>
+       <i class="createBoardBtn bicon fa fa-plus" id="createBoard" > New Board</i>
        
        <div id="form-container" class="boardFromDiv">
-            <form action="/api/boards/create_board/" method="POST" id="boardNameForm">
-                <input type="text" id="boardTitle" name="boardTitle" placeholder="New Board Name ">
-                <i type="submit" id="boardNameSubmit" class="bicon fa fa-check create "> Create </i>
+            <form method="POST" id="boardNameForm">
+                <input type="text" id="boardTitle" name="boardTitle" placeholder="New Board Name">
+                <i id="boardNameSubmit" class="bicon fa fa-check create "> Create </i>
             </form>
         </div>`
     return newForm
