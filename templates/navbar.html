@@ -9,6 +9,11 @@
             <li><a href="/board/4">board 4</a></li>
         </ul>
     </li>
-    <li><a href="/login">Login</a></li>
-    <li><a href="/signup">Register</a></li>
+    {% if session["username"] %}
+        <li><a href="/logout">Logout</a></li>
+        <li class="text">Welcome {{ session["username"] }}</li>
+    {% else %}
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup">Register</a></li>
+    {% endif %}
 </ul>

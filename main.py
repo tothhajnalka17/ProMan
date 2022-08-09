@@ -6,7 +6,6 @@ import queries
 import util
 import datetime
 import re
-import data_manager
 
 mimetypes.add_type('application/javascript', '.js')
 
@@ -43,7 +42,7 @@ def login():
 
             # If account exists in users table in our database
             if util.verify_password(password, encrypted_password):
-                flash("Successfully logged in!")
+                flash(f"Successfully logged in as {session['username']}!")
                 return redirect("/")
 
             else:
@@ -122,7 +121,8 @@ def signup():
 def logout():
     user = session['username']
     flash(f'Goodbye {user}')
-    session.pop("username", None)
+    session.pop("username")
+    session.pop("id")
     return redirect(url_for('index'))
 
 
