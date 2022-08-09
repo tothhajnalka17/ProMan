@@ -17,7 +17,13 @@ app.permanent_session_lifetime = datetime.timedelta(minutes=1)
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    if "username" in session:
+        username = session["username"]
+        user_id = session["id"]
+    else:
+        username = None
+        user_id = None
+    return render_template('index.html', username=username, user_id=user_id)
 
 
 """
@@ -32,7 +38,6 @@ def login():
         email = request.form['email']
         password = request.form['password']
         account = queries.get_user_by_email(email)
-        print(account)
 
         if account:
             encrypted_password = account["encrypted_password"]

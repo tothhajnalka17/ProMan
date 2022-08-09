@@ -182,6 +182,17 @@ def get_user_encrypted_password(username):
     return encrypted_pass
 
 
+def get_user_by_username(username):
+    user_select = data_manager.execute_select(
+        """
+        SELECT * FROM users
+        WHERE username = %(username)s
+        """
+        , {'username': username}, fetchall=False)
+
+    return user_select
+
+
 def insert_users(username, email, encrypted_password, register_date):
     data_manager.execute_query("""
     INSERT INTO users (username, email, encrypted_password, register_date) 

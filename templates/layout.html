@@ -19,6 +19,13 @@
 
             <script src="https://kit.fontawesome.com/7958facff4.js" crossorigin="anonymous"></script>
 
+            {% if username %}
+                <script defer>
+                    localStorage.setItem("username", '{{ username }}');
+                    localStorage.setItem("user_id", '{{ user_id }}');
+                </script>
+            {% endif %}
+
         {% endblock %}
         <title>{% block title %}{% endblock %}</title>
     </head>
