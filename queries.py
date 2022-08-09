@@ -62,12 +62,13 @@ def get_boards(user_id=0):
         """, {"user_id": user_id})
 
 
-def insert_board(board_title):
+def insert_board(board_title, user_id=0):
     return data_manager.execute_select("""
-    Insert INTO boards(title)
-    VALUES (%(board_title)s)
+    Insert INTO boards(title, user_id)
+    VALUES (%(board_title)s, %(user_id)s)
     RETURNING id;
-    """, {"board_title": board_title}, False)
+    """, {"board_title": board_title,
+          "user_id": user_id}, False)
 
 
 def update_board_name(board_id, new_board_name):
