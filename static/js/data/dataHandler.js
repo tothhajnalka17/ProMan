@@ -1,6 +1,7 @@
 export let dataHandler = {
     getBoards: async function () {
-        return await apiGet("/api/boards");
+        let userId = localStorage.getItem("user_id") ? localStorage.getItem("user_id"): 0
+        return await apiGet(`/api/boards/?user_id=${userId}`);
     },
     getBoard: async function (boardId) {
         // the board is retrieved and then the callback function is called with the board

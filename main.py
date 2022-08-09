@@ -136,10 +136,11 @@ BOARDS
 """
 
 
-@app.route("/api/boards")
+@app.route("/api/boards/")
 @json_response
 def get_boards():
-    return queries.get_boards()
+    user_id = request.args.get("user_id")
+    return queries.get_boards(user_id)
 
 
 @app.route("/api/boards/<int:board_id>", methods=["GET", "POST", "DELETE", "PUT"])
