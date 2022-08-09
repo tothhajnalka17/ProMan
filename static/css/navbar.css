@@ -34,9 +34,10 @@
    float: left;
    position: relative;
    transform: skewX(25deg);
+   color: white;
   }
 
-  .menu a {
+  .menu a, .text {
    display: block;
    color: #fff;
    text-transform: uppercase;
@@ -49,7 +50,7 @@
    background: #e74c3c;
   }
 
-  .menu > li > a {
+  .menu > li > a, .text {
    transform: skewX(-25deg);
    padding: 1em 2em;
   }

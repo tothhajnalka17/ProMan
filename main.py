@@ -6,7 +6,6 @@ import queries
 import util
 import datetime
 import re
-import data_manager
 
 mimetypes.add_type('application/javascript', '.js')
 
@@ -36,14 +35,15 @@ def login():
         print(account)
 
         if account:
-            encrypted_password = queries.get_user_encrypted_password(email)
+            encrypted_password = account["encrypted_password"]
             session.permanent = True
-            session['username'] = account.username
-            session['id'] = account.id
+            session['username'] = account["username"]
+            session['id'] = account["id"]
 
-            # If account exists in users table in out database
+            # If account exists in users table in our database
             if util.verify_password(password, encrypted_password):
-                return redirect(url_for('route_home'))
+                flash(f"Successfully logged in as {session['username']}!")
+                return redirect("/")
 
             else:
                 # Account doesn't exist or username/password incorrect
@@ -121,7 +121,8 @@ def signup():
 def logout():
     user = session['username']
     flash(f'Goodbye {user}')
-    session.pop("username", None)
+    session.pop("username")
+    session.pop("id")
     return redirect(url_for('index'))
 
 
