@@ -24,6 +24,11 @@
                     localStorage.setItem("username", '{{ username }}');
                     localStorage.setItem("userId", '{{ user_id }}');
                 </script>
+            {% else %}
+                <script defer>
+                    localStorage.removeItem("username");
+                    localStorage.removeItem("userId");
+                </script>
             {% endif %}
 
         {% endblock %}
