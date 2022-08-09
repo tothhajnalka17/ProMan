@@ -6,7 +6,7 @@ export async function init() {
     await boardsManager.loadBoards();
     formManager.initFormCreation();
     columnsManager.insertAddColumnListener();
-    console.log(localStorage.getItem("username"), localStorage.getItem("user_id"));
+    boardsManager.boardRenameControl();
 }
 
 init();
