@@ -1,6 +1,7 @@
 export let dataHandler = {
     getBoards: async function () {
-        let userId = localStorage.getItem("user_id") ? localStorage.getItem("user_id"): 0
+        let userId = localStorage.getItem("userId") === null ? 0 : localStorage.getItem("userId");
+        console.log(userId);
         return await apiGet(`/api/boards/?user_id=${userId}`);
     },
     getBoard: async function (boardId) {
@@ -25,8 +26,8 @@ export let dataHandler = {
     getCard: async function (cardId) {
         return await apiGet(`/api/cards/${cardId}`);
     },
-    createNewBoard: async function  (boardTitle) {
-        return await apiPost('/api/boards/0', {"boardTitle": boardTitle})
+    createNewBoard: async function  (boardTitle, userId) {
+        return await apiPost('/api/boards/0', {"boardTitle": boardTitle, "userId": userId})
     },
     updateBoardName: async function (boardId, newBoardName) {
         return await apiPut(`/api/boards/${boardId}`, {"boardId": boardId,
