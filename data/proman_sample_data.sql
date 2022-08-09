@@ -36,7 +36,8 @@ CREATE TABLE statuses (
 
 CREATE TABLE boards (
     id          SERIAL PRIMARY KEY  NOT NULL,
-    title       VARCHAR(200)        NOT NULL
+    title       VARCHAR(200)        NOT NULL,
+    user_id     INTEGER             NOT NULL
 );
 
 CREATE TABLE cards (
@@ -72,9 +73,9 @@ INSERT INTO statuses(title, board_id, column_order) VALUES ('in progress', 3, 2)
 INSERT INTO statuses(title, board_id, column_order) VALUES ('testing', 3, 3);
 INSERT INTO statuses(title, board_id, column_order) VALUES ('done', 3, 4);
 
-INSERT INTO boards(title) VALUES ('Infiltrate Humanity');
-INSERT INTO boards(title) VALUES ('World Domination');
-INSERT INTO boards(title) VALUES ('Stop Climate Change');
+INSERT INTO boards(title, user_id) VALUES ('Infiltrate Humanity', 0);
+INSERT INTO boards(title, user_id) VALUES ('World Domination', 0);
+INSERT INTO boards(title, user_id) VALUES ('Stop Climate Change', 0);
 
 
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'Overcome Asimov laws' , 1);
@@ -91,6 +92,8 @@ INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 6, 'not a card', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 7, 'unplanned', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 8, 'unexpected', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 8, 'undo', 2);
+
+INSERT INTO users VALUES (1, 'Hegyiember', 'hegyiember@hegy.com', '$2b$12$EZ0rEOICDg2HeUkGWg1/BOxvqbCBqoCQFYlQYkjY6Vnah1fq7LHYi', '2022-08-09 09:36:18');
 
 ---
 --- add constraints

@@ -52,22 +52,23 @@ BOARDS
 """
 
 
-def get_boards():
+def get_boards(user_id=0):
     return data_manager.execute_select(
         """
         SELECT * FROM boards
+        WHERE user_id = 0 OR user_id = %(user_id)s
         ORDER BY id
         ;
-        """
-    )
+        """, {"user_id": user_id})
 
 
-def insert_board(board_title):
+def insert_board(board_title, user_id=0):
     return data_manager.execute_select("""
-    Insert INTO boards(title)
-    VALUES (%(board_title)s)
+    Insert INTO boards(title, user_id)
+    VALUES (%(board_title)s, %(user_id)s)
     RETURNING id;
-    """, {"board_title": board_title}, False)
+    """, {"board_title": board_title,
+          "user_id": user_id}, False)
 
 
 def update_board_name(board_id, new_board_name):
@@ -180,28 +181,6 @@ def get_user_encrypted_password(username):
         , {"username": username}, fetchall=False)
 
     return encrypted_pass
-
-
-def get_user_id_by(email):
-    user_select = data_manager.execute_select(
-        """
-        SELECT id FROM users
-        WHERE email = %(email)s;
-        """
-        , {'email': email}, fetchall=False)
-
-    return user_select
-
-
-def get_username_by(email):
-    user_select = data_manager.execute_select(
-        """
-        SELECT username FROM users
-        WHERE email = %(email)s;
-        """
-        , {'email': email}, fetchall=False)
-
-    return user_select
 
 
 def get_user_by_username(username):

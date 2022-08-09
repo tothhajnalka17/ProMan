@@ -6,7 +6,7 @@ export async function init() {
     await boardsManager.loadBoards();
     formManager.initFormCreation();
     columnsManager.insertAddColumnListener();
-
+    boardsManager.boardRenameControl();
 }
 
 init();

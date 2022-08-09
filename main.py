@@ -17,7 +17,13 @@ app.permanent_session_lifetime = datetime.timedelta(minutes=1)
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    if "username" in session:
+        username = session["username"]
+        user_id = session["id"]
+    else:
+        username = None
+        user_id = None
+    return render_template('index.html', username=username, user_id=user_id)
 
 
 """
@@ -32,7 +38,6 @@ def login():
         email = request.form['email']
         password = request.form['password']
         account = queries.get_user_by_email(email)
-        print(account)
 
         if account:
             encrypted_password = account["encrypted_password"]
@@ -131,10 +136,11 @@ BOARDS
 """
 
 
-@app.route("/api/boards")
+@app.route("/api/boards/")
 @json_response
 def get_boards():
-    return queries.get_boards()
+    user_id = request.args.get("user_id")
+    return queries.get_boards(user_id)
 
 
 @app.route("/api/boards/<int:board_id>", methods=["GET", "POST", "DELETE", "PUT"])
@@ -145,7 +151,7 @@ def boards_crud(board_id: int):
         queries.update_board_name(request.form.get("boardId"), request.form.get("newBoardName"))
         return Response(status=200)
     elif request.method == "POST":
-        board_id = queries.insert_board(request.form.get("boardTitle"))["id"]
+        board_id = queries.insert_board(request.form.get("boardTitle"), request.form.get("userId"))["id"]
         queries.insert_status("New", board_id, 1)
         queries.insert_status("In Progress", board_id, 2)
         queries.insert_status("Testing", board_id, 3)

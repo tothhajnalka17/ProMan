@@ -2,7 +2,7 @@ import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {cardsManager} from "./cardsManager.js";
-import {add_columns, columnsManager, renameColumnHandler} from "./columnsManager.js";
+import {add_columns, columnsManager} from "./columnsManager.js";
 import {initDragAndDrop} from "./dragNDropManager.js";
 
 export let boardsManager = {
@@ -96,13 +96,34 @@ function addNewBoardForm(){
         if(formDiv.style.display === 'block'){
             formDiv.style.display = 'none';
             createBtn.classList.remove("fa-minus");
-            createBtn.classList.add("fa-plus")
+            createBtn.classList.add("fa-plus");
         }else{
           formDiv.style.display = 'block';
           createBtn.classList.remove("fa-plus");
-          createBtn.classList.add("fa-minus")
+          createBtn.classList.add("fa-minus");
+          extendBoardForm();
         }
     })
+}
+
+function extendBoardForm() {
+    let form = document.querySelector("#boardNameForm");
+    if (localStorage.getItem("username") !== null && document.querySelector("#privateBox") === null) {
+        let boxDiv = document.createElement("div");
+        let checkBox = document.createElement("input");
+        let label = document.createElement("label");
+
+        label.for = "private";
+        label.innerText = "Private";
+
+        checkBox.type = "checkbox";
+        checkBox.id = "privateBox";
+        checkBox.name = "privateBox";
+
+        boxDiv.appendChild(checkBox);
+        boxDiv.appendChild(label);
+        form.appendChild(boxDiv);
+    }
 }
 
 function deleteBoardHandler(boardId){
