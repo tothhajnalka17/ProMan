@@ -33,7 +33,7 @@ function boardBuilder(board) {
     return `<div class="board-container">
                 <div class="board-header-div" data-board-header-id="${board.id}">
                     <div class="inline">
-                        <h2 class="board-header" data-header-id="${board.id}"> ${board.title} </h2>
+                        <h2 class="board-header" data-header-id="${board.id}" contenteditable="true"> ${board.title} </h2>
                     </div>
                     <div class="inline right">
                         <i class="fa-solid fa-plus bicon add-column" data-board-id="${board.id}"></i>
@@ -49,9 +49,11 @@ function boardBuilder(board) {
 }
 
 function cardBuilder(card) {
-    return `<div class="card" data-card-id="${card.id}">${card.title}
-    <div class="cardDel">
-            <i class="fa fa-trash inline delI" style="" data-trash-id="${card.id}" ></i>
+    return `
+    <div class="card" data-card-id="${card.id}" data-board-id="${card.board_id}" data-card-order="${card.card_order}" data-status-id="${card.status_id}" ">
+        <div class="cardTitle" contenteditable="true">${card.title}</div>
+        <div class="cardDel">
+                <i class="fa fa-trash inline delI" style="" data-trash-id="${card.id}" ></i>
         </div>
     </div>`
 
@@ -73,6 +75,7 @@ function columnBuilder(title, statusId) {
     let columnHeader = document.createElement("h4");
     columnHeader.classList.add("column-header");
     columnHeader.innerText = title;
+    columnHeader.contentEditable = "true";
     columnDiv.appendChild(columnHeader);
     return columnDiv
 }

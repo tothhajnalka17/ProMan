@@ -10,8 +10,23 @@ export let columnsManager = {
 
         let columnHeaderDivs = Array.from(document.querySelectorAll(".column-header"));
         columnHeaderDivs.forEach( columnHeaderDiv => {
-            columnHeaderDiv.addEventListener("click", () => {
-                renameColumnHandler(columnHeaderDiv);
+            columnHeaderDiv.addEventListener("click", (event) => {
+                columnHeaderDiv.addEventListener("keydown", async (event) => {
+                        if (event.key === "Enter") {
+                            event.preventDefault();
+                            let columnId = event.target.parentElement.dataset.columnId;
+                            let newTitle = columnHeaderDiv.innerText;
+                            try {
+                                await dataHandler.updateStatusName(columnId, newTitle);
+                            }
+                            catch (error) {
+                                console.log(`There was an error during the board name update: ${error}`);
+                            }
+                            finally {
+                                event.target.blur();
+                            }
+                            }
+                    })
             })
         })
     },
@@ -23,26 +38,33 @@ export let columnsManager = {
             let statuses = await dataHandler.getStatuses(boardId);
             let newStatusOrder = statuses.length + 1;
 
-            let status = await dataHandler.insertStatus("New Column", boardId, newStatusOrder);
+            let response = await dataHandler.insertStatus("New Column", boardId, newStatusOrder);
 
-            let parent = document.querySelector(`.board[data-board-id="${boardId}"]`);
-            const columnBuilder = htmlFactory(htmlTemplates.column);
-            let column = columnBuilder(status["title"], status["id"]);
-            parent.appendChild(column);
-            column.classList.add("ourColumn");
+            // if header is open:
+            if (event.target.parentElement.parentElement.status === "open") {
+                let status = await response.json();
+
+                let parent = document.querySelector(`.board[data-board-id="${boardId}"]`);
+                const columnBuilder = htmlFactory(htmlTemplates.column);
+                let column = columnBuilder(status["title"], status["id"]);
+                parent.appendChild(column);
+                column.classList.add("ourColumn");
+                await addDeleteColumnButton(parent, boardId);
+                columnsManager.columnRenameControl();
+            }
         })
     })
 }
 }
 
-export async function add_columns(boardId){
+export async function displayColumns(boardId){
     const statuses = await dataHandler.getStatuses(boardId);
     let parent = document.querySelector(`.board[data-board-id="${boardId}"]`);
     const columnBuilder = htmlFactory(htmlTemplates.column);
     for (let status of statuses) {
         let column = columnBuilder(status.title, status.id);
         parent.appendChild(column);
-        deleteColumn(parent, boardId)
+        addDeleteColumnButton(parent, boardId);
     }
     let columns = Array.from(document.querySelectorAll(".board-column"))
     columns.forEach( column => {
@@ -50,38 +72,11 @@ export async function add_columns(boardId){
     })
 }
 
-export function renameColumnHandler(headerDiv) {
-    let statusName = headerDiv.innerText;
-    let statusId = headerDiv.parentElement.getAttribute("data-column-id");
-
-    const formBuilder = htmlFactory(htmlTemplates.renameForm);
-    let newDiv = document.createElement("div");
-    newDiv.innerHTML = formBuilder(statusName);
-    newDiv.classList.add("column-header");
-
-    headerDiv.replaceWith(newDiv);
-
-    // Add focus to the main input field and listen to focus loss
-    let inputField = document.querySelector(".column-header > form > input");
-    inputField.focus();
-
-    inputField.addEventListener("focusout", async () => {
-        headerDiv.innerText = inputField.value;
-        newDiv.replaceWith(headerDiv)
-        try {
-            await dataHandler.updateStatusName(statusId, inputField.value);
-        } catch (error) {
-            console.log(`There was an error during the board name update: ${error}`);
-        }
-    });
-}
-
-async function deleteColumn(parent, boardId){
+async function addDeleteColumnButton(parent, boardId){
     const trash = document.createElement('i')
     trash.classList = "fa fa-trash inline bicon"
     trash.dataset.board_id = boardId
     trash.style = "float: right"
-    console.log(parent.dataset.boardId)
     let columns = parent.children
     if (parent.dataset.boardId === boardId) {
 
