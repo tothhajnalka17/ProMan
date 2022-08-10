@@ -33,7 +33,7 @@ function boardBuilder(board) {
     return `<div class="board-container">
                 <div class="board-header-div" data-board-header-id="${board.id}">
                     <div class="inline">
-                        <h2 class="board-header" data-header-id="${board.id}"> ${board.title} </h2>
+                        <h2 class="board-header" data-header-id="${board.id}" contenteditable="true"> ${board.title} </h2>
                     </div>
                     <div class="inline right">
                         <i class="fa-solid fa-plus bicon add-column" data-board-id="${board.id}"></i>

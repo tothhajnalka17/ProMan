@@ -24,15 +24,30 @@ export let boardsManager = {
         }
     },
     boardRenameControl: function() {
-        let headerDivs = Array.from(document.querySelectorAll(".board-header"));
-        headerDivs.forEach(headerDiv => {
-            headerDiv.addEventListener("click", () => {
-                renameBoardHandler(headerDiv);
-            })
+        let boardTitles = Array.from(document.querySelectorAll("h2.board-header"));
+        boardTitles.forEach(boardTitle => {
+            let oldTitle = boardTitle.innerText;
+                boardTitle.addEventListener("click", () => {
+                    boardTitle.addEventListener("keydown", async (event) => {
+                        if (event.key === "Enter") {
+                            event.preventDefault();
+                            let boardId = event.target.dataset.headerId;
+                            let newTitle = boardTitle.innerText;
+                            try {
+                                await dataHandler.updateBoardName(boardId, newTitle);
+                            }
+                            catch (error) {
+                                console.log(`There was an error during the board name update: ${error}`);
+                            }
+                            finally {
+                                event.target.blur();
+                            }
+                            }
+                    })
+                })
         })
     },
 };
-
 
 async function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
@@ -60,33 +75,6 @@ async function showHideButtonHandler(clickEvent) {
         event.preventDefault();
         domManager.refreshPage();
     })
-}
-
-function renameBoardHandler (headerDiv) {
-    let boardId = headerDiv.getAttribute("data-header-id");
-    let boardTitle = headerDiv.innerText;
-    const formBuilder = htmlFactory(htmlTemplates.renameForm);
-
-    let newDiv = document.createElement("div");
-    newDiv.innerHTML = formBuilder(boardTitle);
-    newDiv.classList.add("board-header");
-
-    headerDiv.replaceWith(newDiv);
-
-    // Add focus to the main input field and listen to focus loss
-    let inputField = document.querySelector(".board-header > form > input");
-    inputField.focus();
-
-    inputField.addEventListener("focusout", async () => {
-        headerDiv.innerText = inputField.value;
-        newDiv.replaceWith(headerDiv)
-        try {
-            await dataHandler.updateBoardName(boardId, inputField.value);
-        }
-        catch (error) {
-            console.log(`There was an error during the board name update: ${error}`);
-        }
-    });
 }
 
 function addNewBoardForm(){
