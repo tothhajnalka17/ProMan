@@ -44,7 +44,6 @@ export let cardsManager = {
                         let statusId = event.target.parentElement.dataset.statusId;
                         let cardOrder = event.target.parentElement.dataset.cardOrder;
                         let newTitle = cardTitleDiv.innerText;
-                        console.log(cardId, boardId, statusId, cardOrder, newTitle)
                         try {
                             await dataHandler.updateCard(cardId, boardId, statusId, newTitle, cardOrder);
                         }
