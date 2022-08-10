@@ -49,9 +49,11 @@ function boardBuilder(board) {
 }
 
 function cardBuilder(card) {
-    return `<div class="card" data-card-id="${card.id}">${card.title}
-    <div class="cardDel">
-            <i class="fa fa-trash inline delI" style="" data-trash-id="${card.id}" ></i>
+    return `
+    <div class="card" data-card-id="${card.id}" data-board-id="${card.board_id}" data-card-order="${card.card_order}" data-status-id="${card.status_id}" ">
+        <div class="cardTitle" contenteditable="true">${card.title}</div>
+        <div class="cardDel">
+                <i class="fa fa-trash inline delI" style="" data-trash-id="${card.id}" ></i>
         </div>
     </div>`
 

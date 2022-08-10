@@ -2,7 +2,6 @@ import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {initDraggable} from "./dragNDropManager.js";
-import {boardsManager} from "./boardsManager.js";
 
 export let cardsManager = {
     loadCards: async function (boardId) {
@@ -34,10 +33,29 @@ export let cardsManager = {
     },
 
     cardRenameControl: function () {
-        let cardDivs = Array.from(document.querySelectorAll(".card"));
-        cardDivs.forEach(cardDiv => {
-            cardDiv.addEventListener("click", () => {
-                renameCardHandler(cardDiv)
+        let cardTitleDivs = Array.from(document.querySelectorAll(".cardTitle"));
+        cardTitleDivs.forEach(cardTitleDiv => {
+            cardTitleDiv.addEventListener("click", () => {
+                cardTitleDiv.addEventListener("keydown", async (event) => {
+                    if (event.key === "Enter") {
+                        event.preventDefault();
+                        let cardId = event.target.parentElement.dataset.cardId;
+                        let boardId = event.target.parentElement.dataset.boardId;
+                        let statusId = event.target.parentElement.dataset.statusId;
+                        let cardOrder = event.target.parentElement.dataset.cardOrder;
+                        let newTitle = cardTitleDiv.innerText;
+                        console.log(cardId, boardId, statusId, cardOrder, newTitle)
+                        try {
+                            await dataHandler.updateCard(cardId, boardId, statusId, newTitle, cardOrder);
+                        }
+                        catch (error) {
+                            console.log(`There was an error during the board name update: ${error}`);
+                        }
+                        finally {
+                            event.target.blur();
+                        }
+                    }
+                })
             })
         })
     },
