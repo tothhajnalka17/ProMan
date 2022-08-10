@@ -24,15 +24,19 @@ export let columnsManager = {
             let newStatusOrder = statuses.length + 1;
 
             let response = await dataHandler.insertStatus("New Column", boardId, newStatusOrder);
-            let status = await response.json();
 
-            let parent = document.querySelector(`.board[data-board-id="${boardId}"]`);
-            const columnBuilder = htmlFactory(htmlTemplates.column);
-            let column = columnBuilder(status["title"], status["id"]);
-            parent.appendChild(column);
-            column.classList.add("ourColumn");
-            await addDeleteColumnButton(parent, boardId);
-            columnsManager.columnRenameControl();
+            // if header is open:
+            if (event.target.parentElement.parentElement.status === "open") {
+                let status = await response.json();
+
+                let parent = document.querySelector(`.board[data-board-id="${boardId}"]`);
+                const columnBuilder = htmlFactory(htmlTemplates.column);
+                let column = columnBuilder(status["title"], status["id"]);
+                parent.appendChild(column);
+                column.classList.add("ourColumn");
+                await addDeleteColumnButton(parent, boardId);
+                columnsManager.columnRenameControl();
+            }
         })
     })
 }

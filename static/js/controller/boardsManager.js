@@ -49,6 +49,8 @@ async function showHideButtonHandler(clickEvent) {
 
     initDragAndDrop();
 
+    let boardHeaderDiv = this.parentElement.parentElement;
+    boardHeaderDiv.status = "open";
     let icon = clickEvent.target;
     icon.removeEventListener("click", showHideButtonHandler)
     icon.classList.remove("fa-chevron-down")
