@@ -23,26 +23,29 @@ export let columnsManager = {
             let statuses = await dataHandler.getStatuses(boardId);
             let newStatusOrder = statuses.length + 1;
 
-            let status = await dataHandler.insertStatus("New Column", boardId, newStatusOrder);
+            let response = await dataHandler.insertStatus("New Column", boardId, newStatusOrder);
+            let status = await response.json();
 
             let parent = document.querySelector(`.board[data-board-id="${boardId}"]`);
             const columnBuilder = htmlFactory(htmlTemplates.column);
             let column = columnBuilder(status["title"], status["id"]);
             parent.appendChild(column);
             column.classList.add("ourColumn");
+            await addDeleteColumnButton(parent, boardId);
+            columnsManager.columnRenameControl();
         })
     })
 }
 }
 
-export async function add_columns(boardId){
+export async function displayColumns(boardId){
     const statuses = await dataHandler.getStatuses(boardId);
     let parent = document.querySelector(`.board[data-board-id="${boardId}"]`);
     const columnBuilder = htmlFactory(htmlTemplates.column);
     for (let status of statuses) {
         let column = columnBuilder(status.title, status.id);
         parent.appendChild(column);
-        deleteColumn(parent, boardId)
+        addDeleteColumnButton(parent, boardId);
     }
     let columns = Array.from(document.querySelectorAll(".board-column"))
     columns.forEach( column => {
@@ -76,12 +79,11 @@ export function renameColumnHandler(headerDiv) {
     });
 }
 
-async function deleteColumn(parent, boardId){
+async function addDeleteColumnButton(parent, boardId){
     const trash = document.createElement('i')
     trash.classList = "fa fa-trash inline bicon"
     trash.dataset.board_id = boardId
     trash.style = "float: right"
-    console.log(parent.dataset.boardId)
     let columns = parent.children
     if (parent.dataset.boardId === boardId) {
 
