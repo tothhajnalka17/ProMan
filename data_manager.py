@@ -12,7 +12,7 @@ def establish_connection(connection_data=None):
     if connection_data is None:
         connection_data = get_connection_data()
     try:
-
+        print(os.environ.get('DATABASE_URL'))
         connect_str = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(connect_str)
     except psycopg2.DatabaseError as e:
