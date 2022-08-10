@@ -73,6 +73,7 @@ function columnBuilder(title, statusId) {
     let columnHeader = document.createElement("h4");
     columnHeader.classList.add("column-header");
     columnHeader.innerText = title;
+    columnHeader.contentEditable = "true";
     columnDiv.appendChild(columnHeader);
     return columnDiv
 }
