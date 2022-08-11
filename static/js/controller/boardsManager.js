@@ -4,6 +4,7 @@ import {domManager} from "../view/domManager.js";
 import {cardsManager} from "./cardsManager.js";
 import {displayColumns, columnsManager} from "./columnsManager.js";
 import {initDragAndDrop} from "./dragNDropManager.js";
+import {resetTitle} from "./util.js";
 
 export let boardsManager = {
     loadBoards: async function () {
@@ -26,12 +27,30 @@ export let boardsManager = {
     boardRenameControl: function() {
         let boardTitles = Array.from(document.querySelectorAll("h2.board-header"));
         boardTitles.forEach(boardTitle => {
+            let oldTitle = boardTitle.innerText;
+            if (boardTitle.hasClick === 'true'){
+                return;
+            }
                 boardTitle.addEventListener("click", () => {
+                    boardTitle.hasClick = "true";
+                    if (boardTitle.hasFocusOutListener === 'true'){
+                        return;
+                    }
+
+                    boardTitle.addEventListener("focusout", () => {
+                        boardTitle.hasFocusOutListener = "true";
+                        if (boardTitle.properSubmission !== "true") {
+                            resetTitle(oldTitle, boardTitle);
+                            }
+                        boardTitle.properSubmission = "false";
+                    })
                     boardTitle.addEventListener("keydown", async (event) => {
                         if (event.key === "Enter") {
                             event.preventDefault();
+                            boardTitle.properSubmission = "true";
                             let boardId = event.target.dataset.headerId;
                             let newTitle = boardTitle.innerText;
+                            oldTitle = newTitle;
                             try {
                                 await dataHandler.updateBoardName(boardId, newTitle);
                             }

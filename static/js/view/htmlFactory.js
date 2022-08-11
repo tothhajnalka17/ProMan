@@ -51,7 +51,7 @@ function boardBuilder(board) {
 function cardBuilder(card) {
     return `
     <div class="card" data-card-id="${card.id}" data-board-id="${card.board_id}" data-card-order="${card.card_order}" data-status-id="${card.status_id}" ">
-        <div class="cardTitle" contenteditable="true">${card.title}</div>
+        <div class="card-title" contenteditable="true">${card.title}</div>
         <div class="cardDel">
                 <i class="fa fa-trash inline delI" style="" data-trash-id="${card.id}" ></i>
         </div>
@@ -87,7 +87,7 @@ function addBoardForm(){
        <i class="createBoardBtn bicon fa fa-plus" id="createBoard" > New Board</i>
        
        <div id="form-container" class="boardFromDiv">
-            <form method="POST" id="boardNameForm">
+            <form id="boardNameForm">
                 <input type="text" id="boardTitle" name="boardTitle" placeholder="New Board Name">
                 <i id="boardNameSubmit" class="bicon fa fa-check create "> Create </i>
             </form>
