@@ -28,8 +28,17 @@ export let boardsManager = {
         let boardTitles = Array.from(document.querySelectorAll("h2.board-header"));
         boardTitles.forEach(boardTitle => {
             let oldTitle = boardTitle.innerText;
+            if (boardTitle.hasClick === 'true'){
+                return;
+            }
                 boardTitle.addEventListener("click", () => {
+                    boardTitle.hasClick = "true";
+                    if (boardTitle.hasFocusOutListener === 'true'){
+                        return;
+                    }
+
                     boardTitle.addEventListener("focusout", () => {
+                        boardTitle.hasFocusOutListener = "true";
                         if (boardTitle.properSubmission !== "true") {
                             resetTitle(oldTitle, boardTitle);
                             }
@@ -41,6 +50,7 @@ export let boardsManager = {
                             boardTitle.properSubmission = "true";
                             let boardId = event.target.dataset.headerId;
                             let newTitle = boardTitle.innerText;
+                            oldTitle = newTitle;
                             try {
                                 await dataHandler.updateBoardName(boardId, newTitle);
                             }

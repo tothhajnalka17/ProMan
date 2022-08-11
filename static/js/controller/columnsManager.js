@@ -13,8 +13,16 @@ export let columnsManager = {
         let columnHeaderDivs = Array.from(document.querySelectorAll(".column-header"));
         columnHeaderDivs.forEach( columnHeaderDiv => {
             let oldTitle = columnHeaderDiv.innerText;
+            if (columnHeaderDiv.hasClick === "true") {
+                return;
+            }
             columnHeaderDiv.addEventListener("click", () => {
+                columnHeaderDiv.hasClick = "true";
+                if (columnHeaderDiv.hasFocusOutListener === 'true'){
+                    return;
+                }
                 columnHeaderDiv.addEventListener('focusout', () => {
+                    columnHeaderDiv.hasFocusOutListener = 'true'
                     if (columnHeaderDiv.properSubmission !== 'true'){
                         resetTitle(oldTitle, columnHeaderDiv);
                     }
@@ -26,6 +34,7 @@ export let columnsManager = {
                             columnHeaderDiv.properSubmission = "true"
                             let columnId = event.target.parentElement.dataset.columnId;
                             let newTitle = columnHeaderDiv.innerText;
+                            oldTitle = newTitle;
                             try {
                                 await dataHandler.updateStatusName(columnId, newTitle);
                             }

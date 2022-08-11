@@ -87,7 +87,7 @@ function addBoardForm(){
        <i class="createBoardBtn bicon fa fa-plus" id="createBoard" > New Board</i>
        
        <div id="form-container" class="boardFromDiv">
-            <form method="POST" id="boardNameForm">
+            <form id="boardNameForm">
                 <input type="text" id="boardTitle" name="boardTitle" placeholder="New Board Name">
                 <i id="boardNameSubmit" class="bicon fa fa-check create "> Create </i>
             </form>

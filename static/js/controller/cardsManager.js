@@ -54,9 +54,17 @@ export let cardsManager = {
 };
 
 function initCardRename(cardTitleDiv) {
+    if (cardTitleDiv.hasClick === "true" ) {
+        return;
+    }
     cardTitleDiv.addEventListener("click", () => {
+        cardTitleDiv.hasClick = "true"
         let oldTitle = cardTitleDiv.innerText;
+        if (cardTitleDiv.hasFocusOutListener === "true") {
+            return;
+        }
         cardTitleDiv.addEventListener("focusout", () => {
+            cardTitleDiv.hasFocusOutListener = "true";
             if (cardTitleDiv.properSubmission !== "true") {
                 resetTitle(oldTitle, cardTitleDiv);
             }
@@ -71,6 +79,7 @@ function initCardRename(cardTitleDiv) {
                 let statusId = event.target.parentElement.dataset.statusId;
                 let cardOrder = event.target.parentElement.dataset.cardOrder;
                 let newTitle = cardTitleDiv.innerText;
+                oldTitle = newTitle;
                 try {
                     await dataHandler.updateCard(cardId, boardId, statusId, newTitle, cardOrder);
                 } catch (error) {
