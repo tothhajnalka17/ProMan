@@ -27,10 +27,18 @@ export let boardsManager = {
     boardRenameControl: function() {
         let boardTitles = Array.from(document.querySelectorAll("h2.board-header"));
         boardTitles.forEach(boardTitle => {
+            let oldTitle = boardTitle.innerText;
                 boardTitle.addEventListener("click", () => {
+                    boardTitle.addEventListener("focusout", () => {
+                        if (boardTitle.properSubmission !== "true") {
+                            resetTitle(oldTitle, boardTitle);
+                            }
+                        boardTitle.properSubmission = "false";
+                    })
                     boardTitle.addEventListener("keydown", async (event) => {
                         if (event.key === "Enter") {
                             event.preventDefault();
+                            boardTitle.properSubmission = "true";
                             let boardId = event.target.dataset.headerId;
                             let newTitle = boardTitle.innerText;
                             try {
