@@ -3,28 +3,6 @@ import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {initDraggable} from "./dragNDropManager.js";
 
-function initCardRename(cardTitleDiv) {
-    cardTitleDiv.addEventListener("click", () => {
-        cardTitleDiv.addEventListener("keydown", async (event) => {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                let cardId = event.target.parentElement.dataset.cardId;
-                let boardId = event.target.parentElement.dataset.boardId;
-                let statusId = event.target.parentElement.dataset.statusId;
-                let cardOrder = event.target.parentElement.dataset.cardOrder;
-                let newTitle = cardTitleDiv.innerText;
-                try {
-                    await dataHandler.updateCard(cardId, boardId, statusId, newTitle, cardOrder);
-                } catch (error) {
-                    console.log(`There was an error during the board name update: ${error}`);
-                } finally {
-                    event.target.blur();
-                }
-            }
-        })
-    })
-}
-
 export let cardsManager = {
     loadCards: async function (boardId) {
         const cards = await dataHandler.getCardsByBoardId(boardId);
@@ -73,6 +51,28 @@ export let cardsManager = {
         })
 }
 };
+
+function initCardRename(cardTitleDiv) {
+    cardTitleDiv.addEventListener("click", () => {
+        cardTitleDiv.addEventListener("keydown", async (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                let cardId = event.target.parentElement.dataset.cardId;
+                let boardId = event.target.parentElement.dataset.boardId;
+                let statusId = event.target.parentElement.dataset.statusId;
+                let cardOrder = event.target.parentElement.dataset.cardOrder;
+                let newTitle = cardTitleDiv.innerText;
+                try {
+                    await dataHandler.updateCard(cardId, boardId, statusId, newTitle, cardOrder);
+                } catch (error) {
+                    console.log(`There was an error during the board name update: ${error}`);
+                } finally {
+                    event.target.blur();
+                }
+            }
+        })
+    })
+}
 
 async function insertCard(boardId, statusId, cardOrder) {
     try{
