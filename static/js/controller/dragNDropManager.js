@@ -1,4 +1,4 @@
-export {initDragAndDrop, initDraggable}
+export {initDragAndDrop, initDraggable, initDropzone}
 import {dataHandler} from "../data/dataHandler.js";
 
 const dom = {

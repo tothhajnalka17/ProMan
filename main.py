@@ -172,11 +172,16 @@ def get_statuses(board_id: int):
         return jsonify(queries.get_statuses_for_board(board_id))
 
 
+@app.route('/api/status', methods=["POST"])
+def create_status():
+    if request.method == "POST":
+        return jsonify(queries.insert_status(request.form.get("name"), request.form.get("boardId"),
+                                             request.form.get("columnOrder")))
+
+
 @app.route('/api/status/<int:status_id>', methods=["POST", "PUT", "DELETE"])
 def status_crud(status_id):
-    if request.method == "POST":
-        return jsonify(queries.insert_status(request.form.get("name"), request.form.get("boardId"), request.form.get("columnOrder")))
-    elif request.method == "PUT":
+    if request.method == "PUT":
         queries.update_status_name(request.form.get("id"), request.form.get("name"))
         return Response(status=200)
     elif request.method == "DELETE":
@@ -188,15 +193,19 @@ CARDS
 """
 
 
-@app.route('/api/cards/<int:id>', methods=["GET", "POST", "PUT", "DELETE"])
-def card_crud(id):
-    if request.method == "GET":
-        return queries.get_card(id)
-    elif request.method == "POST":
+@app.route('/api/cards', methods=["POST"])
+def insert_card():
+    if request.method == "POST":
         board_id = request.form.get("boardId")
         status_id = request.form.get("statusId")
         card_order = request.form.get("cardOrder")
         return jsonify(queries.insert_card(board_id, status_id, card_order))
+
+
+@app.route('/api/cards/<int:id>', methods=["GET", "PUT", "DELETE"])
+def card_crud(id):
+    if request.method == "GET":
+        return queries.get_card(id)
     elif request.method == "PUT":
         status_id = request.form.get("statusId")
         board_id = request.form.get("boardId")
