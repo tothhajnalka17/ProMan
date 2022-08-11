@@ -54,8 +54,17 @@ export let cardsManager = {
 
 function initCardRename(cardTitleDiv) {
     cardTitleDiv.addEventListener("click", () => {
+        let oldTitle = cardTitleDiv.innerText;
+        cardTitleDiv.addEventListener("focusout", () => {
+            if (cardTitleDiv.properSubmission !== "true") {
+                resetTitle(oldTitle, cardTitleDiv)
+            }
+            cardTitleDiv.properSubmission = "false";
+        });
         cardTitleDiv.addEventListener("keydown", async (event) => {
             if (event.key === "Enter") {
+                cardTitleDiv.properSubmission = "true";
+                await cardTitleDiv.removeEventListener("focusout", resetTitle);
                 event.preventDefault();
                 let cardId = event.target.parentElement.dataset.cardId;
                 let boardId = event.target.parentElement.dataset.boardId;
@@ -72,6 +81,10 @@ function initCardRename(cardTitleDiv) {
             }
         })
     })
+}
+
+function resetTitle(oldTitle, titleDiv) {
+    titleDiv.innerText = oldTitle
 }
 
 async function insertCard(boardId, statusId, cardOrder) {
