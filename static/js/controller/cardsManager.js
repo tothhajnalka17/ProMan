@@ -33,7 +33,7 @@ export let cardsManager = {
     },
 
     cardRenameControl: function () {
-        let cardTitleDivs = Array.from(document.querySelectorAll(".cardTitle"));
+        let cardTitleDivs = Array.from(document.querySelectorAll("div.card-title"));
         cardTitleDivs.forEach(cardTitleDiv => {
             initCardRename(cardTitleDiv);
         })
@@ -85,7 +85,7 @@ async function insertCard(boardId, statusId, cardOrder) {
         domManager.addChild(`.board-column[data-column-id="${statusId}"]`, content);
         let cardElement = document.querySelector(`.board-column[data-column-id="${statusId}"]`).lastChild;
         initDraggable(cardElement);
-        initCardRename(card.querySelector(".card-title"));
+        initCardRename(cardElement.querySelector("div.card-title"));
     }
     catch (error) {
         console.log("An error has occurred during card insertion:");

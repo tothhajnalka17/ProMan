@@ -13,7 +13,7 @@ export let dataHandler = {
 
     },
     insertStatus: async function (name, boardId, columnOrder) {
-        return await apiPost("/api/status/0",
+        return await apiPost("/api/status",
             {"name":name, "boardId": boardId, "columnOrder": columnOrder})
     },
     updateStatusName: async function (columnId, newStatusName) {
@@ -33,7 +33,7 @@ export let dataHandler = {
             "newBoardName": newBoardName})
     },
     createNewCard: async function (boardId, statusId, cardOrder) {
-        return await apiPost("/api/cards/0",
+        return await apiPost("/api/cards",
             {"boardId": boardId,
                 "statusId": statusId,
                 "cardOrder": cardOrder})
