@@ -2,6 +2,7 @@ import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {initDraggable} from "./dragNDropManager.js";
+import {resetTitle} from "./util.js";
 
 export let cardsManager = {
     loadCards: async function (boardId) {
@@ -57,14 +58,13 @@ function initCardRename(cardTitleDiv) {
         let oldTitle = cardTitleDiv.innerText;
         cardTitleDiv.addEventListener("focusout", () => {
             if (cardTitleDiv.properSubmission !== "true") {
-                resetTitle(oldTitle, cardTitleDiv)
+                resetTitle(oldTitle, cardTitleDiv);
             }
             cardTitleDiv.properSubmission = "false";
         });
         cardTitleDiv.addEventListener("keydown", async (event) => {
             if (event.key === "Enter") {
                 cardTitleDiv.properSubmission = "true";
-                await cardTitleDiv.removeEventListener("focusout", resetTitle);
                 event.preventDefault();
                 let cardId = event.target.parentElement.dataset.cardId;
                 let boardId = event.target.parentElement.dataset.boardId;
@@ -81,10 +81,6 @@ function initCardRename(cardTitleDiv) {
             }
         })
     })
-}
-
-function resetTitle(oldTitle, titleDiv) {
-    titleDiv.innerText = oldTitle
 }
 
 async function insertCard(boardId, statusId, cardOrder) {

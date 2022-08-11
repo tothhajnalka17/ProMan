@@ -1,6 +1,7 @@
 import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {initDropzone} from "./dragNDropManager.js";
+import {resetTitle} from "./util.js";
 
 export let columnsManager = {
     columnRenameControl: function() {
@@ -11,10 +12,18 @@ export let columnsManager = {
 
         let columnHeaderDivs = Array.from(document.querySelectorAll(".column-header"));
         columnHeaderDivs.forEach( columnHeaderDiv => {
-            columnHeaderDiv.addEventListener("click", (event) => {
+            let oldTitle = columnHeaderDiv.innerText;
+            columnHeaderDiv.addEventListener("click", () => {
+                columnHeaderDiv.addEventListener('focusout', () => {
+                    if (columnHeaderDiv.properSubmission !== 'true'){
+                        resetTitle(oldTitle, columnHeaderDiv);
+                    }
+                    columnHeaderDiv.properSubmission = "false";
+                })
                 columnHeaderDiv.addEventListener("keydown", async (event) => {
                         if (event.key === "Enter") {
                             event.preventDefault();
+                            columnHeaderDiv.properSubmission = "true"
                             let columnId = event.target.parentElement.dataset.columnId;
                             let newTitle = columnHeaderDiv.innerText;
                             try {
