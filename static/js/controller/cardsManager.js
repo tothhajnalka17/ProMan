@@ -40,15 +40,10 @@ export let cardsManager = {
         })
     },
 
-    deleteCrd: function () {
-    let deleteI = Array.from(document.querySelectorAll(".delI"))
-        deleteI.forEach((i)=>{
-            let trashId = i.dataset.trashId
-            i.addEventListener("click", e => {
-                dataHandler.deleteCard(trashId);
-                e.stopPropagation();
-                e.target.parentElement.parentElement.remove();
-            })
+    initDeleteCards: function () {
+    let deleteIcons = Array.from(document.querySelectorAll(".delI"))
+        deleteIcons.forEach((icon)=>{
+            addDeleteFunctionality(icon);
         })
 }
 };
@@ -92,6 +87,15 @@ function initCardRename(cardTitleDiv) {
     })
 }
 
+function addDeleteFunctionality(icon) {
+    let trashId = icon.dataset.trashId
+    icon.addEventListener("click", e => {
+        dataHandler.deleteCard(trashId);
+        e.stopPropagation();
+        e.target.parentElement.parentElement.remove();
+    })
+}
+
 async function insertCard(boardId, statusId, cardOrder) {
     try{
         let response = await dataHandler.createNewCard(boardId, statusId, cardOrder);
@@ -104,6 +108,7 @@ async function insertCard(boardId, statusId, cardOrder) {
         let cardElement = document.querySelector(`.board-column[data-column-id="${statusId}"]`).lastChild;
         initDraggable(cardElement);
         initCardRename(cardElement.querySelector("div.card-title"));
+        addDeleteFunctionality(cardElement.querySelector("i.delI"));
     }
     catch (error) {
         console.log("An error has occurred during card insertion:");
