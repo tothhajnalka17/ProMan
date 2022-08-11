@@ -77,7 +77,7 @@ async function showHideButtonHandler(clickEvent) {
 
     // Call event related functions
     cardsManager.cardRenameControl();
-    cardsManager.deleteCrd()
+    cardsManager.initDeleteCards()
     columnsManager.columnRenameControl();
 
     initDragAndDrop();
