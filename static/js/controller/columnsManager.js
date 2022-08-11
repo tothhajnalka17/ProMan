@@ -1,5 +1,6 @@
 import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
+import {initDropzone} from "./dragNDropManager.js";
 
 export let columnsManager = {
     columnRenameControl: function() {
@@ -51,6 +52,7 @@ export let columnsManager = {
                 column.classList.add("ourColumn");
                 await addDeleteColumnButton(parent, boardId);
                 columnsManager.columnRenameControl();
+                initDropzone(column);
             }
         })
     })
