@@ -7,6 +7,7 @@
     --status-2: #594300;
     --status-3: #525900;
     --status-4: #085900;
+    --status-5: #123456;
 }
 
 body{
@@ -91,9 +92,8 @@ h4{
 
 
 .card{
-
+    background: pink;
     position: relative;
-    background: #222;
     color: #fff;
     border-radius: var(--border-radius);
     margin: 4px 0;
@@ -115,6 +115,16 @@ h4{
 .board-column:nth-of-type(4) .card{
     background: var(--status-4);
 }
+
+.board-column:nth-of-type(5) .card{
+    background: var(--status-5);
+}
+
+.board-column:nth-of-type(5) ~ .board-column > .card{
+    background: dimgrey;
+}
+
+
 
 .card-remove{
     display: block;
